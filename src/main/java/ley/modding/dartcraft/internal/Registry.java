@@ -1,0 +1,69 @@
+package ley.modding.dartcraft.internal;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import ley.modding.dartcraft.Dartcraft;
+import ley.modding.tileralib.api.IRegistry;
+import ley.modding.tileralib.api.ITEProvider;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Registry implements IRegistry {
+
+    Map<String, Item> items;
+    Map<String, Block> blocks;
+
+    public Registry() {
+        items = new HashMap<String, Item>();
+        blocks = new HashMap<String, Block>();
+    }
+
+    @Override
+    public String getModID() {
+        return Dartcraft.MODID;
+    }
+
+    @Override
+    public Item getItem(String id) {
+        if (items.containsKey(id)) {
+            return items.get(id);
+        }
+        return GameRegistry.findItem(getModID(), id);
+    }
+
+    @Override
+    public Block getBlock(String id) {
+        if (blocks.containsKey(id)) {
+            return blocks.get(id);
+        }
+        return GameRegistry.findBlock(getModID(), id);
+    }
+
+    @Override
+    public Item registerItem(Item item) {
+        if (item != null) {
+            String id = item.getUnlocalizedName().toLowerCase().split("\\.")[1];
+            items.put(id, item);
+            GameRegistry.registerItem(item, id, getModID());
+            return item;
+        }
+        return null;
+    }
+
+    @Override
+    public Block registerBlock(Block block) {
+        if (block != null) {
+            String id = block.getUnlocalizedName().toLowerCase().split("\\.")[1];
+            blocks.put(id, block);
+            GameRegistry.registerBlock(block, id);
+            if (block instanceof ITEProvider) {
+                GameRegistry.registerTileEntity(((ITEProvider) block).getTEClass(),id);
+            }
+            return block;
+        }
+        return null;
+    }
+
+}
