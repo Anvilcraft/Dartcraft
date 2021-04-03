@@ -7,6 +7,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import ley.modding.dartcraft.block.BlockPowerOre;
 import ley.modding.dartcraft.block.Blocks;
+import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
 import ley.modding.dartcraft.item.BaseItem;
 import ley.modding.dartcraft.item.Items;
@@ -15,6 +16,7 @@ import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = Dartcraft.MODID, name = Dartcraft.MODNAME, version = Dartcraft.VERSION)
 public class Dartcraft {
@@ -33,7 +35,7 @@ public class Dartcraft {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e)
     {
-
+        MinecraftForge.EVENT_BUS.register(new EventHandler());
     }
 
     @Mod.EventHandler
