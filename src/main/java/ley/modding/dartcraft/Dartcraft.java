@@ -11,6 +11,7 @@ import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
 import ley.modding.dartcraft.item.BaseItem;
 import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.tool.ItemForceMitts;
 import ley.modding.dartcraft.item.tool.ItemForcePickaxe;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
@@ -48,6 +49,7 @@ public class Dartcraft {
         Items.forcestick = registry.registerItem(new BaseItem("forcestick"));
         Items.forceshard = registry.registerItem(new BaseItem("forceshard"));
         registry.registerItem(new ItemForcePickaxe());
+        registry.registerItem(new ItemForceMitts());
         Blocks.powerore = registry.registerBlock(new BlockPowerOre());
     }
 
