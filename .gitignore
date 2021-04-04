@@ -2,3 +2,11 @@
 .idea
 build
 run
+.classpath
+.project
+.settings
+bin
+*.iml
+*.ipr
+*.iws
+
