@@ -1,11 +1,9 @@
 package ley.modding.dartcraft.block;
 
-import java.util.List;
-import java.util.Random;
-
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.util.Util;
 import ley.modding.dartcraft.worldgen.GenForceTree;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
@@ -15,12 +13,16 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
+import java.util.List;
+import java.util.Random;
+
 public class BlockForceSapling extends BlockSapling {
     IIcon icon;
 
     public BlockForceSapling() {
         Util.configureBlock(this, "forcesapling");
         setBlockTextureName(Dartcraft.MODID + ":sapling");
+        setStepSound(Block.soundTypeGrass);
     }
 
     // generate tree
