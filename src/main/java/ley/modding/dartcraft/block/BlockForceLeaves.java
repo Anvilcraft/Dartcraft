@@ -6,8 +6,11 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.util.Util;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+
+import java.util.Random;
 
 public class BlockForceLeaves extends BlockLeaves {
     private IIcon icon;
@@ -22,7 +25,6 @@ public class BlockForceLeaves extends BlockLeaves {
         this.icon = register.registerIcon(Dartcraft.MODID + ":leaves");
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public boolean isOpaqueCube() {
         return false;
@@ -65,4 +67,10 @@ public class BlockForceLeaves extends BlockLeaves {
     public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_) {
         return 0xffffff;
     }
+
+    @Override
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+        return Item.getItemFromBlock(Blocks.forcesapling);
+    }
+
 }
