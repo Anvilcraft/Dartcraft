@@ -23,6 +23,18 @@ public class BlockForceLeaves extends BlockLeaves {
     }
 
     @SideOnly(Side.CLIENT)
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
+        return true;
+    }
+
+    @SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
 		return this.icon;
