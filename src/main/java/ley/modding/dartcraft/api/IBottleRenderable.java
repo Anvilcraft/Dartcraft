@@ -8,5 +8,4 @@ public interface IBottleRenderable {
 
    void setEntityItem(ItemStack var1);
 
-   void sendDescriptionPacket();
 }

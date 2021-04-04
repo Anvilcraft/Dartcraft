@@ -6,15 +6,14 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
 import ley.modding.dartcraft.block.BlockPowerOre;
 import ley.modding.dartcraft.block.Blocks;
+import ley.modding.dartcraft.entity.*;
 import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
-import ley.modding.dartcraft.entity.EntityColdChicken;
-import ley.modding.dartcraft.entity.EntityColdCow;
-import ley.modding.dartcraft.entity.EntityColdPig;
 import ley.modding.dartcraft.item.BaseItem;
+import ley.modding.dartcraft.item.ItemEntityBottle;
+import ley.modding.dartcraft.item.ItemForceFlask;
 import ley.modding.dartcraft.item.Items;
 import ley.modding.dartcraft.item.tool.ItemForceMitts;
 import ley.modding.dartcraft.item.tool.ItemForcePickaxe;
@@ -33,7 +32,6 @@ public class Dartcraft {
 
     @Mod.Instance
     public static Dartcraft instance = new Dartcraft();
-    public static DartcraftClient client = new DartcraftClient();
     public static IRegistry registry;
     @SidedProxy(serverSide = "ley.modding.dartcraft.proxy.CommonProxy", clientSide = "ley.modding.dartcraft.proxy.ClientProxy")
     public static CommonProxy proxy;
@@ -47,10 +45,6 @@ public class Dartcraft {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        // TODO: use proxys
-        if (e.getSide() == Side.CLIENT)
-            client.init();
-
         registry = new Registry();
         Items.forcegem = registry.registerItem(new BaseItem("forcegem"));
         Items.forceingot = registry.registerItem(new BaseItem("forceingot"));
@@ -60,12 +54,16 @@ public class Dartcraft {
         Items.forcemitts = registry.registerItem(new ItemForceMitts());
         Items.forcepickaxe = registry.registerItem(new ItemForcePickaxe());
         Items.forceshears = registry.registerItem(new ItemForceShears());
+        Items.forceflask = registry.registerItem(new ItemForceFlask());
+        Items.entitybottle = registry.registerItem(new ItemEntityBottle());
         Blocks.powerore = registry.registerBlock(new BlockPowerOre());
-
+        proxy.init();
         int entityId = 0;
         EntityRegistry.registerModEntity(EntityColdChicken.class, "coldChicken", entityId++, Dartcraft.instance, 40, 1, true);
         EntityRegistry.registerModEntity(EntityColdCow.class, "coldCow", entityId++, Dartcraft.instance, 40, 1, true);
         EntityRegistry.registerModEntity(EntityColdPig.class, "coldPig", entityId++, Dartcraft.instance, 40, 1, true);
+        EntityRegistry.registerModEntity(EntityBottle.class, "entityBottleItem", entityId++, Dartcraft.instance, 40, 1, true);
+        EntityRegistry.registerModEntity(EntityFlyingFlask.class, "entityFlyingFlask", entityId++, Dartcraft.instance, 40, 1, true);
     }
 
     @Mod.EventHandler

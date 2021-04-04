@@ -1,0 +1,5 @@
+{
+  "bottle": {"category": "master","sounds": [{"name": "bottle","stream": false}]},
+  "swipe": {"category": "master","sounds": [{"name": "swipe","stream": false}]},
+  "nope": {"category": "master","sounds": [{"name": "nope","stream": false}]}
+}

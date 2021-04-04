@@ -12,5 +12,7 @@ public class Items {
     public static Item forceshears;
     public static Item forcepickaxe;
     public static Item forcemitts;
+    public static Item forceflask;
+    public static Item entitybottle;
 
 }
