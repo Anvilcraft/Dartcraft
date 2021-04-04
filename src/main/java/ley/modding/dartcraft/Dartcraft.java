@@ -6,22 +6,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
-import ley.modding.dartcraft.block.BlockForceLeaves;
-import ley.modding.dartcraft.block.BlockForceLog;
-import ley.modding.dartcraft.block.BlockForceSapling;
-import ley.modding.dartcraft.block.BlockPowerOre;
 import ley.modding.dartcraft.block.Blocks;
 import ley.modding.dartcraft.entity.*;
 import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
-import ley.modding.dartcraft.item.BaseItem;
-import ley.modding.dartcraft.item.ItemEntityBottle;
-import ley.modding.dartcraft.item.ItemForceFlask;
 import ley.modding.dartcraft.item.Items;
-import ley.modding.dartcraft.item.tool.ItemForceMitts;
-import ley.modding.dartcraft.item.tool.ItemForcePickaxe;
-import ley.modding.dartcraft.item.tool.ItemForceShears;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.tileralib.api.IRegistry;
@@ -49,23 +38,9 @@ public class Dartcraft {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
-        // TODO: wtf is this?! this belongs into the Items and Blocks classes!
         registry = new Registry();
-        Items.forcegem = registry.registerItem(new BaseItem("forcegem"));
-        Items.forceingot = registry.registerItem(new BaseItem("forceingot"));
-        Items.forcenugget = registry.registerItem(new BaseItem("forcenugget"));
-        Items.forcestick = registry.registerItem(new BaseItem("forcestick"));
-        Items.forceshard = registry.registerItem(new BaseItem("forceshard"));
-        Items.forcemitts = registry.registerItem(new ItemForceMitts());
-        Items.forcepickaxe = registry.registerItem(new ItemForcePickaxe());
-        Items.forceshears = registry.registerItem(new ItemForceShears());
-        Items.forceflask = registry.registerItem(new ItemForceFlask());
-        Items.entitybottle = registry.registerItem(new ItemEntityBottle());
-
-        Blocks.forcesapling = registry.registerBlock(new BlockForceSapling());
-        Blocks.powerore = registry.registerBlock(new BlockPowerOre());
-        Blocks.forcelog = registry.registerBlock(new BlockForceLog());
-        Blocks.forceleaves = registry.registerBlock(new BlockForceLeaves());
+        Items.regsiter(registry);
+        Blocks.register(registry);
 
         proxy.init();
 
