@@ -7,6 +7,7 @@ import ley.modding.dartcraft.api.IBreakable;
 import ley.modding.dartcraft.api.IForceConsumer;
 import ley.modding.dartcraft.item.Items;
 import ley.modding.dartcraft.util.ForceConsumerUtils;
+import ley.modding.dartcraft.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -28,9 +29,7 @@ public class ItemForcePickaxe extends ItemPickaxe implements IBreakable, IForceC
 
     public ItemForcePickaxe() {
         super(material);
-        setUnlocalizedName("forcepickaxe");
-        setTextureName(Dartcraft.MODID + ":forcepickaxe");
-        setCreativeTab(Dartcraft.tab);
+        Util.configureItem(this, "forcepickaxe");
     }
 
     @Override
