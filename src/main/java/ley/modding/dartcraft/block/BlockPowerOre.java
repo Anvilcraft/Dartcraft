@@ -2,6 +2,7 @@ package ley.modding.dartcraft.block;
 
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -12,12 +13,11 @@ public class BlockPowerOre extends Block {
 
     public BlockPowerOre() {
         super(Material.rock);
-        setBlockName("powerore");
+        Util.configureBlock(this, "powerore");
         setHardness(3.0F);
         setResistance(10.0F);
         setStepSound(soundTypeStone);
         setBlockTextureName(Dartcraft.MODID + ":powerore");
-        setCreativeTab(Dartcraft.tab);
     }
 
     @Override

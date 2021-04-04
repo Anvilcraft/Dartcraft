@@ -11,5 +11,10 @@ item.forceflask_potion_force.name=Liquid Force Flask
 item.forceflask_potion_green.name=Green Liquid Flask
 item.forceflask_potion_blue.name=Blue Liquid Flask
 item.forceflask_potion_red.name=Red Liquid Flask
+tile.powerore.name=Power Ore
+tile.forcelog.name=Force Log
+tile.forceleaves.name=Force Leaves
+tile.forcesapling.name=Force Sapling
+tile.forcepickaxe.name=Force Pickaxe
 
 itemGroup.dartcraft=Dartcraft

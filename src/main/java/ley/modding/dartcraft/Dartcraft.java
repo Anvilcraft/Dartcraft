@@ -6,6 +6,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.relauncher.Side;
+import ley.modding.dartcraft.block.BlockForceLeaves;
+import ley.modding.dartcraft.block.BlockForceLog;
+import ley.modding.dartcraft.block.BlockForceSapling;
 import ley.modding.dartcraft.block.BlockPowerOre;
 import ley.modding.dartcraft.block.Blocks;
 import ley.modding.dartcraft.entity.*;
@@ -45,6 +49,7 @@ public class Dartcraft {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
+        // TODO: wtf is this?! this belongs into the Items and Blocks classes!
         registry = new Registry();
         Items.forcegem = registry.registerItem(new BaseItem("forcegem"));
         Items.forceingot = registry.registerItem(new BaseItem("forceingot"));
@@ -56,8 +61,14 @@ public class Dartcraft {
         Items.forceshears = registry.registerItem(new ItemForceShears());
         Items.forceflask = registry.registerItem(new ItemForceFlask());
         Items.entitybottle = registry.registerItem(new ItemEntityBottle());
+
+        Blocks.forcesapling = registry.registerBlock(new BlockForceSapling());
         Blocks.powerore = registry.registerBlock(new BlockPowerOre());
+        Blocks.forcelog = registry.registerBlock(new BlockForceLog());
+        Blocks.forceleaves = registry.registerBlock(new BlockForceLeaves());
+
         proxy.init();
+
         int entityId = 0;
         EntityRegistry.registerModEntity(EntityColdChicken.class, "coldChicken", entityId++, Dartcraft.instance, 40, 1, true);
         EntityRegistry.registerModEntity(EntityColdCow.class, "coldCow", entityId++, Dartcraft.instance, 40, 1, true);
