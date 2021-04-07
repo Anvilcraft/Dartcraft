@@ -19,6 +19,14 @@ public class DartItems {
     public static Item forceflask;
     public static Item entitybottle;
 
+    //Useless Items
+    public static Item fortune;
+    public static Item soulwafer;
+    public static Item claw;
+    public static Item goldenpower;
+    public static Item resource;
+
+
     public static void regsiter(IRegistry reg) {
         DartItems.forcegem = reg.registerItem(new BaseItem("forcegem"));
         DartItems.forceingot = reg.registerItem(new BaseItem("forceingot"));
@@ -30,5 +38,12 @@ public class DartItems {
         DartItems.forceshears = reg.registerItem(new ItemForceShears());
         DartItems.forceflask = reg.registerItem(new ItemForceFlask());
         DartItems.entitybottle = reg.registerItem(new ItemEntityBottle());
+
+        DartItems.fortune = reg.registerItem(new BaseItem("fortune"));
+        DartItems.soulwafer = reg.registerItem(new BaseItem("soulwafer"));
+        DartItems.claw = reg.registerItem(new BaseItem("claw"));
+        DartItems.goldenpower = reg.registerItem(new BaseItem("goldenpower"));
+        DartItems.resource = reg.registerItem(new BaseItem("resource"));
+
     }
 }

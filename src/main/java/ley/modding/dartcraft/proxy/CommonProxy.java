@@ -1,6 +1,7 @@
 package ley.modding.dartcraft.proxy;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import ley.modding.dartcraft.util.ForceUpgradeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -28,7 +29,7 @@ public class CommonProxy {
     }
 
     public void init() {
-
+        ForceUpgradeManager.load();
     }
 
 }

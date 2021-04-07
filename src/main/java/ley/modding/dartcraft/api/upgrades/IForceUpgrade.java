@@ -67,7 +67,7 @@ public class IForceUpgrade {
       if(this.materials != null && this.materials.size() > 0) {
          for(int i = 0; i < this.materials.size(); ++i) {
             IForceUpgradeMaterial check = (IForceUpgradeMaterial)this.materials.get(i);
-            if(check.getUpgradeID() == mat.getUpgradeID() && check.getItemID() == mat.getItemID() && check.getItemMeta() == mat.getItemMeta()) {
+            if(check.getUpgradeID() == mat.getUpgradeID() && check.getItem() == mat.getItem() && check.getItemMeta() == mat.getItemMeta()) {
                return i;
             }
          }
