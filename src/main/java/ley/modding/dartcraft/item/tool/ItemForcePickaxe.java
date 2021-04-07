@@ -5,8 +5,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBreakable;
 import ley.modding.dartcraft.api.IForceConsumer;
+import ley.modding.dartcraft.api.upgrades.IForceUpgradable;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.ForceConsumerUtils;
+import ley.modding.dartcraft.util.ForceUpgradeManager;
 import ley.modding.dartcraft.util.Util;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +20,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class ItemForcePickaxe extends ItemPickaxe implements IBreakable, IForceConsumer {
+public class ItemForcePickaxe extends ItemPickaxe implements IBreakable, IForceConsumer, IForceUpgradable {
 
     private static int damage = 1;
     private static float efficiency = 5.0F;
@@ -108,11 +110,17 @@ public class ItemForcePickaxe extends ItemPickaxe implements IBreakable, IForceC
 
     @Override
     public boolean useForce(ItemStack stack, int var2, boolean var3) {
-        return false;
+        return ForceConsumerUtils.useForce(stack, var2, var3);
     }
 
     @Override
     public boolean attemptRepair(ItemStack stack) {
         return ForceConsumerUtils.attemptRepair(stack);
     }
+
+    public int[] validUpgrades()
+    {
+        return new int[] { ForceUpgradeManager.HEAT.getID(), ForceUpgradeManager.SPEED.getID(), ForceUpgradeManager.LUCK.getID(), ForceUpgradeManager.TOUCH.getID(), ForceUpgradeManager.STURDY.getID(), ForceUpgradeManager.GRINDING.getID(), ForceUpgradeManager.REPAIR.getID(), ForceUpgradeManager.IMPERVIOUS.getID() };
+    }
+
 }

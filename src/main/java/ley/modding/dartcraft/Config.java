@@ -14,4 +14,5 @@ public class Config {
     public static int damageLevel;
     public static int sturdyLevel;
 
+    public static float gemValue;
 }

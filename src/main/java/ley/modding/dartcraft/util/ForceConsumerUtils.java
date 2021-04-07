@@ -1,13 +1,18 @@
 package ley.modding.dartcraft.util;
 
-import java.util.Random;
-
-import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.Config;
 import ley.modding.dartcraft.api.IForceConsumer;
-import net.minecraft.entity.player.EntityPlayer;
+import ley.modding.dartcraft.api.inventory.ItemInventory;
+import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Random;
+import java.util.logging.Logger;
 
 public class ForceConsumerUtils {
 
@@ -49,4 +54,62 @@ public class ForceConsumerUtils {
 
         return repaired;
     }
+
+    public static boolean useForce(ItemStack stack, int amount, boolean use)
+    {
+        if ((stack == null) || (!stack.hasTagCompound()) || (amount < 0) || (stack.getItem() == null) || (!(stack.getItem() instanceof IForceConsumer)))
+        {
+            return false;
+        }
+        boolean canUse = stack.getTagCompound().getInteger("storedForce") >= amount;
+
+        try
+        {
+            if (use)
+            {
+                stack.getTagCompound().setInteger("storedForce", stack.getTagCompound().getInteger("storedForce") - amount);
+
+
+                ItemInventory inv = new ItemInventory(1, stack, "consumerContents");
+                IForceConsumer consumer = (IForceConsumer)stack.getItem();
+                ItemStack invStack = inv.getStackInSlot(0);
+
+                int defecit = consumer.getMaxStored(stack) - stack.getTagCompound().getInteger("storedForce");
+
+
+                if ((defecit > 0) && (invStack != null) && (invStack.stackSize > 0))
+                {
+                    FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(new ItemStack(invStack.getItem(), 1, invStack.getItemDamage()));
+
+
+                    if ((liquid == null) && (invStack.getItem() == DartItems.forcegem)) {
+                        liquid = new FluidStack(FluidRegistry.getFluid("liquidforce"), (int)(1000.0F * Config.gemValue));
+                    }
+
+                    if ((liquid != null) && (liquid.getFluid().getName().equalsIgnoreCase("liquidforce")))
+                    {
+
+                        while ((defecit >= liquid.amount) && (invStack.stackSize > 0))
+                        {
+                            stack.getTagCompound().setInteger("storedForce", stack.getTagCompound().getInteger("storedForce") + liquid.amount);
+                            invStack.stackSize -= 1;
+                            if (invStack.stackSize <= 0) {
+                                inv.setInventorySlotContents(0, invStack.getItem().hasContainerItem() ? new ItemStack(invStack.getItem().getContainerItem()) : (ItemStack)null);
+                            }
+                            inv.save();
+                            defecit = consumer.getMaxStored(stack) - stack.getTagCompound().getInteger("storedForce");
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.getLogger("DartCraft").info("There was a problem in IForceConsumer implementation.");
+            e.printStackTrace();
+        }
+
+        return canUse;
+    }
+
 }
