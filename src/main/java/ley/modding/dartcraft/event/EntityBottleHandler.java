@@ -2,7 +2,7 @@ package ley.modding.dartcraft.event;
 
 import cpw.mods.fml.common.Mod.EventHandler;
 import ley.modding.dartcraft.Dartcraft;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.EntityUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
@@ -23,7 +23,7 @@ public class EntityBottleHandler {
             if (((PlayerEvent)event).entityPlayer == null || event.item == null || event.item.getEntityItem() == null)
                 return;
             boolean trigger = false;
-            if (event.item.getEntityItem().getItem() == Items.entitybottle)
+            if (event.item.getEntityItem().getItem() == DartItems.entitybottle)
                 if (meshBottles(((PlayerEvent)event).entityPlayer, event.item.getEntityItem())) {
                     event.setCanceled(true);
                     trigger = true;
@@ -72,7 +72,7 @@ public class EntityBottleHandler {
             }
             for (i = 0; i < player.inventory.mainInventory.length; i++) {
                 ItemStack invStack = player.inventory.mainInventory[i];
-                if (invStack != null && invStack.getItem() == Items.entitybottle && invStack
+                if (invStack != null && invStack.getItem() == DartItems.entitybottle && invStack
                         .hasTagCompound() && invStack.stackSize < invStack.getMaxStackSize()) {
                     EntityLivingBase entityTwo = (EntityLivingBase)EntityList.createEntityFromNBT(invStack
                             .getTagCompound(), null);

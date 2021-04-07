@@ -4,8 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBottleRenderable;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.item.ItemEntityBottle;
-import ley.modding.dartcraft.item.Items;
 import ley.modding.dartcraft.util.EntityUtils;
 import ley.modding.dartcraft.util.ItemUtils;
 import net.minecraft.entity.Entity;
@@ -35,7 +35,7 @@ public class EntityBottle extends EntityLivingBase implements IBottleRenderable 
 
     protected void entityInit() {
         super.entityInit();
-        ((Entity)this).getDataWatcher().addObject(12, new ItemStack(Items.entitybottle));
+        ((Entity)this).getDataWatcher().addObject(12, new ItemStack(DartItems.entitybottle));
     }
 
     public void writeToNBT(NBTTagCompound comp) {

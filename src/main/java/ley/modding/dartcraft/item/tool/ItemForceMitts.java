@@ -3,7 +3,7 @@ package ley.modding.dartcraft.item.tool;
 import cpw.mods.fml.common.eventhandler.Event;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBreakable;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,7 +40,7 @@ public class ItemForceMitts extends ItemTool implements IBreakable {
 
     @Override
     public ItemStack itemReturned() {
-        return new ItemStack(Items.forceshard);
+        return new ItemStack(DartItems.forceshard);
     }
 
     @Override

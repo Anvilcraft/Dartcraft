@@ -1,7 +1,7 @@
 package ley.modding.dartcraft.util;
 
 import ley.modding.dartcraft.Dartcraft;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -29,7 +29,7 @@ public class EntityUtils {
             String entityName = EntityList.getEntityString(victim);
             if (victim == null || entityName == null)
                 return null;
-            ItemStack bottleStack = new ItemStack(Items.entitybottle);
+            ItemStack bottleStack = new ItemStack(DartItems.entitybottle);
             NBTTagCompound bottleComp = new NBTTagCompound();
             victim.writeToNBT(bottleComp);
             bottleComp.removeTag("OnGround");

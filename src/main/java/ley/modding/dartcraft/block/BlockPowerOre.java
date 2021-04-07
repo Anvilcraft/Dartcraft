@@ -1,7 +1,7 @@
 package ley.modding.dartcraft.block;
 
 import ley.modding.dartcraft.Dartcraft;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -22,12 +22,14 @@ public class BlockPowerOre extends Block {
 
     @Override
     public Item getItemDropped(int par1, Random rand, int par3) {
-        return Items.forcegem;
+        return DartItems.forcegem;
     }
 
     @Override
     public int quantityDropped(Random rand) {
         return rand.nextInt(3) + 2;
     }
+
+
 
 }

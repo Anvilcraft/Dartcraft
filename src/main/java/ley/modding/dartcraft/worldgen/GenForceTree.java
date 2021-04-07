@@ -1,13 +1,13 @@
 package ley.modding.dartcraft.worldgen;
 
-import java.util.Random;
-
-import ley.modding.dartcraft.block.Blocks;
+import ley.modding.dartcraft.block.DartBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
 
 public class GenForceTree extends WorldGenAbstractTree {
     /** The minimum height of a generated tree. */
@@ -72,7 +72,7 @@ public class GenForceTree extends WorldGenAbstractTree {
                 boolean isSoil =
                     block2.canSustainPlant(
 
-                            world, x, y - 1, z, ForgeDirection.UP, (BlockSapling) Blocks.forcesapling);
+                            world, x, y - 1, z, ForgeDirection.UP, (BlockSapling) DartBlocks.forcesapling);
                 if (isSoil && y < 256 - treeHeight - 1) {
                     block2.onPlantGrow(world, x, y - 1, z, x, y, z);
                     b0 = 3;
@@ -97,7 +97,7 @@ public class GenForceTree extends WorldGenAbstractTree {
 
                                     if (block1.isAir(world, i2, k1, k2) || block1.isLeaves(world, i2, k1, k2)) {
                                         this.setBlockAndNotifyAdequately(
-                                                world, i2, k1, k2, Blocks.forceleaves, this.metaLeaves);
+                                                world, i2, k1, k2, DartBlocks.forceleaves, this.metaLeaves);
                                     }
                                 }
                             }
@@ -108,7 +108,7 @@ public class GenForceTree extends WorldGenAbstractTree {
                         block = world.getBlock(x, y + k1, z);
 
                         if (block.isAir(world, x, y + k1, z) || block.isLeaves(world, x, y + k1, z)) {
-                            this.setBlockAndNotifyAdequately(world, x, y + k1, z, Blocks.forcelog, this.metaWood);
+                            this.setBlockAndNotifyAdequately(world, x, y + k1, z, DartBlocks.forcelog, this.metaWood);
                         }
                     }
 

@@ -1,9 +1,8 @@
 package ley.modding.dartcraft.item.tool;
 
-import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBreakable;
 import ley.modding.dartcraft.api.IForceConsumer;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.ForceConsumerUtils;
 import ley.modding.dartcraft.util.Util;
 import net.minecraft.item.ItemShears;
@@ -17,7 +16,7 @@ public class ItemForceShears extends ItemShears implements IBreakable, IForceCon
 
     @Override
     public ItemStack itemReturned() {
-        return new ItemStack(Items.forceshard);
+        return new ItemStack(DartItems.forceshard);
     }
 
     @Override

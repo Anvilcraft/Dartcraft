@@ -6,7 +6,7 @@ import ley.modding.dartcraft.client.renderer.entity.RenderColdAnimal;
 import ley.modding.dartcraft.client.renderer.entity.RenderEntityBottle;
 import ley.modding.dartcraft.client.renderer.item.RenderItemForceFlask;
 import ley.modding.dartcraft.entity.*;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPig;
@@ -27,8 +27,8 @@ public class ClientProxy extends CommonProxy {
 
     public void init() {
         super.init();
-        MinecraftForgeClient.registerItemRenderer(Items.forceflask, RenderItemForceFlask.instance);
-        MinecraftForgeClient.registerItemRenderer(Items.entitybottle, RenderItemForceFlask.instance);
+        MinecraftForgeClient.registerItemRenderer(DartItems.forceflask, RenderItemForceFlask.instance);
+        MinecraftForgeClient.registerItemRenderer(DartItems.entitybottle, RenderItemForceFlask.instance);
         RenderEntityBottle bottleRenderer = new RenderEntityBottle();
         RenderingRegistry.registerEntityRenderingHandler(EntityBottle.class, bottleRenderer);
         RenderingRegistry.registerEntityRenderingHandler(EntityFlyingFlask.class, bottleRenderer);

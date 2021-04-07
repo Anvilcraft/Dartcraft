@@ -2,7 +2,7 @@ package ley.modding.dartcraft.entity;
 
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBottleRenderable;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.EntityUtils;
 import ley.modding.dartcraft.util.ItemUtils;
 import net.minecraft.entity.Entity;
@@ -54,7 +54,7 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
 
     protected void entityInit() {
         super.entityInit();
-        ((Entity)this).getDataWatcher().addObject(12, new ItemStack(Items.entitybottle));
+        ((Entity)this).getDataWatcher().addObject(12, new ItemStack(DartItems.entitybottle));
     }
 
     protected void onImpact(MovingObjectPosition pos) {
@@ -63,7 +63,7 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
                 this.contained.setPosition(((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
                 ((Entity)this).worldObj.spawnEntityInWorld((Entity)this.contained);
                 if (!this.creative) {
-                    ItemStack flaskStack = new ItemStack(Items.forceflask);
+                    ItemStack flaskStack = new ItemStack(DartItems.forceflask);
                     ItemUtils.dropItem(flaskStack, ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
                 }
                 ((Entity)this).worldObj.playSoundAtEntity((Entity)this, "random.pop", 1.0F,
@@ -72,7 +72,7 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
                 if (!bottleEntity(pos.entityHit)) {
                     ((Entity)this).worldObj.playSoundAtEntity((Entity)this, "random.pop", 1.0F,
                             EntityUtils.randomPitch());
-                    ItemUtils.dropItem(new ItemStack(Items.forceflask), ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
+                    ItemUtils.dropItem(new ItemStack(DartItems.forceflask), ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
                 }
             }
             setDead();

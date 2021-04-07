@@ -1,6 +1,6 @@
 package ley.modding.dartcraft.tab;
 
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -12,6 +12,6 @@ public class DartcraftTab extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        return Items.forcegem;
+        return DartItems.forcegem;
     }
 }

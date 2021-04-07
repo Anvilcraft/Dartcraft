@@ -168,12 +168,12 @@ public class ItemEntityBottle extends Item {
                 stack.stackSize--;
                 if (!thrown) {
                     if (stack.stackSize > 0) {
-                        if (!player.inventory.addItemStackToInventory(new ItemStack(Items.forceflask)))
+                        if (!player.inventory.addItemStackToInventory(new ItemStack(DartItems.forceflask)))
                             if (Dartcraft.proxy.isSimulating(world))
-                                ItemUtils.dropItem(new ItemStack(Items.forceflask), world, ((Entity)player).posX, ((Entity)player).posY, ((Entity)player).posZ);
+                                ItemUtils.dropItem(new ItemStack(DartItems.forceflask), world, ((Entity)player).posX, ((Entity)player).posY, ((Entity)player).posZ);
                         return stack;
                     }
-                    return new ItemStack(Items.forceflask);
+                    return new ItemStack(DartItems.forceflask);
                 }
             } else if (stack.getItemDamage() == 1) {
 

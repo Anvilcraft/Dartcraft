@@ -70,7 +70,7 @@ public class BlockForceLeaves extends BlockLeaves {
 
     @Override
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
-        return Item.getItemFromBlock(Blocks.forcesapling);
+        return Item.getItemFromBlock(DartBlocks.forcesapling);
     }
 
 }

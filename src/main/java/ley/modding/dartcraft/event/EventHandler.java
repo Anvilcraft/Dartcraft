@@ -6,10 +6,10 @@ import ley.modding.dartcraft.api.IBreakable;
 import ley.modding.dartcraft.entity.EntityColdChicken;
 import ley.modding.dartcraft.entity.EntityColdCow;
 import ley.modding.dartcraft.entity.EntityColdPig;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -37,7 +37,7 @@ public class EventHandler {
             return;
 
         ItemStack heldItem = event.entityPlayer.getHeldItem();
-        if (heldItem != null && heldItem.getItem() != Items.forceshears)
+        if (heldItem == null || heldItem.getItem() != DartItems.forceshears)
             return;
 
         if (event.target instanceof EntityAnimal) {

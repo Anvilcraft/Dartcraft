@@ -6,11 +6,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import ley.modding.dartcraft.block.Blocks;
+import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.entity.*;
 import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
-import ley.modding.dartcraft.item.Items;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.tileralib.api.IRegistry;
@@ -39,8 +39,8 @@ public class Dartcraft {
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         registry = new Registry();
-        Items.regsiter(registry);
-        Blocks.register(registry);
+        DartItems.regsiter(registry);
+        DartBlocks.register(registry);
 
         proxy.init();
 
