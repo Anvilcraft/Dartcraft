@@ -15,4 +15,7 @@ public class Config {
     public static int sturdyLevel;
 
     public static float gemValue;
+
+    public static int powerOreRenderID;
+
 }
