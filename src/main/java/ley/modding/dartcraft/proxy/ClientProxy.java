@@ -1,6 +1,7 @@
 package ley.modding.dartcraft.proxy;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import ley.modding.dartcraft.Config;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.client.renderer.block.PowerOreRenderer;
@@ -9,6 +10,7 @@ import ley.modding.dartcraft.client.renderer.entity.RenderEntityBottle;
 import ley.modding.dartcraft.client.renderer.item.RenderItemForceFlask;
 import ley.modding.dartcraft.entity.*;
 import ley.modding.dartcraft.item.DartItems;
+import ley.modding.dartcraft.network.DartPacket;
 import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPig;
@@ -39,6 +41,14 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(EntityColdPig.class, new RenderColdAnimal(new ModelPig(), 0.6f, "textures/entity/coldPig.png"));
         Config.powerOreRenderID = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(new PowerOreRenderer());
+    }
+
+    public void sendPacketToServer(DartPacket packet) {
+        try {
+            Dartcraft.channel.sendToServer((IMessage)packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

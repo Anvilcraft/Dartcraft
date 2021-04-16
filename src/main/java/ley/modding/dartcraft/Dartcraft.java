@@ -5,12 +5,16 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.relauncher.Side;
 import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.entity.*;
 import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
 import ley.modding.dartcraft.item.DartItems;
+import ley.modding.dartcraft.network.PacketClipButton;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.tileralib.api.IRegistry;
@@ -29,11 +33,15 @@ public class Dartcraft {
     @SidedProxy(serverSide = "ley.modding.dartcraft.proxy.CommonProxy", clientSide = "ley.modding.dartcraft.proxy.ClientProxy")
     public static CommonProxy proxy;
 
+    public static SimpleNetworkWrapper channel;
+
     public static CreativeTabs tab = new DartcraftTab();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+        channel = NetworkRegistry.INSTANCE.newSimpleChannel("Dartcraft");
+        channel.registerMessage(PacketClipButton.Handler.class, PacketClipButton.class, 0, Side.SERVER);
     }
 
     @Mod.EventHandler

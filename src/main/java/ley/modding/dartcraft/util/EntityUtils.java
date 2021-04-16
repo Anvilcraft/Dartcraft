@@ -5,9 +5,12 @@ import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 import java.lang.reflect.Constructor;
 
@@ -80,5 +83,21 @@ public class EntityUtils {
         return CommonProxy.rand.nextFloat() * 0.25F + 0.85F;
     }
 
+    public static EntityPlayer getPlayerByName(String username) {
+        EntityPlayer player = null;
+        try {
+            WorldServer[] worlds = (MinecraftServer.getServer()).worldServers;
+            for (int i = 0; i < worlds.length; i++) {
+                WorldServer world = worlds[i];
+                if (world != null)
+                    player = world.getPlayerEntityByName(username);
+                if (player != null)
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return player;
+    }
 
 }

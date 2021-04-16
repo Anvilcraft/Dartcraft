@@ -18,6 +18,7 @@ public class DartItems {
     public static Item forcemitts;
     public static Item forceflask;
     public static Item entitybottle;
+    public static Item clipboard;
 
     //Useless Items
     public static Item fortune;
@@ -44,6 +45,7 @@ public class DartItems {
         DartItems.claw = reg.registerItem(new BaseItem("claw"));
         DartItems.goldenpower = reg.registerItem(new BaseItem("goldenpower"));
         DartItems.resource = reg.registerItem(new BaseItem("resource"));
+        DartItems.clipboard = reg.registerItem(new ItemClipboard());
 
     }
 }
