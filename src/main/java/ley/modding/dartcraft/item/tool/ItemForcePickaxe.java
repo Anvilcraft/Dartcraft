@@ -10,6 +10,7 @@ import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.ForceConsumerUtils;
 import ley.modding.dartcraft.util.ForceUpgradeManager;
 import ley.modding.dartcraft.util.Util;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -123,4 +124,49 @@ public class ItemForcePickaxe extends ItemPickaxe implements IBreakable, IForceC
         return new int[] { ForceUpgradeManager.HEAT.getID(), ForceUpgradeManager.SPEED.getID(), ForceUpgradeManager.LUCK.getID(), ForceUpgradeManager.TOUCH.getID(), ForceUpgradeManager.STURDY.getID(), ForceUpgradeManager.GRINDING.getID(), ForceUpgradeManager.REPAIR.getID(), ForceUpgradeManager.IMPERVIOUS.getID() };
     }
 
+    @Override
+    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+        World world = player.worldObj;
+        Block tempBlock = world.getBlock(x, y, z);
+        boolean force = false;
+        if(!this.canHarvestBlock(tempBlock, stack)) {
+            return false;
+        } else {
+            if(stack.hasTagCompound() && stack.getTagCompound().getBoolean("active")) {
+                force = true;
+            }
+
+            if(force) {
+                for(int i = -1; i < 2; ++i) {
+                    for(int j = -1; j < 2; ++j) {
+                        for(int k = -1; k < 2; ++k) {
+                            if(i != 0 || j != 0 || k != 0) {
+                                if(stack == null || stack.getItemDamage() >= stack.getMaxDamage()) {
+                                    return false;
+                                }
+
+                                this.tryBlock(stack, x + i, y + j, z + k, player);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (stack != null && stack.getItemDamage() < stack.getMaxDamage())
+                this.tryBlock(stack, x, y, z, player);
+
+            return false;
+        }
+    }
+
+    public void tryBlock(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+        World world = player.worldObj;
+        Block block = world.getBlock(x, y, z);
+
+        if (this.canHarvestBlock(block, stack) && block.getBlockHardness(world, x, y, z) > 0F & world.getTileEntity(x, y, z) == null) {
+            world.getBlock(x, y, z).harvestBlock(world, player, x, y, z, world.getBlockMetadata(x, y, z));
+            world.setBlockToAir(x, y, z);
+            stack.damageItem(1, player);
+        }
+    }
 }
