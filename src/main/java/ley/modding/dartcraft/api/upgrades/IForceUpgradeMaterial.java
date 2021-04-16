@@ -1,9 +1,11 @@
 package ley.modding.dartcraft.api.upgrades;
 
 
+import net.minecraft.item.Item;
+
 public interface IForceUpgradeMaterial {
 
-   int getItemID();
+   Item getItem();
 
    int getItemMeta();
 
