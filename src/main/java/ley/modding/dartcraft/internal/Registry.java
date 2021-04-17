@@ -2,13 +2,14 @@ package ley.modding.dartcraft.internal;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.tileralib.api.IIngredient;
 import ley.modding.tileralib.api.IRegistry;
 import ley.modding.tileralib.api.ITEProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Registry implements IRegistry {
 
@@ -39,6 +40,27 @@ public class Registry implements IRegistry {
             return blocks.get(id);
         }
         return GameRegistry.findBlock(getModID(), id);
+    }
+
+    @Override
+    public void addShapedRecipe(ItemStack output, String[] pattern, IIngredient[] ingredients) {
+        List<Object> objects = new ArrayList<Object>(Arrays.asList(pattern));
+        for (IIngredient i : ingredients) {
+            objects.add(i.getKey());
+            objects.add(i.getIngredient());
+        }
+        GameRegistry.addShapedRecipe(output, objects.toArray());
+    }
+
+    @Override
+    public void addShapelessRecipe(ItemStack output, IIngredient[] input) {
+        List<Object> objects = new ArrayList<Object>();
+        for (IIngredient ing : input) {
+            for (int i = 0; i < ing.getCount(); i++) {
+                objects.add(ing.getIngredient());
+            }
+        }
+        GameRegistry.addShapelessRecipe(output, objects.toArray());
     }
 
     @Override
