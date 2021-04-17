@@ -17,6 +17,8 @@ import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.network.PacketClipButton;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
+import ley.modding.dartcraft.util.ForceEngineLiquids;
+import ley.modding.dartcraft.util.FortunesUtil;
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
@@ -42,6 +44,7 @@ public class Dartcraft {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("Dartcraft");
         channel.registerMessage(PacketClipButton.Handler.class, PacketClipButton.class, 0, Side.SERVER);
+        FortunesUtil.load();
     }
 
     @Mod.EventHandler
@@ -62,7 +65,7 @@ public class Dartcraft {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
-
+        ForceEngineLiquids.load();
     }
 
 }

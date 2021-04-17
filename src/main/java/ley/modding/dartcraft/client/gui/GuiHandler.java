@@ -2,12 +2,14 @@ package ley.modding.dartcraft.client.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import ley.modding.dartcraft.item.ItemClipboard;
+import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.util.EntityUtils;
 import ley.modding.dartcraft.util.ItemCraftingInventory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler {
@@ -21,6 +23,13 @@ public class GuiHandler implements IGuiHandler {
                 if (clipStack != null)
                     return new ContainerClipboard(player, new ItemCraftingInventory(9, clipStack));
                 break;
+            case 7:
+                TileEntity te2 = world.getTileEntity(x, y, z);
+                if (te2 != null && te2 instanceof TileEntityForceEngine) {
+                    TileEntityForceEngine engine = (TileEntityForceEngine)te2;
+                    return new ContainerForceEngine(player, engine);
+                }
+                break;
         }
         return null;
     }
@@ -33,6 +42,13 @@ public class GuiHandler implements IGuiHandler {
                 clipStack = getClipboard(player);
                 if (clipStack != null)
                     return new GuiClipboard(new ContainerClipboard(player, new ItemCraftingInventory(9, clipStack)));
+                break;
+            case 7:
+                TileEntity te2 = world.getTileEntity(x, y, z);
+                if (te2 instanceof TileEntityForceEngine) {
+                    TileEntityForceEngine engine = (TileEntityForceEngine)te2;
+                    return new GuiEngine(new ContainerForceEngine(player, engine));
+                }
                 break;
         }
         return null;
