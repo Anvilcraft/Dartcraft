@@ -25,6 +25,16 @@ public class Config {
     public static int powerOreRenderID;
 
     public static File engineFile;
+    public static boolean disableRodSpeed;
+    public static boolean disableRodHeal;
+    public static boolean disableRodHeat;
+    public static boolean disableRodEnder;
+    public static boolean generateNetherOre = true;
+    public static boolean generateOre = true;
+    public static int powerOreFreq = 4;
+    public static double netherFreq = 1.5;
+    public static int powerOreRarity = 8;
+    public static int powerOreSpawnHeight = 48;
 
 
     private static void generateDefaultEngineFile() {

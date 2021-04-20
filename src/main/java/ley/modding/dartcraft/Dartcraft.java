@@ -8,6 +8,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.entity.*;
@@ -19,6 +20,7 @@ import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
 import ley.modding.dartcraft.util.FortunesUtil;
+import ley.modding.dartcraft.worldgen.OreGen;
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,6 +56,8 @@ public class Dartcraft {
         DartBlocks.register(registry);
 
         proxy.init();
+
+        GameRegistry.registerWorldGenerator(new OreGen(), 2);
 
         int entityId = 0;
         EntityRegistry.registerModEntity(EntityColdChicken.class, "coldChicken", entityId++, Dartcraft.instance, 40, 1, true);
