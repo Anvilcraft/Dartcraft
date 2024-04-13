@@ -32,9 +32,13 @@ public class Dartcraft {
     public static final String VERSION = "1.0";
 
     @Mod.Instance
-    public static Dartcraft instance = new Dartcraft();
+    public static Dartcraft instance
+        = new Dartcraft();
     public static IRegistry registry;
-    @SidedProxy(serverSide = "ley.modding.dartcraft.proxy.CommonProxy", clientSide = "ley.modding.dartcraft.proxy.ClientProxy")
+    @SidedProxy(
+        serverSide = "ley.modding.dartcraft.proxy.CommonProxy",
+        clientSide = "ley.modding.dartcraft.proxy.ClientProxy"
+    )
     public static CommonProxy proxy;
 
     public static SimpleNetworkWrapper channel;
@@ -45,31 +49,60 @@ public class Dartcraft {
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("Dartcraft");
-        channel.registerMessage(PacketClipButton.Handler.class, PacketClipButton.class, 0, Side.SERVER);
+        channel.registerMessage(
+            PacketClipButton.Handler.class, PacketClipButton.class, 0, Side.SERVER
+        );
         FortunesUtil.load();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent e) {
         registry = new Registry();
-        DartItems.regsiter(registry);
         DartBlocks.register(registry);
+        DartItems.regsiter(registry);
 
         proxy.init();
 
         GameRegistry.registerWorldGenerator(new OreGen(), 2);
 
         int entityId = 0;
-        EntityRegistry.registerModEntity(EntityColdChicken.class, "coldChicken", entityId++, Dartcraft.instance, 40, 1, true);
-        EntityRegistry.registerModEntity(EntityColdCow.class, "coldCow", entityId++, Dartcraft.instance, 40, 1, true);
-        EntityRegistry.registerModEntity(EntityColdPig.class, "coldPig", entityId++, Dartcraft.instance, 40, 1, true);
-        EntityRegistry.registerModEntity(EntityBottle.class, "entityBottleItem", entityId++, Dartcraft.instance, 40, 1, true);
-        EntityRegistry.registerModEntity(EntityFlyingFlask.class, "entityFlyingFlask", entityId++, Dartcraft.instance, 40, 1, true);
+        EntityRegistry.registerModEntity(
+            EntityColdChicken.class,
+            "coldChicken",
+            entityId++,
+            Dartcraft.instance,
+            40,
+            1,
+            true
+        );
+        EntityRegistry.registerModEntity(
+            EntityColdCow.class, "coldCow", entityId++, Dartcraft.instance, 40, 1, true
+        );
+        EntityRegistry.registerModEntity(
+            EntityColdPig.class, "coldPig", entityId++, Dartcraft.instance, 40, 1, true
+        );
+        EntityRegistry.registerModEntity(
+            EntityBottle.class,
+            "entityBottleItem",
+            entityId++,
+            Dartcraft.instance,
+            40,
+            1,
+            true
+        );
+        EntityRegistry.registerModEntity(
+            EntityFlyingFlask.class,
+            "entityFlyingFlask",
+            entityId++,
+            Dartcraft.instance,
+            40,
+            1,
+            true
+        );
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e) {
         ForceEngineLiquids.load();
     }
-
 }

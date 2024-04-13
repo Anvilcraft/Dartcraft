@@ -16,7 +16,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntityFlyingFlask extends EntityThrowable implements IBottleRenderable {
-
     public EntityLivingBase contained;
 
     private boolean creative = false;
@@ -31,19 +30,22 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
         super(world, x, y, z);
     }
 
-    public EntityFlyingFlask(World world, EntityLivingBase thrower, ItemStack flaskStack) {
+    public EntityFlyingFlask(
+        World world, EntityLivingBase thrower, ItemStack flaskStack
+    ) {
         super(world, thrower);
         try {
-            if (thrower instanceof EntityPlayer && ((EntityPlayer)thrower).capabilities.isCreativeMode)
+            if (thrower instanceof EntityPlayer
+                && ((EntityPlayer) thrower).capabilities.isCreativeMode)
                 this.creative = true;
             if (flaskStack != null) {
-                NBTTagCompound comp = (NBTTagCompound)flaskStack.getTagCompound().copy();
+                NBTTagCompound comp = (NBTTagCompound) flaskStack.getTagCompound().copy();
                 Entity entity = EntityList.createEntityFromNBT(comp, world);
                 NBTTagCompound dartTag = EntityUtils.getModComp(entity);
                 dartTag.removeTag("time");
                 dartTag.removeTag("timeTime");
                 dartTag.setInteger("timeImmune", 10);
-                this.contained = (EntityLivingBase)entity;
+                this.contained = (EntityLivingBase) entity;
             } else {
                 this.capture = true;
             }
@@ -54,25 +56,45 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
 
     protected void entityInit() {
         super.entityInit();
-        ((Entity)this).getDataWatcher().addObject(12, new ItemStack(DartItems.entitybottle));
+        ((Entity) this)
+            .getDataWatcher()
+            .addObject(12, new ItemStack(DartItems.entitybottle));
     }
 
     protected void onImpact(MovingObjectPosition pos) {
-        if (Dartcraft.proxy.isSimulating(((Entity)this).worldObj)) {
+        if (Dartcraft.proxy.isSimulating(((Entity) this).worldObj)) {
             if (this.contained != null) {
-                this.contained.setPosition(((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
-                ((Entity)this).worldObj.spawnEntityInWorld((Entity)this.contained);
+                this.contained.setPosition(
+                    ((Entity) this).posX, ((Entity) this).posY, ((Entity) this).posZ
+                );
+                ((Entity) this).worldObj.spawnEntityInWorld((Entity) this.contained);
                 if (!this.creative) {
                     ItemStack flaskStack = new ItemStack(DartItems.forceflask);
-                    ItemUtils.dropItem(flaskStack, ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
+                    ItemUtils.dropItem(
+                        flaskStack,
+                        ((Entity) this).worldObj,
+                        ((Entity) this).posX,
+                        ((Entity) this).posY,
+                        ((Entity) this).posZ
+                    );
                 }
-                ((Entity)this).worldObj.playSoundAtEntity((Entity)this, "random.pop", 1.0F,
-                        EntityUtils.randomPitch());
+                ((Entity) this)
+                    .worldObj.playSoundAtEntity(
+                        (Entity) this, "random.pop", 1.0F, EntityUtils.randomPitch()
+                    );
             } else if (this.capture) {
                 if (!bottleEntity(pos.entityHit)) {
-                    ((Entity)this).worldObj.playSoundAtEntity((Entity)this, "random.pop", 1.0F,
-                            EntityUtils.randomPitch());
-                    ItemUtils.dropItem(new ItemStack(DartItems.forceflask), ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
+                    ((Entity) this)
+                        .worldObj.playSoundAtEntity(
+                            (Entity) this, "random.pop", 1.0F, EntityUtils.randomPitch()
+                        );
+                    ItemUtils.dropItem(
+                        new ItemStack(DartItems.forceflask),
+                        ((Entity) this).worldObj,
+                        ((Entity) this).posX,
+                        ((Entity) this).posY,
+                        ((Entity) this).posZ
+                    );
                 }
             }
             setDead();
@@ -85,14 +107,15 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
                 return false;
             EntityLivingBase victim = null;
             if (entity instanceof EntityLivingBase)
-                victim = (EntityLivingBase)entity;
-            if (victim != null && !((Entity)victim).isDead && victim.getHealth() > 0.0F) {
+                victim = (EntityLivingBase) entity;
+            if (victim != null && !((Entity) victim).isDead
+                && victim.getHealth() > 0.0F) {
                 boolean nope = false;
                 /*boolean whitelisted = !Config.entityWhitelist;
                 if (!whitelisted && PluginBottles.whitelist != null)
                     for (String check : PluginBottles.whitelist) {
-                        if (check != null && check.equals(victim.getClass().getCanonicalName())) {
-                            whitelisted = true;
+                        if (check != null &&
+                check.equals(victim.getClass().getCanonicalName())) { whitelisted = true;
                             break;
                         }
                     }
@@ -100,10 +123,14 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
                     nope = true;*/
                 if (victim instanceof EntityPlayer || victim instanceof EntityBottle)
                     nope = true;
-                if (!nope && (victim instanceof net.minecraft.entity.monster.EntityMob || victim instanceof net.minecraft.entity.monster.EntityGhast)) {
+                if (!nope
+                    && (victim instanceof net.minecraft.entity.monster.EntityMob
+                        || victim instanceof net.minecraft.entity.monster.EntityGhast)) {
                     float maxHealth = 0.0F;
                     try {
-                        maxHealth = (float)victim.getAttributeMap().getAttributeInstanceByName("generic.maxHealth").getAttributeValue();
+                        maxHealth = (float) victim.getAttributeMap()
+                                        .getAttributeInstanceByName("generic.maxHealth")
+                                        .getAttributeValue();
                     } catch (Exception e) {}
                     float ratio = victim.getHealth() / maxHealth;
                     float limit = 0.25F;
@@ -115,16 +142,32 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
                     dartTag.setInteger("timeImmune", 5);
                 }
                 if (nope) {
-                    ((Entity)this).worldObj.playSoundAtEntity((Entity)victim, "dartcraft:nope", 2.0F,
-                            EntityUtils.randomPitch());
+                    ((Entity) this)
+                        .worldObj.playSoundAtEntity(
+                            (Entity) victim,
+                            "dartcraft:nope",
+                            2.0F,
+                            EntityUtils.randomPitch()
+                        );
                     return false;
                 }
-                ItemStack bottleStack = EntityUtils.bottleEntity((Entity)victim);
-                ((Entity)this).worldObj.playSoundAtEntity((Entity)victim, "dartcraft:swipe", 2.0F,
-                        EntityUtils.randomPitch());
-                ((Entity)this).worldObj.removeEntity((Entity)victim);
+                ItemStack bottleStack = EntityUtils.bottleEntity((Entity) victim);
+                ((Entity) this)
+                    .worldObj.playSoundAtEntity(
+                        (Entity) victim,
+                        "dartcraft:swipe",
+                        2.0F,
+                        EntityUtils.randomPitch()
+                    );
+                ((Entity) this).worldObj.removeEntity((Entity) victim);
                 victim = null;
-                ItemUtils.dropItem(bottleStack, ((Entity)this).worldObj, ((Entity)this).posX, ((Entity)this).posY, ((Entity)this).posZ);
+                ItemUtils.dropItem(
+                    bottleStack,
+                    ((Entity) this).worldObj,
+                    ((Entity) this).posX,
+                    ((Entity) this).posY,
+                    ((Entity) this).posZ
+                );
             }
             return true;
         } catch (Exception e) {
@@ -134,14 +177,13 @@ public class EntityFlyingFlask extends EntityThrowable implements IBottleRendera
     }
 
     public ItemStack getEntityItem() {
-        return ((Entity)this).getDataWatcher().getWatchableObjectItemStack(12);
+        return ((Entity) this).getDataWatcher().getWatchableObjectItemStack(12);
     }
 
     public void setEntityItem(ItemStack stack) {
-        ((Entity)this).getDataWatcher().updateObject(12, stack);
+        ((Entity) this).getDataWatcher().updateObject(12, stack);
         try {
             getEntityData().setString("name", stack.getTagCompound().getString("id"));
         } catch (Exception e) {}
     }
-
 }

@@ -21,13 +21,17 @@ public class ContainerForceEngine extends Container {
     public ContainerForceEngine(EntityPlayer player, TileEntityForceEngine engine) {
         this.user = player;
         this.engine = engine;
-        this.playerInv = (IInventory)player.inventory;
-        addSlotToContainer(new FuelSlot((IInventory)engine.liquidInventory, 0, 38, 33));
-        addSlotToContainer(new ThrottleSlot((IInventory)engine.liquidInventory, 1, 122, 33));
+        this.playerInv = (IInventory) player.inventory;
+        addSlotToContainer(new FuelSlot((IInventory) engine.liquidInventory, 0, 38, 33));
+        addSlotToContainer(
+            new ThrottleSlot((IInventory) engine.liquidInventory, 1, 122, 33)
+        );
         int i;
         for (i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++)
-                addSlotToContainer(new Slot(this.playerInv, i * 9 + j + 9, 8 + 18 * j, 79 + 18 * i));
+                addSlotToContainer(
+                    new Slot(this.playerInv, i * 9 + j + 9, 8 + 18 * j, 79 + 18 * i)
+                );
         }
         for (i = 0; i < 9; i++)
             addSlotToContainer(new Slot(this.playerInv, i, 8 + 18 * i, 137));
@@ -53,15 +57,17 @@ public class ContainerForceEngine extends Container {
                 if (!mergeItemStack(stack, 2, 38, true))
                     return null;
             if (index >= 2)
-                if (ForceEngineLiquids.isFuel(FluidContainerRegistry.getFluidForFilledItem(stack)) || stack.getItem() == DartItems.forcegem) {
+                if (ForceEngineLiquids.isFuel(
+                        FluidContainerRegistry.getFluidForFilledItem(stack)
+                    )
+                    || stack.getItem() == DartItems.forcegem) {
                     if (!mergeItemStack(stack, 0, 1, false))
                         return null;
-                } else if (ForceEngineLiquids.isThrottle(FluidContainerRegistry.getFluidForFilledItem(stack)) &&
-                        !mergeItemStack(stack, 1, 2, false)) {
+                } else if (ForceEngineLiquids.isThrottle(FluidContainerRegistry.getFluidForFilledItem(stack)) && !mergeItemStack(stack, 1, 2, false)) {
                     return null;
                 }
             if (stack.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+                slot.putStack((ItemStack) null);
             } else {
                 slot.onSlotChanged();
             }
@@ -72,7 +78,8 @@ public class ContainerForceEngine extends Container {
         return returnStack;
     }
 
-    protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
+    protected void
+    retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
 
     public boolean canInteractWith(EntityPlayer player) {
         return true;
@@ -86,7 +93,9 @@ public class ContainerForceEngine extends Container {
         public boolean isItemValid(ItemStack stack) {
             if (stack.getItem() == DartItems.forcegem)
                 return true;
-            return ForceEngineLiquids.isFuel(FluidContainerRegistry.getFluidForFilledItem(stack));
+            return ForceEngineLiquids.isFuel(
+                FluidContainerRegistry.getFluidForFilledItem(stack)
+            );
         }
     }
 
@@ -96,8 +105,9 @@ public class ContainerForceEngine extends Container {
         }
 
         public boolean isItemValid(ItemStack stack) {
-            return ForceEngineLiquids.isThrottle(FluidContainerRegistry.getFluidForFilledItem(stack));
+            return ForceEngineLiquids.isThrottle(
+                FluidContainerRegistry.getFluidForFilledItem(stack)
+            );
         }
     }
 }
-

@@ -40,7 +40,11 @@ public class PacketClipButton extends DartPacket implements IMessage {
         public IMessage onMessage(PacketClipButton packet, MessageContext ctx) {
             EntityPlayer player = EntityUtils.getPlayerByName(packet.getReceiver());
             if (player != null) {
-                ContainerClipboard clipboard = (player.openContainer != null && player.openContainer instanceof ContainerClipboard) ? (ContainerClipboard)player.openContainer : null;
+                ContainerClipboard clipboard
+                    = (player.openContainer != null
+                       && player.openContainer instanceof ContainerClipboard)
+                    ? (ContainerClipboard) player.openContainer
+                    : null;
                 if (clipboard != null)
                     switch (packet.button) {
                         case 0:

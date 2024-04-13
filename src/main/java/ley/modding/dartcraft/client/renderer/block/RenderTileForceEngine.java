@@ -24,17 +24,26 @@ public class RenderTileForceEngine extends TileEntitySpecialRenderer {
 
     static double[][] translate = new double[6][3];
 
-    public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
+    public void
+    renderTileEntityAt(TileEntity tile, double x, double y, double z, float f) {
         TileEntityForceEngine engine;
         if (tile instanceof TileEntityForceEngine) {
-            engine = (TileEntityForceEngine)tile;
+            engine = (TileEntityForceEngine) tile;
         } else {
             return;
         }
-        render(engine.isActive, engine.getCycleProgress(), engine.getFacing().ordinal(), x, y, z);
+        render(
+            engine.isActive,
+            engine.getCycleProgress(),
+            engine.getFacing().ordinal(),
+            x,
+            y,
+            z
+        );
     }
 
-    public void render(boolean active, float progress, int facing, double x, double y, double z) {
+    public void
+    render(boolean active, float progress, int facing, double x, double y, double z) {
         float step;
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, z);
@@ -58,7 +67,11 @@ public class RenderTileForceEngine extends TileEntitySpecialRenderer {
         Dartcraft.proxy.bindTexture("forceEngine.png");
         base.render(0.0625F);
         GL11.glPushMatrix();
-        GL11.glTranslated(translate[facing][0] * translateFactor, translate[facing][1] * translateFactor, translate[facing][2] * translateFactor);
+        GL11.glTranslated(
+            translate[facing][0] * translateFactor,
+            translate[facing][1] * translateFactor,
+            translate[facing][2] * translateFactor
+        );
         piston.render(0.0625F);
         GL11.glPopMatrix();
         if (active) {
@@ -75,7 +88,11 @@ public class RenderTileForceEngine extends TileEntitySpecialRenderer {
         float extensionFactor = 0.125F;
         for (int i = 0; i < step + 2.0F; i += 2) {
             extension.render(0.0625F);
-            GL11.glTranslated(translate[facing][0] * extensionFactor, translate[facing][1] * extensionFactor, translate[facing][2] * extensionFactor);
+            GL11.glTranslated(
+                translate[facing][0] * extensionFactor,
+                translate[facing][1] * extensionFactor,
+                translate[facing][2] * extensionFactor
+            );
         }
         GL11.glPopMatrix();
     }

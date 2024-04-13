@@ -9,7 +9,6 @@ import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 public class BlockRenderer {
-
     protected static float W1 = 0.0625F;
 
     protected static float W2 = 0.125F;
@@ -38,11 +37,22 @@ public class BlockRenderer {
 
     protected static float W15 = 0.9375F;
 
-    public static void DrawFaces(RenderBlocks renderblocks, Block block, IIcon i, boolean st) {
+    public static void
+    DrawFaces(RenderBlocks renderblocks, Block block, IIcon i, boolean st) {
         DrawFaces(renderblocks, block, i, i, i, i, i, i, st);
     }
 
-    public static void DrawFaces(RenderBlocks renderblocks, Block block, IIcon i1, IIcon i2, IIcon i3, IIcon i4, IIcon i5, IIcon i6, boolean solidtop) {
+    public static void DrawFaces(
+        RenderBlocks renderblocks,
+        Block block,
+        IIcon i1,
+        IIcon i2,
+        IIcon i3,
+        IIcon i4,
+        IIcon i5,
+        IIcon i6,
+        boolean solidtop
+    ) {
         Tessellator tessellator = Tessellator.instance;
         GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
         tessellator.startDrawingQuads();
@@ -76,7 +86,8 @@ public class BlockRenderer {
         GL11.glTranslatef(0.5F, 0.5F, 0.5F);
     }
 
-    public static int setBrightness(IBlockAccess blockAccess, int i, int j, int k, Block block) {
+    public static int
+    setBrightness(IBlockAccess blockAccess, int i, int j, int k, Block block) {
         Tessellator tessellator = Tessellator.instance;
         int mb = block.getMixedBrightnessForBlock(blockAccess, i, j, k);
         tessellator.setBrightness(mb);
@@ -97,11 +108,28 @@ public class BlockRenderer {
         return mb;
     }
 
-    protected static void renderAllSides(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex) {
+    protected static void renderAllSides(
+        IBlockAccess world,
+        int x,
+        int y,
+        int z,
+        Block block,
+        RenderBlocks renderer,
+        IIcon tex
+    ) {
         renderAllSides(world, x, y, z, block, renderer, tex, true);
     }
 
-    public static void renderAllSides(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex, boolean allsides) {
+    public static void renderAllSides(
+        IBlockAccess world,
+        int x,
+        int y,
+        int z,
+        Block block,
+        RenderBlocks renderer,
+        IIcon tex,
+        boolean allsides
+    ) {
         if (allsides || block.shouldSideBeRendered(world, x + 1, y, z, 6))
             renderer.renderFaceXPos(block, x, y, z, tex);
         if (allsides || block.shouldSideBeRendered(world, x - 1, y, z, 6))
@@ -116,7 +144,16 @@ public class BlockRenderer {
             renderer.renderFaceYNeg(block, x, y, z, tex);
     }
 
-    protected static void renderAllSidesInverted(IBlockAccess world, int x, int y, int z, Block block, RenderBlocks renderer, IIcon tex, boolean allsides) {
+    protected static void renderAllSidesInverted(
+        IBlockAccess world,
+        int x,
+        int y,
+        int z,
+        Block block,
+        RenderBlocks renderer,
+        IIcon tex,
+        boolean allsides
+    ) {
         if (allsides || !block.shouldSideBeRendered(world, x - 1, y, z, 6))
             renderer.renderFaceXPos(block, (x - 1), y, z, tex);
         if (allsides || !block.shouldSideBeRendered(world, x + 1, y, z, 6))
@@ -130,5 +167,4 @@ public class BlockRenderer {
         if (allsides || !block.shouldSideBeRendered(world, x, y + 1, z, 6))
             renderer.renderFaceYNeg(block, x, (y + 1), z, tex);
     }
-
 }

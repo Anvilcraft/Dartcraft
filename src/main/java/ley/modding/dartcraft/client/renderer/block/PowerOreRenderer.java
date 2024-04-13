@@ -10,9 +10,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
-public class PowerOreRenderer extends BlockRenderer implements ISimpleBlockRenderingHandler {
-
-    public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
+public class PowerOreRenderer
+    extends BlockRenderer implements ISimpleBlockRenderingHandler {
+    public void
+    renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer) {
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         renderer.setRenderBoundsFromBlock(block);
         IIcon bgIcon = null;
@@ -28,7 +29,15 @@ public class PowerOreRenderer extends BlockRenderer implements ISimpleBlockRende
     }
 
     @Override
-    public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
+    public boolean renderWorldBlock(
+        IBlockAccess world,
+        int x,
+        int y,
+        int z,
+        Block block,
+        int modelId,
+        RenderBlocks renderer
+    ) {
         int brightness = setBrightness(world, x, y, z, block);
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         renderer.setRenderBoundsFromBlock(block);

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 
 public class FortunesUtil {
-
     private static Random rand;
 
     private static List<String> fortunes = new ArrayList<String>();
@@ -37,23 +36,30 @@ public class FortunesUtil {
         addFortune("Whatever happened to Doritos 3D?");
         addFortune("Diabetes, anyone?");
         addFortune("That wasn't a cookie!");
-        addFortune("If a tree falls down in the woods, you have a special mod installed.");
+        addFortune("If a tree falls down in the woods, you have a special mod installed."
+        );
         addFortune("The cake is a lie of omission.");
-        addFortune("A wise man once said, \"Yes honey, it does make you look fat.\"  He never said that again.");
+        addFortune(
+            "A wise man once said, \"Yes honey, it does make you look fat.\"  He never said that again."
+        );
         addFortune("Don't stare directly at the pixels.");
         addFortune("I know where you live.");
         addFortune("Your lucky numbers are 0, -7, and 437922904678137496.708162");
         addFortune("There is never enough redstone.");
         addFortune("What you seek is surrounded by blocks.");
         addFortune("Today is Tuesday, or is it Friday - I can never tell.");
-        addFortune("In the event of a creeper explosion, your keyboard can double as a broken keyboard.");
+        addFortune(
+            "In the event of a creeper explosion, your keyboard can double as a broken keyboard."
+        );
         addFortune("I didn't do it.");
         addFortune("You are 5.6 grams heavier than you were 10 seconds ago.");
         addFortune("I dropped my cookie.");
         addFortune("...Saltpeter?  Really?");
         addFortune("We're no strangers to love.  You know the rules and so do I.");
         addFortune("Eat another cookie.");
-        addFortune("fontRenderer.drawString(\"Totally Real Accidental Glitch\", posX, posY, 0xFFFFFF);");
+        addFortune(
+            "fontRenderer.drawString(\"Totally Real Accidental Glitch\", posX, posY, 0xFFFFFF);"
+        );
         addFortune("I CAN believe it's not butter.");
         addFortune("Beware enderman with a short fuse...");
         addFortune("Remember to repair your tools.");
@@ -65,25 +71,43 @@ public class FortunesUtil {
         addFortune("Not all Blocks are created equal.");
         addFortune("Don't touch that!");
         addFortune("Always name your machinations.");
-        addFortune("Look in your inventory, now back to me - this fortune is now diamonds!");
+        addFortune(
+            "Look in your inventory, now back to me - this fortune is now diamonds!"
+        );
         addFortune("Who put that there?");
-        addFortune("Winners never cheat and cheaters never win, unless the winners cheated, in which case the cheaters won.");
+        addFortune(
+            "Winners never cheat and cheaters never win, unless the winners cheated, in which case the cheaters won."
+        );
         addFortune("Hi Bob!  What, they can't all be zingers.");
-        addFortune("Have you ever thought to yourself, \"My, that's an awfully large open grave!\"");
+        addFortune(
+            "Have you ever thought to yourself, \"My, that's an awfully large open grave!\""
+        );
         addFortune("Could you pick up my dry-cleaning?");
-        addFortune("Never shower in a thunderstorm.  It's less efficient than bathing indoors and you'll freak out your neighbors.");
-        addFortune("It is said that everyone experiences hardships, but God must REALLY hate YOU.");
-        addFortune("If you play a country song backwards, you waste about 4 minutes of your life listening to garbled nonsense.");
+        addFortune(
+            "Never shower in a thunderstorm.  It's less efficient than bathing indoors and you'll freak out your neighbors."
+        );
+        addFortune(
+            "It is said that everyone experiences hardships, but God must REALLY hate YOU."
+        );
+        addFortune(
+            "If you play a country song backwards, you waste about 4 minutes of your life listening to garbled nonsense."
+        );
         addFortune("No, you can't make that jump.");
-        addFortune("I know they're furry and cuddly, but trust me, they're evil incarnate.");
+        addFortune(
+            "I know they're furry and cuddly, but trust me, they're evil incarnate."
+        );
         addFortune("Do you Dew?");
         addFortune("I see the land, but where exactly are the tracts?");
         addFortune("Creepers were originally from Dr. Who.");
         addFortune("Don't bogart my nasal spray!");
         addFortune("You'll live.");
         addFortune("Don't make me come back there!");
-        addFortune("I've burned everything that reminds me of you in a ritualistic bonfire.");
-        addFortune("We will be an unstoppable force; to our enemies we bring only death, to our allies we always bring cake.");
+        addFortune(
+            "I've burned everything that reminds me of you in a ritualistic bonfire."
+        );
+        addFortune(
+            "We will be an unstoppable force; to our enemies we bring only death, to our allies we always bring cake."
+        );
         addFortune("Heavy is the head that eats the crayons.");
         addFortune("Beware skinwalkers.");
         addFortune("Don't fear the creeper.");
@@ -154,11 +178,14 @@ public class FortunesUtil {
         addFortune("Has anyone seen my Fedora?");
         addFortune("I beg to defer.");
         addFortune("Everybody loops.");
-        addFortune("Why is Count Chocula seasonal?  Pedophilic vampires are always in style!");
+        addFortune(
+            "Why is Count Chocula seasonal?  Pedophilic vampires are always in style!"
+        );
         addFortune("Eekum Bokum.");
         addFortune("Churba wurt!");
         addFortune("Darwa jit!");
-        addFortune("Success is often preceded by failure, then followed again by failure.");
+        addFortune("Success is often preceded by failure, then followed again by failure."
+        );
         addFortune("Man with Steve skin receive no cake.");
         addFortune("It's all Melnics to me!");
         addFortune("\"Steve\" means \"lazy\" in Swedish.");
@@ -171,8 +198,12 @@ public class FortunesUtil {
         addFortune("I'm upgrade fodder!");
         addFortune("You can do anything at Zombo.com.");
         addFortune("Remember to feed the cattle.");
-        addFortune("TROGDOR was a man.  I mean, he was a dragon-man...  Maybe he was just a dragon.");
-        addFortune("Charles in charge of our clicks left and right.  Charles in charge of every block in sight.");
+        addFortune(
+            "TROGDOR was a man.  I mean, he was a dragon-man...  Maybe he was just a dragon."
+        );
+        addFortune(
+            "Charles in charge of our clicks left and right.  Charles in charge of every block in sight."
+        );
         addFortune("Charles was never really in charge.");
         addFortune("Remember to use every part of the chicken.");
         addFortune("I'm not responsible for this.");
@@ -202,19 +233,25 @@ public class FortunesUtil {
         addFortune("Bring me a shrubbery!");
         addFortune("It's bigger on the inside.");
         addFortune("That's what she said.");
-        addFortune("Have you heard the one about the Rabbi and the Priest?  Oh I forgot, you're deaf.");
-        addFortune("There are worse appendages to get caught sticking inside the cookie jar.");
+        addFortune(
+            "Have you heard the one about the Rabbi and the Priest?  Oh I forgot, you're deaf."
+        );
+        addFortune(
+            "There are worse appendages to get caught sticking inside the cookie jar."
+        );
         addFortune("Ever have the feeling you're being watched?  That's me!");
         addFortune("He who handles his NullPointerExceptions is a wise man indeed.");
         addFortune("Taking candy from a baby often prevents choking.");
         addFortune("Texting while driving is a potent form of natural-selection.");
         addFortune("The secret to a good marriage is matching tattoos.");
-        addFortune("A sucker is born every minute, however an idiot is born every two seconds.");
-        addFortune("Error in Thread Main: ExceptionNotCaughtException: DartCraft.java:32");
+        addFortune(
+            "A sucker is born every minute, however an idiot is born every two seconds."
+        );
+        addFortune("Error in Thread Main: ExceptionNotCaughtException: DartCraft.java:32"
+        );
         addFortune("I'll tear YOUR stub!");
         addFortune("Daydreaming is free, cookies are not.");
         addFortune("PINGAS!");
         addFortune("The run is dead.");
     }
-
 }

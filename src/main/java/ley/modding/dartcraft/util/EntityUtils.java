@@ -15,13 +15,16 @@ import net.minecraft.world.WorldServer;
 import java.lang.reflect.Constructor;
 
 public class EntityUtils {
-
     public static NBTTagCompound getModComp(Entity entity) {
         if (entity == null || entity.getEntityData() == null)
             return new NBTTagCompound();
-        NBTTagCompound comp = entity.getEntityData().hasKey(Dartcraft.MODID) ? entity.getEntityData().getCompoundTag(Dartcraft.MODID) : null;
+        NBTTagCompound comp = entity.getEntityData().hasKey(Dartcraft.MODID)
+            ? entity.getEntityData().getCompoundTag(Dartcraft.MODID)
+            : null;
         if (comp == null) {
-            entity.getEntityData().setTag(Dartcraft.MODID, (NBTBase)new NBTTagCompound());
+            entity.getEntityData().setTag(
+                Dartcraft.MODID, (NBTBase) new NBTTagCompound()
+            );
             comp = entity.getEntityData().getCompoundTag(Dartcraft.MODID);
         }
         return comp;
@@ -71,7 +74,8 @@ public class EntityUtils {
         try {
             Class entityClass = (Class) EntityList.stringToClassMapping.get(name);
             if (entityClass != null) {
-                Constructor<Entity> constructor = entityClass.getConstructor(new Class[] { World.class });
+                Constructor<Entity> constructor
+                    = entityClass.getConstructor(new Class[] { World.class });
                 Entity entity = constructor.newInstance(new Object[] { null });
                 return entity;
             }
@@ -99,5 +103,4 @@ public class EntityUtils {
         }
         return player;
     }
-
 }

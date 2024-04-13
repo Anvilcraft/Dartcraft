@@ -1,9 +1,7 @@
 package ley.modding.dartcraft.api;
 
-
 public interface IOwnedTile {
+    String getOwner();
 
-   String getOwner();
-
-   int getAccessLevel();
+    int getAccessLevel();
 }

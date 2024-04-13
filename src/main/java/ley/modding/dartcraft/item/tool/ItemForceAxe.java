@@ -14,11 +14,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class ItemForceAxe extends ItemAxe implements IBreakable, IForceConsumer {
-
     private static int damage = 1;
     private static float efficiency = 5.0F;
     private static int toolLevel = 10;
-    public static ToolMaterial material = EnumHelper.addToolMaterial("FORCE", toolLevel, 512, efficiency, (float) damage, 0);
+    public static ToolMaterial material = EnumHelper.addToolMaterial(
+        "FORCE", toolLevel, 512, efficiency, (float) damage, 0
+    );
 
     public ItemForceAxe() {
         super(material);
@@ -31,7 +32,9 @@ public class ItemForceAxe extends ItemAxe implements IBreakable, IForceConsumer 
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        stack.getTagCompound().setBoolean("active", !stack.getTagCompound().getBoolean("active"));
+        stack.getTagCompound().setBoolean(
+            "active", !stack.getTagCompound().getBoolean("active")
+        );
         if (!Dartcraft.proxy.isSimulating(world)) {
             if (stack.getTagCompound().getBoolean("active")) {
                 Dartcraft.proxy.sendChatToPlayer(player, "Area mode activated.");

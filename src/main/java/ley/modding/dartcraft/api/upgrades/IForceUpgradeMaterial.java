@@ -1,21 +1,19 @@
 package ley.modding.dartcraft.api.upgrades;
 
-
 import net.minecraft.item.Item;
 
 public interface IForceUpgradeMaterial {
+    Item getItem();
 
-   Item getItem();
+    int getItemMeta();
 
-   int getItemMeta();
+    int getUpgradeID();
 
-   int getUpgradeID();
+    int getBonus();
 
-   int getBonus();
+    float getEfficiency();
 
-   float getEfficiency();
+    String getDescription();
 
-   String getDescription();
-
-   boolean isRequired();
+    boolean isRequired();
 }

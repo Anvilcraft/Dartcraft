@@ -28,11 +28,12 @@ public class BlockForceSapling extends BlockSapling {
     // generate tree
     @Override
     public void func_149878_d(World world, int x, int y, int z, Random rand) {
-        if (!TerrainGen.saplingGrowTree(world, rand, x, y, z)) return;
+        if (!TerrainGen.saplingGrowTree(world, rand, x, y, z))
+            return;
         world.setBlockToAir(x, y, z);
         new GenForceTree(true).generate(world, rand, x, y, z);
     }
-    
+
     @Override
     public void getSubBlocks(Item item, CreativeTabs tabs, List list) {
         list.add(new ItemStack(item));

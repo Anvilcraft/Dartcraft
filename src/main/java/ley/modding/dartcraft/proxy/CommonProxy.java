@@ -14,7 +14,6 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class CommonProxy {
-
     public static Random rand = new Random();
 
     public void sendChatToPlayer(EntityPlayer player, String message) {
@@ -29,8 +28,7 @@ public class CommonProxy {
         return FMLClientHandler.instance().getClient();
     }
 
-    public void bindTexture(String texture) {
-    }
+    public void bindTexture(String texture) {}
 
     public void init() {
         ForceUpgradeManager.load();
@@ -38,5 +36,4 @@ public class CommonProxy {
     }
 
     public void sendPacketToServer(DartPacket packet) {}
-
 }

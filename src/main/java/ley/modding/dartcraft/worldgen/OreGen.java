@@ -11,13 +11,22 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import java.util.Random;
 
 public class OreGen implements IWorldGenerator {
+    WorldGenMinable powerMinable
+        = new WorldGenMinable(DartBlocks.powerore, Config.powerOreFreq);
 
-    WorldGenMinable powerMinable = new WorldGenMinable(DartBlocks.powerore, Config.powerOreFreq);
-
-    WorldGenMinable netherMinable = new WorldGenMinable(DartBlocks.powerore, 1, Config.powerOreFreq, Blocks.netherrack);
+    WorldGenMinable netherMinable = new WorldGenMinable(
+        DartBlocks.powerore, 1, Config.powerOreFreq, Blocks.netherrack
+    );
 
     @Override
-    public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+    public void generate(
+        Random random,
+        int chunkX,
+        int chunkZ,
+        World world,
+        IChunkProvider chunkGenerator,
+        IChunkProvider chunkProvider
+    ) {
         doGeneration(random, chunkX, chunkZ, world);
     }
 
@@ -33,7 +42,7 @@ public class OreGen implements IWorldGenerator {
     }
 
     public void generateNether(Random rand, int chunkX, int chunkZ, World world) {
-        for (int i = 0; i < (int)(Config.powerOreRarity * Config.netherFreq); i++) {
+        for (int i = 0; i < (int) (Config.powerOreRarity * Config.netherFreq); i++) {
             int posx = chunkX * 16 + rand.nextInt(16);
             int posy = rand.nextInt(128);
             int posz = chunkZ * 16 + rand.nextInt(16);
@@ -49,5 +58,4 @@ public class OreGen implements IWorldGenerator {
             this.powerMinable.generate(world, rand, posx, posy, posz);
         }
     }
-
 }

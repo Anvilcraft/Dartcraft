@@ -11,12 +11,13 @@ package buildcraft.api.tools;
 import net.minecraft.entity.player.EntityPlayer;
 
 /***
- * Implement this interface on subclasses of Item to have that item work as a wrench for buildcraft
+ * Implement this interface on subclasses of Item to have that item work as a wrench for
+ * buildcraft
  */
 public interface IToolWrench {
-
     /***
-     * Called to ensure that the wrench can be used. To get the ItemStack that is used, check player.inventory.getCurrentItem()
+     * Called to ensure that the wrench can be used. To get the ItemStack that is used,
+     * check player.inventory.getCurrentItem()
      *
      * @param player
      *            - The player doing the wrenching
@@ -28,7 +29,8 @@ public interface IToolWrench {
     boolean canWrench(EntityPlayer player, int x, int y, int z);
 
     /***
-     * Callback after the wrench has been used. This can be used to decrease durability or for other purposes. To get the ItemStack that was used, check
+     * Callback after the wrench has been used. This can be used to decrease durability or
+     * for other purposes. To get the ItemStack that was used, check
      * player.inventory.getCurrentItem()
      *
      * @param player

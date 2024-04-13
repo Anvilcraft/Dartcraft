@@ -9,12 +9,18 @@ public class RenderItemEngine implements IItemRenderer {
         return true;
     }
 
-    public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType type, ItemStack item, IItemRenderer.ItemRendererHelper helper) {
+    public boolean shouldUseRenderHelper(
+        IItemRenderer.ItemRenderType type,
+        ItemStack item,
+        IItemRenderer.ItemRendererHelper helper
+    ) {
         return true;
     }
 
-    public void renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data) {
-        if (type == IItemRenderer.ItemRenderType.EQUIPPED || type == IItemRenderer.ItemRenderType.INVENTORY) {
+    public void
+    renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data) {
+        if (type == IItemRenderer.ItemRenderType.EQUIPPED
+            || type == IItemRenderer.ItemRenderType.INVENTORY) {
             ClientProxy.engineRender.render(false, 0.25F, 1, 0.0D, 0.0D, 0.0D);
         } else {
             ClientProxy.engineRender.render(false, 0.25F, 1, -0.5D, -0.5D, -0.5D);

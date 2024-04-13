@@ -69,19 +69,22 @@ public class GuiClipboard extends GuiContainer {
         if (this.balanceBounds.contains(pos)) {
             getClass();
             this.balanceRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket) new PacketClipButton((EntityPlayer)((GuiScreen)this).mc.thePlayer, 0));
+            Dartcraft.proxy.sendPacketToServer((DartPacket
+            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 0));
             this.container.balanceItems();
         }
         if (this.distBounds.contains(pos)) {
             getClass();
             this.distRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket)new PacketClipButton((EntityPlayer)((GuiScreen)this).mc.thePlayer, 1));
+            Dartcraft.proxy.sendPacketToServer((DartPacket
+            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 1));
             this.container.doDistribute();
         }
         if (this.clearBounds.contains(pos)) {
             getClass();
             this.clearRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket)new PacketClipButton((EntityPlayer)((GuiScreen)this).mc.thePlayer, 2));
+            Dartcraft.proxy.sendPacketToServer((DartPacket
+            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 2));
             this.container.clearMatrix();
         }
     }
@@ -95,11 +98,15 @@ public class GuiClipboard extends GuiContainer {
             this.distRender--;
         }
         if (this.balanceRender > 0) {
-            drawTexturedModalRect(this.balanceBounds.x, this.balanceBounds.y, 176, 0, 11, 11);
+            drawTexturedModalRect(
+                this.balanceBounds.x, this.balanceBounds.y, 176, 0, 11, 11
+            );
             this.balanceRender--;
         }
         if (this.clearRender > 0) {
-            drawTexturedModalRect(this.clearBounds.x, this.clearBounds.y, 176, 22, 11, 11);
+            drawTexturedModalRect(
+                this.clearBounds.x, this.clearBounds.y, 176, 22, 11, 11
+            );
             this.clearRender--;
         }
     }
@@ -116,13 +123,16 @@ public class GuiClipboard extends GuiContainer {
         GL11.glColor4f(value, value, value, 0.65F);
         GL11.glEnable(3042);
         GL11.glDisable(2896);
-        itemRenderer.renderItemIntoGUI(this.fontRendererObj, ((GuiScreen)this).mc.renderEngine, stack, x, y, false);
+        itemRenderer.renderItemIntoGUI(
+            this.fontRendererObj, ((GuiScreen) this).mc.renderEngine, stack, x, y, false
+        );
         GL11.glDisable(3042);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.zLevel = 0.0F;
     }
 
-    public boolean handleDragNDrop(GuiContainer gui, int x, int y, ItemStack stack, int button) {
+    public boolean
+    handleDragNDrop(GuiContainer gui, int x, int y, ItemStack stack, int button) {
         return false;
     }
 
@@ -134,4 +144,3 @@ public class GuiClipboard extends GuiContainer {
         return null;
     }
 }
-

@@ -16,23 +16,29 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityBottle extends RenderLiving {
+    private static final ResourceLocation texture
+        = new ResourceLocation(Dartcraft.MODID, "bottle.png");
 
-    private static final ResourceLocation texture = new ResourceLocation(Dartcraft.MODID, "bottle.png");
-
-    private static IModelCustom bottle = AdvancedModelLoader.loadModel(new ResourceLocation(Dartcraft.MODID, "models/bottle.obj"));
+    private static IModelCustom bottle = AdvancedModelLoader.loadModel(
+        new ResourceLocation(Dartcraft.MODID, "models/bottle.obj")
+    );
 
     public RenderEntityBottle() {
         super(null, 0.2F);
     }
 
     @Override
-    public void doRender(Entity entity, double par2, double par4, double par6, float par8, float par9) {
+    public void doRender(
+        Entity entity, double par2, double par4, double par6, float par8, float par9
+    ) {
         if (entity instanceof IBottleRenderable) {
-            ItemStack stack = ((IBottleRenderable)entity).getEntityItem();
+            ItemStack stack = ((IBottleRenderable) entity).getEntityItem();
             GL11.glPushMatrix();
             GL11.glTranslated(par2, par4 + 0.25D, par6);
             GL11.glScalef(0.5F, 0.5F, 0.5F);
-            RenderItemForceFlask.instance.renderItem(IItemRenderer.ItemRenderType.ENTITY, stack, new Object[0]);
+            RenderItemForceFlask.instance.renderItem(
+                IItemRenderer.ItemRenderType.ENTITY, stack, new Object[0]
+            );
             GL11.glPopMatrix();
         }
     }
@@ -40,5 +46,4 @@ public class RenderEntityBottle extends RenderLiving {
     protected ResourceLocation getEntityTexture(Entity entity) {
         return texture;
     }
-
 }

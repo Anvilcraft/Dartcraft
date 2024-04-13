@@ -11,16 +11,25 @@ import java.util.ArrayList;
 
 public abstract class GuiTab extends GuiContainer {
     protected enum SlotColor {
-        BLUE, RED, YELLOW, ORANGE, GREEN, PURPLE;
+        BLUE,
+        RED,
+        YELLOW,
+        ORANGE,
+        GREEN,
+        PURPLE;
     }
 
     protected enum SlotType {
         //SINGLE, OUTPUT, DOUBLEOUTPUT;
-        TOP, BOTTOM, FULL
+        TOP,
+        BOTTOM,
+        FULL
     }
 
     protected enum SlotRender {
-        TOP, BOTTOM, FULL;
+        TOP,
+        BOTTOM,
+        FULL;
     }
 
     protected static int SCALE_ENERGY = 42;
@@ -60,7 +69,8 @@ public abstract class GuiTab extends GuiContainer {
 
     protected abstract void drawTooltips();
 
-    protected void drawColoredSlot(int x, int y, SlotColor color, SlotType type, SlotRender render) {
+    protected void
+    drawColoredSlot(int x, int y, SlotColor color, SlotType type, SlotRender render) {
         if (enableGuiBorders) {
             drawColoredSlotWithBorder(x, y, color, type, render);
         } else {
@@ -68,7 +78,9 @@ public abstract class GuiTab extends GuiContainer {
         }
     }
 
-    protected void drawColoredSlotNoBorder(int x, int y, SlotColor color, SlotType type, SlotRender render) {
+    protected void drawColoredSlotNoBorder(
+        int x, int y, SlotColor color, SlotType type, SlotRender render
+    ) {
         int sizeX = 0;
         int sizeY = 0;
         int offsetX = color.ordinal() / 3 * 128;
@@ -106,7 +118,9 @@ public abstract class GuiTab extends GuiContainer {
         drawTexturedModalRect(x, y, offsetX, offsetY, sizeX, sizeY);
     }
 
-    protected void drawColoredSlotWithBorder(int x, int y, SlotColor color, SlotType type, SlotRender render) {
+    protected void drawColoredSlotWithBorder(
+        int x, int y, SlotColor color, SlotType type, SlotRender render
+    ) {
         int sizeX = 32;
         int sizeY = 32;
         int offsetX = color.ordinal() / 3 * 128;
@@ -165,7 +179,8 @@ public abstract class GuiTab extends GuiContainer {
         drawTexturedModalRect(x - 8, y - 2, offsetX, offsetY, sizeX, sizeY);
     }
 
-    protected void drawLiquid(int j, int k, int liquidId, NBTTagCompound comp, int width, int height) {
+    protected void
+    drawLiquid(int j, int k, int liquidId, NBTTagCompound comp, int width, int height) {
         int liquidImgIndex = 0;
         try {
             FluidStack tempStack = new FluidStack(liquidId, 0, comp);
@@ -183,7 +198,9 @@ public abstract class GuiTab extends GuiContainer {
             for (y = 0; y < height; y += 16) {
                 drawWidth = Math.min(width - x, 16);
                 drawHeight = Math.min(height - y, 16);
-                drawTexturedModalRect(j + x, k + y, imgColumn * 16, imgLine * 16, drawWidth, drawHeight);
+                drawTexturedModalRect(
+                    j + x, k + y, imgColumn * 16, imgLine * 16, drawWidth, drawHeight
+                );
             }
         }
     }
@@ -203,7 +220,8 @@ public abstract class GuiTab extends GuiContainer {
     protected void mouseClicked(int x, int y, int mouseButton) {
         super.mouseClicked(x, y, mouseButton);
         Tab tab = getTabAtPosition(this.mouseX, this.mouseY);
-        if (tab != null && !tab.handleMouseClicked(this.mouseX, this.mouseY, mouseButton)) {
+        if (tab != null
+            && !tab.handleMouseClicked(this.mouseX, this.mouseY, mouseButton)) {
             if (tab.leftSide) {
                 for (Tab other : this.tabListLeft) {
                     if (other != tab && other.isOpen())
@@ -221,7 +239,7 @@ public abstract class GuiTab extends GuiContainer {
 
     public void handleMouseInput() {
         int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
-        int y = this.height- Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
+        int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
         this.mouseX = x - (this.width - this.xSize) / 2;
         this.mouseY = y - (this.height - this.ySize) / 2;
         super.handleMouseInput();
@@ -230,11 +248,13 @@ public abstract class GuiTab extends GuiContainer {
     public void addTab(Tab tab) {
         if (tab.leftSide) {
             this.tabListLeft.add(tab);
-            if (TabVars.getOpenedLeftTab() != null && tab.getClass().equals(TabVars.getOpenedLeftTab()))
+            if (TabVars.getOpenedLeftTab() != null
+                && tab.getClass().equals(TabVars.getOpenedLeftTab()))
                 tab.setFullyOpen();
         } else {
             this.tabListRight.add(tab);
-            if (TabVars.getOpenedRightTab() != null && tab.getClass().equals(TabVars.getOpenedRightTab()))
+            if (TabVars.getOpenedRightTab() != null
+                && tab.getClass().equals(TabVars.getOpenedRightTab()))
                 tab.setFullyOpen();
         }
     }

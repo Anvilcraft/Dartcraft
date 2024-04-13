@@ -20,4 +20,21 @@ tile.forceleaves.name=Force Leaves
 tile.forcesapling.name=Force Sapling
 tile.forcepickaxe.name=Force Pickaxe
 
+tile.forcebrick0.name=Black Force Brick
+tile.forcebrick1.name=Red Force Brick
+tile.forcebrick2.name=Green Force Brick
+tile.forcebrick3.name=Brown Force Brick
+tile.forcebrick4.name=Blue Force Brick
+tile.forcebrick5.name=Purple Force Brick
+tile.forcebrick6.name=Cyan Force Brick
+tile.forcebrick7.name=Light Gray Force Brick
+tile.forcebrick8.name=Gray Force Brick
+tile.forcebrick9.name=Pink Force Brick
+tile.forcebrick10.name=Lime Force Brick
+tile.forcebrick11.name=Yellow Force Brick
+tile.forcebrick12.name=Light Blue Force Brick
+tile.forcebrick13.name=Magenta Force Brick
+tile.forcebrick14.name=Orange Force Brick
+tile.forcebrick15.name=White Force Brick
+
 itemGroup.dartcraft=Dartcraft

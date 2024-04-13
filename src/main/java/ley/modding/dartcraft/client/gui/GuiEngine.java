@@ -19,7 +19,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GuiEngine extends GuiTab {
     private TileEntityForceEngine engine;
 
@@ -49,17 +48,24 @@ public class GuiEngine extends GuiTab {
         this.throttleBounds = new Rectangle(this.guiLeft + 94, this.guiTop + 11, 16, 58);
     }
 
-    public List<String> handleItemTooltip(ItemStack stack, int x, int y, List<String> tooltip) {
+    public List<String>
+    handleItemTooltip(ItemStack stack, int x, int y, List<String> tooltip) {
         Point pointerLoc = new Point(x, y);
         if (this.fuelBounds.contains(pointerLoc))
             try {
-                tooltip.add("" + this.engine.fuelTank.getFluid().getFluid().getLocalizedName() + " (" + (this.engine.fuelTank.getFluid()).amount + ")");
+                tooltip.add(
+                    "" + this.engine.fuelTank.getFluid().getFluid().getLocalizedName()
+                    + " (" + (this.engine.fuelTank.getFluid()).amount + ")"
+                );
             } catch (Exception e) {
                 tooltip.add("Empty");
             }
         if (this.throttleBounds.contains(pointerLoc))
             try {
-                tooltip.add("" + (this.engine.throttleTank.getInfo()).fluid.getFluid().getName() + " (" + (this.engine.throttleTank.getFluid()).amount + ")");
+                tooltip.add(
+                    "" + (this.engine.throttleTank.getInfo()).fluid.getFluid().getName()
+                    + " (" + (this.engine.throttleTank.getFluid()).amount + ")"
+                );
             } catch (Exception e) {
                 tooltip.add("Empty");
             }
@@ -73,10 +79,18 @@ public class GuiEngine extends GuiTab {
         int posX = (this.width - this.xSize) / 2;
         int posY = (this.height - this.ySize) / 2;
         drawTexturedModalRect(posX, posY, 0, 0, this.xSize, this.ySize);
-        if (this.engine.fuelTank.getFluid() != null && (this.engine.fuelTank.getFluid()).amount > 0)
-            displayGauge(this.fuelBounds.x, this.fuelBounds.y, this.engine.fuelTank.getFluid());
-        if (this.engine.throttleTank.getFluid() != null && (this.engine.throttleTank.getFluid()).amount > 0)
-            displayGauge(this.throttleBounds.x, this.throttleBounds.y, this.engine.throttleTank.getFluid());
+        if (this.engine.fuelTank.getFluid() != null
+            && (this.engine.fuelTank.getFluid()).amount > 0)
+            displayGauge(
+                this.fuelBounds.x, this.fuelBounds.y, this.engine.fuelTank.getFluid()
+            );
+        if (this.engine.throttleTank.getFluid() != null
+            && (this.engine.throttleTank.getFluid()).amount > 0)
+            displayGauge(
+                this.throttleBounds.x,
+                this.throttleBounds.y,
+                this.engine.throttleTank.getFluid()
+            );
     }
 
     private void displayGauge(int x, int y, FluidStack liquid) {
@@ -84,7 +98,7 @@ public class GuiEngine extends GuiTab {
         if (liquid == null)
             return;
         int start = 0;
-        int squaled = (int)(58.0F * liquid.amount / 10000.0F);
+        int squaled = (int) (58.0F * liquid.amount / 10000.0F);
         Dartcraft.proxy.bindTexture("textures/atlas/blocks.png");
         do {
             tempx = 0;
@@ -98,7 +112,9 @@ public class GuiEngine extends GuiTab {
             IIcon icon = liquid.getFluid().getStillIcon();
             if (icon == null)
                 icon = FluidRegistry.LAVA.getStillIcon();
-            drawTexturedModelRectFromIcon(x, y + 58 - tempx - start, icon, 16, 16 - 16 - tempx);
+            drawTexturedModelRectFromIcon(
+                x, y + 58 - tempx - start, icon, 16, 16 - 16 - tempx
+            );
             start += 16;
         } while (tempx != 0 && squaled != 0);
         Dartcraft.proxy.bindTexture("engineGui.png");
@@ -124,7 +140,9 @@ public class GuiEngine extends GuiTab {
             float output = GuiEngine.this.engine.getEnergyPerProcess();
             float throttle = 0.0F;
             if (GuiEngine.this.engine.throttleTank.getFluid() != null) {
-                EngineLiquid throttleLiquid = ForceEngineLiquids.getEngineLiquid(GuiEngine.this.engine.throttleTank.getFluid());
+                EngineLiquid throttleLiquid = ForceEngineLiquids.getEngineLiquid(
+                    GuiEngine.this.engine.throttleTank.getFluid()
+                );
                 if (throttleLiquid != null)
                     throttle = throttleLiquid.getModifier();
             }
@@ -134,15 +152,28 @@ public class GuiEngine extends GuiTab {
             Tab.tabFontRenderer.drawStringWithShadow("Output", x + 22, y + 6, 16777215);
             Tab.tabFontRenderer.drawStringWithShadow("MJ/t:", x + 8, y + 20, 16777215);
             if (output > 0.0F) {
-                Tab.tabFontRenderer.drawStringWithShadow("" + GuiEngine.this.engine.getEnergyPerProcess(), x + 36, y + 20, subColor);
+                Tab.tabFontRenderer.drawStringWithShadow(
+                    "" + GuiEngine.this.engine.getEnergyPerProcess(),
+                    x + 36,
+                    y + 20,
+                    subColor
+                );
             } else {
-                Tab.tabFontRenderer.drawStringWithShadow("None", x + 36, y + 20, subColor);
+                Tab.tabFontRenderer.drawStringWithShadow(
+                    "None", x + 36, y + 20, subColor
+                );
             }
-            Tab.tabFontRenderer.drawStringWithShadow("Throttle:", x + 8, y + 30, 16777215);
+            Tab.tabFontRenderer.drawStringWithShadow(
+                "Throttle:", x + 8, y + 30, 16777215
+            );
             if (throttle > 0.0F) {
-                Tab.tabFontRenderer.drawStringWithShadow("" + throttle, x + 55, y + 30, subColor);
+                Tab.tabFontRenderer.drawStringWithShadow(
+                    "" + throttle, x + 55, y + 30, subColor
+                );
             } else {
-                Tab.tabFontRenderer.drawStringWithShadow("None", x + 55, y + 30, subColor);
+                Tab.tabFontRenderer.drawStringWithShadow(
+                    "None", x + 55, y + 30, subColor
+                );
             }
         }
 
@@ -170,19 +201,35 @@ public class GuiEngine extends GuiTab {
         }
 
         private void initializeItems() {
-            this.infoStrings.add("The Force Engine can be throttled with a few liquids, most notably water.");
-            this.infoStrings.add("The Force Engine's output is determined by the base output of the Fuel multiplied by the Throttle's value.");
-            this.infoStrings.add("The Force Engine will never explode or die of loneliness.");
+            this.infoStrings.add(
+                "The Force Engine can be throttled with a few liquids, most notably water."
+            );
+            this.infoStrings.add(
+                "The Force Engine's output is determined by the base output of the Fuel multiplied by the Throttle's value."
+            );
+            this.infoStrings.add(
+                "The Force Engine will never explode or die of loneliness."
+            );
             this.infoStrings.add("The Force Engine requires a redstone signal to run.");
-            this.infoStrings.add("You can right-click the Force Engine with a valid liquid container to add liquid quickly.");
+            this.infoStrings.add(
+                "You can right-click the Force Engine with a valid liquid container to add liquid quickly."
+            );
             if (Loader.isModLoaded("BuildCraft|Energy")) {
-                this.infoStrings.add("A wide variety of fuels are usable inside the Force Engine.  While Liquid Force is the most effective, BuildCraft Fuel or even lava is also usable.");
-                this.infoStrings.add("Using Fuel or Lava in the Force Engine will yield the same output as the Combustion Engine if water is used as a throttle.");
+                this.infoStrings.add(
+                    "A wide variety of fuels are usable inside the Force Engine.  While Liquid Force is the most effective, BuildCraft Fuel or even lava is also usable."
+                );
+                this.infoStrings.add(
+                    "Using Fuel or Lava in the Force Engine will yield the same output as the Combustion Engine if water is used as a throttle."
+                );
             } else {
-                this.infoStrings.add("Lava is also a valid Force Engine Fuel, although not as effective as Liquid Force.");
+                this.infoStrings.add(
+                    "Lava is also a valid Force Engine Fuel, although not as effective as Liquid Force."
+                );
             }
             if (Loader.isModLoaded("Forestry")) {
-                this.infoStrings.add("Liquid Force may also be obtained by squeezing Force Logs.");
+                this.infoStrings.add(
+                    "Liquid Force may also be obtained by squeezing Force Logs."
+                );
                 this.infoStrings.add("Milk is also an effective throttle.");
                 this.infoStrings.add("Did someone say Glacial bees?");
             }
@@ -207,8 +254,12 @@ public class GuiEngine extends GuiTab {
             drawIcon("items.png", 0, x + 2, y + 2);
             if (!isFullyOpened())
                 return;
-            Tab.tabFontRenderer.drawStringWithShadow("Information", x + 22, y + 6, 16777215);
-            Tab.tabFontRenderer.drawSplitString(this.currentInfo, x + 8, y + 20, this.maxWidth - 14, 0);
+            Tab.tabFontRenderer.drawStringWithShadow(
+                "Information", x + 22, y + 6, 16777215
+            );
+            Tab.tabFontRenderer.drawSplitString(
+                this.currentInfo, x + 8, y + 20, this.maxWidth - 14, 0
+            );
         }
 
         private String getRandomItem() {

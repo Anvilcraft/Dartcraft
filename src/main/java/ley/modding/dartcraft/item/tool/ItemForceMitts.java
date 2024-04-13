@@ -25,11 +25,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter {
-
     private static int damage = 0;
     private static float efficiency = 16.0F;
     private static int toolLevel = 4;
-    public static ToolMaterial material = EnumHelper.addToolMaterial("FORCE", toolLevel, 256, efficiency, (float)damage, 0);
+    public static ToolMaterial material = EnumHelper.addToolMaterial(
+        "FORCE", toolLevel, 256, efficiency, (float) damage, 0
+    );
     public ArrayList<Block> mineableBlocks = new ArrayList<Block>();
     private int range = 2;
 
@@ -86,17 +87,21 @@ public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter
 
     @Override
     public boolean canHarvestBlock(Block block, ItemStack itemStack) {
-        return this.mineableBlocks.contains(block) || block.getMaterial() == Material.leaves || block.getMaterial() == Material.wood;
+        return this.mineableBlocks.contains(block)
+            || block.getMaterial() == Material.leaves
+            || block.getMaterial() == Material.wood;
     }
 
     @Override
-    public boolean hitEntity(ItemStack itemStack, EntityLivingBase entity, EntityLivingBase player) {
+    public boolean
+    hitEntity(ItemStack itemStack, EntityLivingBase entity, EntityLivingBase player) {
         return true;
     }
 
     @Override
     public float getDigSpeed(ItemStack stack, Block block, int meta) {
-        if(!ForgeHooks.isToolEffective(stack, block, meta) && !this.canHarvestBlock(block, stack)) {
+        if (!ForgeHooks.isToolEffective(stack, block, meta)
+            && !this.canHarvestBlock(block, stack)) {
             return 1.0F;
         } else {
             return this.efficiencyOnProperMaterial; //TODO Upgrades
@@ -104,7 +109,18 @@ public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10) {
+    public boolean onItemUse(
+        ItemStack stack,
+        EntityPlayer player,
+        World world,
+        int x,
+        int y,
+        int z,
+        int par7,
+        float par8,
+        float par9,
+        float par10
+    ) {
         if (!player.canPlayerEdit(x, y, z, par7, stack)) {
             return false;
         } else {
@@ -119,42 +135,48 @@ public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter
 
         Block block = world.getBlock(x, y, z);
 
-        if (par7 != 0 && world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z) && (block == Blocks.grass || block == Blocks.dirt))
-        {
+        if (par7 != 0 && world.getBlock(x, y + 1, z).isAir(world, x, y + 1, z)
+            && (block == Blocks.grass || block == Blocks.dirt)) {
             Block block1 = Blocks.farmland;
-            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block1.stepSound.getStepResourcePath(), (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
+            world.playSoundEffect(
+                (double) ((float) x + 0.5F),
+                (double) ((float) y + 0.5F),
+                (double) ((float) z + 0.5F),
+                block1.stepSound.getStepResourcePath(),
+                (block1.stepSound.getVolume() + 1.0F) / 2.0F,
+                block1.stepSound.getPitch() * 0.8F
+            );
 
-            if (world.isRemote)
-            {
+            if (world.isRemote) {
                 return true;
-            }
-            else
-            {
+            } else {
                 world.setBlock(x, y, z, block1);
                 stack.damageItem(1, player);
                 return true;
             }
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
 
     @Override
-    public float getSaplingModifier(ItemStack stack, World world, EntityPlayer player, int x, int y, int z) {
+    public float getSaplingModifier(
+        ItemStack stack, World world, EntityPlayer player, int x, int y, int z
+    ) {
         return 100.0F;
     }
 
-    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+    public boolean
+    onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
         World world = player.worldObj;
-        if(!Dartcraft.proxy.isSimulating(world)) {
+        if (!Dartcraft.proxy.isSimulating(world)) {
             return false;
         } else {
             Block block = world.getBlock(x, y, z);
             if (block != null) {
                 Material mat = block.getMaterial();
-                if ((!(block instanceof BlockFlower)) && (mat == null || mat != Material.leaves)) {
+                if ((!(block instanceof BlockFlower))
+                    && (mat == null || mat != Material.leaves)) {
                     return false;
                 } else {
                     for (int i = 0 - this.range; i < 1 + this.range; ++i) {
@@ -164,11 +186,25 @@ public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter
                                 int newY = y + j;
                                 int newZ = z + k;
                                 Block block2 = world.getBlock(newX, newY, newZ);
-                                if (block2 instanceof BlockFlower || block2 != null && block2.getMaterial() == Material.leaves) {
-                                    world.getBlock(x + i, y + j, z + k).harvestBlock(world, player, x + i, y + j, z + k, world.getBlockMetadata(x + i, y + j, z + k));
+                                if (block2 instanceof BlockFlower
+                                    || block2 != null
+                                        && block2.getMaterial() == Material.leaves) {
+                                    world.getBlock(x + i, y + j, z + k)
+                                        .harvestBlock(
+                                            world,
+                                            player,
+                                            x + i,
+                                            y + j,
+                                            z + k,
+                                            world.getBlockMetadata(x + i, y + j, z + k)
+                                        );
                                     world.setBlockToAir(x + i, y + j, z + k);
                                     if (i == 0 && j == 0 && k == 0) {
-                                        //PacketDispatcher.sendPacketToAllAround((double) x, (double) y, (double) z, 30.0D, player.field_71093_bK, (new FXPacket(17, (double) x, (double) y, (double) z)).getPacket());
+                                        //PacketDispatcher.sendPacketToAllAround((double)
+                                        //x, (double) y, (double) z, 30.0D,
+                                        //player.field_71093_bK, (new FXPacket(17,
+                                        //(double) x, (double) y, (double)
+                                        //z)).getPacket());
                                     }
                                 }
                             }
@@ -176,7 +212,14 @@ public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter
                     }
 
                     stack.damageItem(1, player);
-                    world.playSoundEffect((double) x, (double) y, (double) z, "dartcraft:fly", 0.75F, EntityUtils.randomPitch());
+                    world.playSoundEffect(
+                        (double) x,
+                        (double) y,
+                        (double) z,
+                        "dartcraft:fly",
+                        0.75F,
+                        EntityUtils.randomPitch()
+                    );
                     return true;
                 }
             }

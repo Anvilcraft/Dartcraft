@@ -21,7 +21,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 
 public class BlockForceEngine extends BlockContainer implements ITEProvider {
-
     public BlockForceEngine() {
         super(Material.iron);
         setHardness(3.0F);
@@ -34,27 +33,40 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         return new TileEntityForceEngine();
     }
 
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int par6, float par7, float par8, float par9) {
-        if(!Dartcraft.proxy.isSimulating(world)) {
+    public boolean onBlockActivated(
+        World world,
+        int x,
+        int y,
+        int z,
+        EntityPlayer player,
+        int par6,
+        float par7,
+        float par8,
+        float par9
+    ) {
+        if (!Dartcraft.proxy.isSimulating(world)) {
             return true;
         } else {
             TileEntity tile = world.getTileEntity(x, y, z);
             TileEntityForceEngine engine = null;
-            if(tile instanceof TileEntityForceEngine) {
-                engine = (TileEntityForceEngine)tile;
+            if (tile instanceof TileEntityForceEngine) {
+                engine = (TileEntityForceEngine) tile;
             }
 
-            if(engine != null) {
-                if(DartUtils.isHoldingWrench(player)) {
+            if (engine != null) {
+                if (DartUtils.isHoldingWrench(player)) {
                     engine.rotateBlock();
                     return true;
                 }
 
-                if(player.getCurrentEquippedItem() != null && FluidContainerRegistry.getFluidForFilledItem(player.getCurrentEquippedItem()) != null) {
+                if (player.getCurrentEquippedItem() != null
+                    && FluidContainerRegistry.getFluidForFilledItem(
+                           player.getCurrentEquippedItem()
+                       ) != null) {
                     return DartUtils.fillTankWithContainer(engine, player);
                 }
 
-                if(!player.isSneaking() && !DartUtils.isHoldingWrench(player)) {
+                if (!player.isSneaking() && !DartUtils.isHoldingWrench(player)) {
                     player.openGui(Dartcraft.instance, 7, world, x, y, z);
                 }
             }
@@ -63,18 +75,21 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         }
     }
 
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase living, ItemStack stack) {
-        TileEntityForceEngine tile = (TileEntityForceEngine)world.getTileEntity(x, y, z);
-        if(tile != null) {
+    public void onBlockPlacedBy(
+        World world, int x, int y, int z, EntityLivingBase living, ItemStack stack
+    ) {
+        TileEntityForceEngine tile = (TileEntityForceEngine) world.getTileEntity(x, y, z);
+        if (tile != null) {
             tile.setFacing(ForgeDirection.UP);
             tile.rotateBlock();
         }
-
     }
 
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
-        return te instanceof TileEntityForceEngine?((TileEntityForceEngine)te).getLightValue():0;
+        return te instanceof TileEntityForceEngine
+            ? ((TileEntityForceEngine) te).getLightValue()
+            : 0;
     }
 
     public int getRenderType() {
@@ -90,14 +105,14 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
     }
 
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-        if(Dartcraft.proxy.isSimulating(world)) {
+        if (Dartcraft.proxy.isSimulating(world)) {
             TileEntity tile = world.getTileEntity(x, y, z);
-            if(tile instanceof TileEntityForceEngine) {
-                TileEntityForceEngine engine = (TileEntityForceEngine)tile;
+            if (tile instanceof TileEntityForceEngine) {
+                TileEntityForceEngine engine = (TileEntityForceEngine) tile;
 
-                for(int i = 0; i < engine.liquidInventory.getSizeInventory(); ++i) {
+                for (int i = 0; i < engine.liquidInventory.getSizeInventory(); ++i) {
                     ItemStack tempStack = engine.liquidInventory.getStackInSlot(i);
-                    if(tempStack != null) {
+                    if (tempStack != null) {
                         DartUtils.dropItem(tempStack, world, x, y, z);
                     }
                 }
@@ -108,21 +123,29 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
     }
 
     @Override
-    public boolean isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
+    public boolean
+    isSideSolid(IBlockAccess world, int x, int y, int z, ForgeDirection side) {
         TileEntity tile = world.getTileEntity(x, y, z);
-        return tile instanceof TileEntityForceEngine ?((TileEntityForceEngine)tile).facing.getOpposite() == side:false;
+        return tile instanceof TileEntityForceEngine
+            ? ((TileEntityForceEngine) tile).facing.getOpposite() == side
+            : false;
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer renderer) {
-        //FXUtils.makeShiny(world, (double)x, (double)y, (double)z, 2, 16776960, 16, true);
+    public boolean addDestroyEffects(
+        World world, int x, int y, int z, int meta, EffectRenderer renderer
+    ) {
+        //FXUtils.makeShiny(world, (double)x, (double)y, (double)z, 2, 16776960, 16,
+        //true);
         return true;
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
-        if(world != null && target != null) { //TODO FX
-            //FXUtils.makeShiny(world, (double)target.blockX, (double)target.blockY, (double)target.blockZ, 2, 16776960, 3, true);
+    public boolean
+    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
+        if (world != null && target != null) { //TODO FX
+            //FXUtils.makeShiny(world, (double)target.blockX, (double)target.blockY,
+            //(double)target.blockZ, 2, 16776960, 3, true);
         }
         return true;
     }

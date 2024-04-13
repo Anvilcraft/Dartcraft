@@ -18,13 +18,12 @@ import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
 public class EventHandler {
-
     @SubscribeEvent
     public void onItemDestroyed(PlayerDestroyItemEvent event) {
         ItemStack stack = event.original;
         EntityPlayer player = event.entityPlayer;
         if (stack != null && stack.getItem() instanceof IBreakable) {
-            ItemStack ret = ((IBreakable)stack.getItem()).itemReturned();
+            ItemStack ret = ((IBreakable) stack.getItem()).itemReturned();
             if (Dartcraft.proxy.isSimulating(player.worldObj)) {
                 player.inventory.addItemStackToInventory(ret);
             }
@@ -41,7 +40,7 @@ public class EventHandler {
             return;
 
         if (event.target instanceof EntityAnimal) {
-            EntityAnimal entity = (EntityAnimal)event.target;
+            EntityAnimal entity = (EntityAnimal) event.target;
             ColdEntityType type = ColdEntityType.fromClass(entity.getClass());
 
             if (type == null)
@@ -109,7 +108,7 @@ public class EventHandler {
                     return new EntityColdPig(world);
                 case CHICKEN:
                     return new EntityColdChicken(world);
-                
+
                 // why is the compiler so stupid to think that this is required?
                 default:
                     return null;
@@ -117,7 +116,8 @@ public class EventHandler {
         }
 
         ItemStack getDrop() {
-            // gotta use full names here, because tilera had the brilliant idea to call the mod item class "Items"
+            // gotta use full names here, because tilera had the brilliant idea to call
+            // the mod item class "Items"
             switch (this) {
                 case COW:
                     return new ItemStack(net.minecraft.init.Items.leather);
@@ -126,7 +126,7 @@ public class EventHandler {
                     return new ItemStack(net.minecraft.init.Items.porkchop);
                 case CHICKEN:
                     return new ItemStack(net.minecraft.init.Items.feather);
-                
+
                 // why is the compiler so stupid to think that this is required?
                 default:
                     return null;

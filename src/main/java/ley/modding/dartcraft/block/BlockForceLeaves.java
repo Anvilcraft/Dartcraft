@@ -32,39 +32,45 @@ public class BlockForceLeaves extends BlockLeaves {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public boolean shouldSideBeRendered(IBlockAccess p_149646_1_, int p_149646_2_, int p_149646_3_, int p_149646_4_, int p_149646_5_) {
+    public boolean shouldSideBeRendered(
+        IBlockAccess p_149646_1_,
+        int p_149646_2_,
+        int p_149646_3_,
+        int p_149646_4_,
+        int p_149646_5_
+    ) {
         return true;
     }
 
     @SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
-		return this.icon;
-	}
+    @Override
+    public IIcon getIcon(int p_149691_1_, int p_149691_2_) {
+        return this.icon;
+    }
 
     // this seems to be getting the variants or something...
     @SideOnly(Side.CLIENT)
-	@Override
-	public String[] func_150125_e() {
-		return new String[]{"force"};
-	}
+    @Override
+    public String[] func_150125_e() {
+        return new String[] { "force" };
+    }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int getBlockColor()
-    {
+    public int getBlockColor() {
         return 0xffffff;
     }
 
     @SideOnly(Side.CLIENT)
-    public int getRenderColor(int p_149741_1_)
-    {
+    public int getRenderColor(int p_149741_1_) {
         return 0xffffff;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_) {
+    public int colorMultiplier(
+        IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_
+    ) {
         return 0xffffff;
     }
 
@@ -72,5 +78,4 @@ public class BlockForceLeaves extends BlockLeaves {
     public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
         return Item.getItemFromBlock(DartBlocks.forcesapling);
     }
-
 }

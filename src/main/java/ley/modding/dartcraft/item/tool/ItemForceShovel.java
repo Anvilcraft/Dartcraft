@@ -16,11 +16,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class ItemForceShovel extends ItemSpade implements IBreakable, IForceConsumer {
-
     private static int damage = 1;
     private static float efficiency = 5.0F;
     private static int toolLevel = 10;
-    public static ToolMaterial material = EnumHelper.addToolMaterial("FORCE", toolLevel, 512, efficiency, (float) damage, 0);
+    public static ToolMaterial material = EnumHelper.addToolMaterial(
+        "FORCE", toolLevel, 512, efficiency, (float) damage, 0
+    );
 
     public ItemForceShovel() {
         super(material);
@@ -33,7 +34,9 @@ public class ItemForceShovel extends ItemSpade implements IBreakable, IForceCons
             stack.setTagCompound(new NBTTagCompound());
         }
 
-        stack.getTagCompound().setBoolean("active", !stack.getTagCompound().getBoolean("active"));
+        stack.getTagCompound().setBoolean(
+            "active", !stack.getTagCompound().getBoolean("active")
+        );
         if (!Dartcraft.proxy.isSimulating(world)) {
             if (stack.getTagCompound().getBoolean("active")) {
                 Dartcraft.proxy.sendChatToPlayer(player, "Area mode activated.");
@@ -77,28 +80,35 @@ public class ItemForceShovel extends ItemSpade implements IBreakable, IForceCons
 
     @Override
     public boolean canHarvestBlock(Block block, ItemStack itemStack) {
-		return block.getMaterial() == Material.clay || block.getMaterial() == Material.craftedSnow || block.getMaterial() == Material.ground || block.getMaterial() == Material.sand || block.getMaterial() == Material.snow || block.getMaterial() == Material.grass;
+        return block.getMaterial() == Material.clay
+            || block.getMaterial() == Material.craftedSnow
+            || block.getMaterial() == Material.ground
+            || block.getMaterial() == Material.sand
+            || block.getMaterial() == Material.snow
+            || block.getMaterial() == Material.grass;
     }
 
     @Override
-    public boolean onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
+    public boolean
+    onBlockStartBreak(ItemStack stack, int x, int y, int z, EntityPlayer player) {
         World world = player.worldObj;
         Block tempBlock = world.getBlock(x, y, z);
         boolean force = false;
 
-        if(!this.canHarvestBlock(tempBlock, stack)) {
+        if (!this.canHarvestBlock(tempBlock, stack)) {
             return false;
         } else {
-            if(stack.hasTagCompound() && stack.getTagCompound().getBoolean("active")) {
+            if (stack.hasTagCompound() && stack.getTagCompound().getBoolean("active")) {
                 force = true;
             }
 
-            if(force) {
-                for(int i = -1; i < 2; ++i) {
-                    for(int j = -1; j < 2; ++j) {
-                        for(int k = -1; k < 2; ++k) {
-                            if(i != 0 || j != 0 || k != 0) {
-                                if(stack == null || stack.getItemDamage() >= stack.getMaxDamage()) {
+            if (force) {
+                for (int i = -1; i < 2; ++i) {
+                    for (int j = -1; j < 2; ++j) {
+                        for (int k = -1; k < 2; ++k) {
+                            if (i != 0 || j != 0 || k != 0) {
+                                if (stack == null
+                                    || stack.getItemDamage() >= stack.getMaxDamage()) {
                                     return false;
                                 }
 
@@ -120,8 +130,12 @@ public class ItemForceShovel extends ItemSpade implements IBreakable, IForceCons
         World world = player.worldObj;
         Block block = world.getBlock(x, y, z);
 
-        if (this.canHarvestBlock(block, stack) && block.getBlockHardness(world, x, y, z) > 0F & world.getTileEntity(x, y, z) == null) {
-            world.getBlock(x, y, z).harvestBlock(world, player, x, y, z, world.getBlockMetadata(x, y, z));
+        if (this.canHarvestBlock(block, stack)
+            && block.getBlockHardness(world, x, y, z) > 0F
+                & world.getTileEntity(x, y, z) == null) {
+            world.getBlock(x, y, z).harvestBlock(
+                world, player, x, y, z, world.getBlockMetadata(x, y, z)
+            );
             world.setBlockToAir(x, y, z);
             stack.damageItem(1, player);
         }

@@ -13,15 +13,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
-
 public class ItemClipboard extends Item {
-
     public ItemClipboard() {
         Util.configureItem(this, "clipboard");
         setMaxStackSize(1);
     }
 
-    public void onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
+    public void
+    onUpdate(ItemStack stack, World world, Entity entity, int par4, boolean par5) {
         if (stack == null)
             return;
         if (!stack.hasTagCompound())
@@ -36,21 +35,27 @@ public class ItemClipboard extends Item {
         NBTTagList contents = new NBTTagList();
         for (int i = 0; i < 9; i++) {
             NBTTagCompound itemComp = new NBTTagCompound();
-            itemComp.setByte("Slot", (byte)i);
+            itemComp.setByte("Slot", (byte) i);
             contents.appendTag((NBTBase) itemComp);
         }
-        comp.setTag("contents", (NBTBase)contents);
+        comp.setTag("contents", (NBTBase) contents);
         stack.setTagCompound(comp);
     }
 
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (stack.hasTagCompound()) {
-            NBTTagCompound dartTag = EntityUtils.getModComp((Entity)player);
+            NBTTagCompound dartTag = EntityUtils.getModComp((Entity) player);
             dartTag.setInteger("toOpen", stack.getTagCompound().getInteger("ID"));
             if (Dartcraft.proxy.isSimulating(world))
-                player.openGui(Dartcraft.instance, 0, world, (int)((Entity)player).posX, (int)((Entity)player).posY, (int)((Entity)player).posZ);
+                player.openGui(
+                    Dartcraft.instance,
+                    0,
+                    world,
+                    (int) ((Entity) player).posX,
+                    (int) ((Entity) player).posY,
+                    (int) ((Entity) player).posZ
+                );
         }
         return stack;
     }
-
 }

@@ -1,18 +1,23 @@
 package ley.modding.dartcraft.internal;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import cpw.mods.fml.common.registry.GameRegistry;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.tileralib.api.ICustomItemBlockProvider;
 import ley.modding.tileralib.api.IIngredient;
 import ley.modding.tileralib.api.IRegistry;
 import ley.modding.tileralib.api.ITEProvider;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-import java.util.*;
-
 public class Registry implements IRegistry {
-
     Map<String, Item> items;
     Map<String, Block> blocks;
 
@@ -43,7 +48,8 @@ public class Registry implements IRegistry {
     }
 
     @Override
-    public void addShapedRecipe(ItemStack output, String[] pattern, IIngredient[] ingredients) {
+    public void
+    addShapedRecipe(ItemStack output, String[] pattern, IIngredient[] ingredients) {
         List<Object> objects = new ArrayList<Object>(Arrays.asList(pattern));
         for (IIngredient i : ingredients) {
             objects.add(i.getKey());
@@ -79,13 +85,16 @@ public class Registry implements IRegistry {
         if (block != null) {
             String id = block.getUnlocalizedName().toLowerCase().split("\\.")[1];
             blocks.put(id, block);
-            GameRegistry.registerBlock(block, id);
+            Class<? extends ItemBlock> itemBlockClass
+                = block instanceof ICustomItemBlockProvider
+                ? ((ICustomItemBlockProvider) block).getItemBlockClass()
+                : ItemBlock.class;
+            GameRegistry.registerBlock(block, itemBlockClass, id);
             if (block instanceof ITEProvider) {
-                GameRegistry.registerTileEntity(((ITEProvider) block).getTEClass(),id);
+                GameRegistry.registerTileEntity(((ITEProvider) block).getTEClass(), id);
             }
             return block;
         }
         return null;
     }
-
 }

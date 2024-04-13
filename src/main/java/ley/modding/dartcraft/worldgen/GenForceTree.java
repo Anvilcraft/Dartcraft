@@ -21,7 +21,9 @@ public class GenForceTree extends WorldGenAbstractTree {
         this(doBlockNotify, 4, 0, 0);
     }
 
-    public GenForceTree(boolean doBlockNotify, int minTreeHeight, int metaWood, int metaLeaves) {
+    public GenForceTree(
+        boolean doBlockNotify, int minTreeHeight, int metaWood, int metaLeaves
+    ) {
         super(doBlockNotify);
         this.minTreeHeight = minTreeHeight;
         this.metaWood = metaWood;
@@ -69,10 +71,15 @@ public class GenForceTree extends WorldGenAbstractTree {
             } else {
                 Block block2 = world.getBlock(x, y - 1, z);
 
-                boolean isSoil =
-                    block2.canSustainPlant(
+                boolean isSoil = block2.canSustainPlant(
 
-                            world, x, y - 1, z, ForgeDirection.UP, (BlockSapling) DartBlocks.forcesapling);
+                    world,
+                    x,
+                    y - 1,
+                    z,
+                    ForgeDirection.UP,
+                    (BlockSapling) DartBlocks.forcesapling
+                );
                 if (isSoil && y < 256 - treeHeight - 1) {
                     block2.onPlantGrow(world, x, y - 1, z, x, y, z);
                     b0 = 3;
@@ -92,12 +99,20 @@ public class GenForceTree extends WorldGenAbstractTree {
                             for (int k2 = z - l1; k2 <= z + l1; ++k2) {
                                 int l2 = k2 - z;
 
-                                if (Math.abs(j2) != l1 || Math.abs(l2) != l1 || rand.nextInt(2) != 0 && i3 != 0) {
+                                if (Math.abs(j2) != l1 || Math.abs(l2) != l1
+                                    || rand.nextInt(2) != 0 && i3 != 0) {
                                     Block block1 = world.getBlock(i2, k1, k2);
 
-                                    if (block1.isAir(world, i2, k1, k2) || block1.isLeaves(world, i2, k1, k2)) {
+                                    if (block1.isAir(world, i2, k1, k2)
+                                        || block1.isLeaves(world, i2, k1, k2)) {
                                         this.setBlockAndNotifyAdequately(
-                                                world, i2, k1, k2, DartBlocks.forceleaves, this.metaLeaves);
+                                            world,
+                                            i2,
+                                            k1,
+                                            k2,
+                                            DartBlocks.forceleaves,
+                                            this.metaLeaves
+                                        );
                                     }
                                 }
                             }
@@ -107,8 +122,11 @@ public class GenForceTree extends WorldGenAbstractTree {
                     for (k1 = 0; k1 < treeHeight; ++k1) {
                         block = world.getBlock(x, y + k1, z);
 
-                        if (block.isAir(world, x, y + k1, z) || block.isLeaves(world, x, y + k1, z)) {
-                            this.setBlockAndNotifyAdequately(world, x, y + k1, z, DartBlocks.forcelog, this.metaWood);
+                        if (block.isAir(world, x, y + k1, z)
+                            || block.isLeaves(world, x, y + k1, z)) {
+                            this.setBlockAndNotifyAdequately(
+                                world, x, y + k1, z, DartBlocks.forcelog, this.metaWood
+                            );
                         }
                     }
 
@@ -122,4 +140,3 @@ public class GenForceTree extends WorldGenAbstractTree {
         }
     }
 }
-

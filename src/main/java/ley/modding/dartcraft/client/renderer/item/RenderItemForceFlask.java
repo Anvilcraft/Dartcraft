@@ -30,12 +30,15 @@ import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderItemForceFlask implements IItemRenderer {
-
     private static RenderItem renderer = new RenderItem();
 
-    private IModelCustom bottle = AdvancedModelLoader.loadModel(new ResourceLocation(Dartcraft.MODID, "models/bottle.obj"));
+    private IModelCustom bottle = AdvancedModelLoader.loadModel(
+        new ResourceLocation(Dartcraft.MODID, "models/bottle.obj")
+    );
 
-    private IModelCustom liquid = AdvancedModelLoader.loadModel(new ResourceLocation(Dartcraft.MODID, "models/liquid.obj"));
+    private IModelCustom liquid = AdvancedModelLoader.loadModel(
+        new ResourceLocation(Dartcraft.MODID, "models/liquid.obj")
+    );
 
     public static RenderItemForceFlask instance = new RenderItemForceFlask();
 
@@ -43,34 +46,52 @@ public class RenderItemForceFlask implements IItemRenderer {
         return true;
     }
 
-    public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType type, ItemStack item, IItemRenderer.ItemRendererHelper helper) {
-        return (type == IItemRenderer.ItemRenderType.INVENTORY || type == IItemRenderer.ItemRenderType.ENTITY);
+    public boolean shouldUseRenderHelper(
+        IItemRenderer.ItemRenderType type,
+        ItemStack item,
+        IItemRenderer.ItemRendererHelper helper
+    ) {
+        return (
+            type == IItemRenderer.ItemRenderType.INVENTORY
+            || type == IItemRenderer.ItemRenderType.ENTITY
+        );
     }
 
-    public void renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data) {
+    public void
+    renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data) {
         FontRenderer fontRenderer = (Minecraft.getMinecraft()).fontRenderer;
         Entity entity = null;
         GL11.glPushMatrix();
-        if (item != null && item.getItem() instanceof ItemEntityBottle && item.hasTagCompound())
+        if (item != null && item.getItem() instanceof ItemEntityBottle
+            && item.hasTagCompound())
             try {
                 if (item.getItemDamage() == 0) {
                     EntityLivingBase entityLivingBase = null;
-                    NBTTagCompound comp = (NBTTagCompound)item.getTagCompound().copy();
+                    NBTTagCompound comp = (NBTTagCompound) item.getTagCompound().copy();
                     Entity temp = null;
                     if (comp.hasKey("CanPickUpLoot")) {
-                        temp = EntityList.createEntityFromNBT(comp, (World)(Minecraft.getMinecraft()).theWorld);
+                        temp = EntityList.createEntityFromNBT(
+                            comp, (World) (Minecraft.getMinecraft()).theWorld
+                        );
                     } else {
                         temp = EntityUtils.getEntity(comp.getString("id"));
                     }
                     if (temp instanceof EntityLivingBase)
-                        entityLivingBase = (EntityLivingBase)temp;
-                    if (entityLivingBase != null && (Dartcraft.proxy.getClientInstance()).theWorld != null) {
-                        entityLivingBase.setWorld((World)(Dartcraft.proxy.getClientInstance()).theWorld);
-                        entityLivingBase.setLocationAndAngles(0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                        entityLivingBase = (EntityLivingBase) temp;
+                    if (entityLivingBase != null
+                        && (Dartcraft.proxy.getClientInstance()).theWorld != null) {
+                        entityLivingBase.setWorld(
+                            (World) (Dartcraft.proxy.getClientInstance()).theWorld
+                        );
+                        entityLivingBase.setLocationAndAngles(
+                            0.0D, 0.0D, 0.0D, 0.0F, 0.0F
+                        );
                     }
                     entity = entityLivingBase;
                 } else if (item.getItemDamage() == 1) {
-                    EntityItem entityItem  = new EntityItem((World)(Dartcraft.proxy.getClientInstance()).theWorld);
+                    EntityItem entityItem = new EntityItem(
+                        (World) (Dartcraft.proxy.getClientInstance()).theWorld
+                    );
                     entityItem.setLocationAndAngles(0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
                     entityItem.hoverStart = 1.0F;
                     entityItem.setEntityItemStack(new ItemStack(Blocks.brick_block));
@@ -81,17 +102,25 @@ public class RenderItemForceFlask implements IItemRenderer {
         float angle = 0.0F;
         float scale = 0.0F;
         scale(type);
-        if (type == IItemRenderer.ItemRenderType.INVENTORY && (entity instanceof net.minecraft.entity.monster.EntityEnderman || entity instanceof net.minecraft.entity.monster.EntitySpider || entity instanceof net.minecraft.entity.monster.EntityCaveSpider))
+        if (type == IItemRenderer.ItemRenderType.INVENTORY
+            && (entity instanceof net.minecraft.entity.monster.EntityEnderman
+                || entity instanceof net.minecraft.entity.monster.EntitySpider
+                || entity instanceof net.minecraft.entity.monster.EntityCaveSpider))
             entity = null;
         if (entity != null) {
             float coef = 1.0F;
-            if (entity instanceof net.minecraft.entity.monster.EntitySilverfish || entity instanceof net.minecraft.entity.passive.EntityOcelot || entity instanceof net.minecraft.entity.passive.EntityWolf)
+            if (entity instanceof net.minecraft.entity.monster.EntitySilverfish
+                || entity instanceof net.minecraft.entity.passive.EntityOcelot
+                || entity instanceof net.minecraft.entity.passive.EntityWolf)
                 coef = 2.5F;
-            scale = 8.0F * ((((Entity)entity).height > ((Entity)entity).width * coef) ? (1.3F / ((Entity)entity).height) : (0.5F / ((Entity)entity).width));
-            value = -((Entity)entity).height;
+            scale = 8.0F
+                * ((((Entity) entity).height > ((Entity) entity).width * coef)
+                       ? (1.3F / ((Entity) entity).height)
+                       : (0.5F / ((Entity) entity).width));
+            value = -((Entity) entity).height;
             angle = 0.0F;
             if (entity instanceof net.minecraft.entity.passive.EntityPig)
-                scale = 6.5F / ((Entity)entity).height;
+                scale = 6.5F / ((Entity) entity).height;
             if (entity instanceof EntityBottle) {
                 scale = 30.0F;
                 value += 1.5F;
@@ -100,7 +129,7 @@ public class RenderItemForceFlask implements IItemRenderer {
                 int age = item.getTagCompound().getInteger("Age");
                 if (age < 0) {
                     scale /= 2.0F;
-                    value -= ((Entity)entity).height * 0.5F;
+                    value -= ((Entity) entity).height * 0.5F;
                 }
             }
             if (type == IItemRenderer.ItemRenderType.INVENTORY)
@@ -115,11 +144,16 @@ public class RenderItemForceFlask implements IItemRenderer {
                 boolean shouldRender = (type != IItemRenderer.ItemRenderType.INVENTORY);
                 if (!shouldRender) {
                     Minecraft mc = Dartcraft.proxy.getClientInstance();
-                    EntityClientPlayerMP entityClientPlayerMP = (mc != null) ? mc.thePlayer : null;
+                    EntityClientPlayerMP entityClientPlayerMP
+                        = (mc != null) ? mc.thePlayer : null;
                     boolean found = false;
-                    if (entityClientPlayerMP != null && ((EntityPlayer)entityClientPlayerMP).inventory != null && ((EntityPlayer)entityClientPlayerMP).inventory.mainInventory != null)
+                    if (entityClientPlayerMP != null
+                        && ((EntityPlayer) entityClientPlayerMP).inventory != null
+                        && ((EntityPlayer) entityClientPlayerMP).inventory.mainInventory
+                            != null)
                         for (int i = 0; i < 9; i++) {
-                            ItemStack invStack = ((EntityPlayer)entityClientPlayerMP).inventory.mainInventory[i];
+                            ItemStack invStack = ((EntityPlayer) entityClientPlayerMP)
+                                                     .inventory.mainInventory[i];
                             if (invStack != null && invStack == item) {
                                 found = true;
                                 break;
@@ -129,9 +163,10 @@ public class RenderItemForceFlask implements IItemRenderer {
                         shouldRender = true;
                 }
                 if (shouldRender) {
-                    Render render = RenderManager.instance.getEntityRenderObject((Entity)entity);
+                    Render render
+                        = RenderManager.instance.getEntityRenderObject((Entity) entity);
                     if (render != null && entity != null)
-                        render.doRender((Entity)entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+                        render.doRender((Entity) entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
                 }
             } catch (Exception e) {}
             GL11.glPopMatrix();
@@ -193,10 +228,12 @@ public class RenderItemForceFlask implements IItemRenderer {
         float angle = 0.0F;
         float angle2 = 0.0F;
         float scale = 0.0F;
-        value = ((Entity)(Minecraft.getMinecraft()).thePlayer).rotationYaw * 2.0F;
-        angle = ((Entity)(Minecraft.getMinecraft()).thePlayer).rotationPitch * 2.0F;
-        angle2 = ((EntityLivingBase)(Minecraft.getMinecraft()).thePlayer).rotationYawHead * 2.0F;
-        if (Keyboard.isKeyDown(50));
+        value = ((Entity) (Minecraft.getMinecraft()).thePlayer).rotationYaw * 2.0F;
+        angle = ((Entity) (Minecraft.getMinecraft()).thePlayer).rotationPitch * 2.0F;
+        angle2 = ((EntityLivingBase) (Minecraft.getMinecraft()).thePlayer).rotationYawHead
+            * 2.0F;
+        if (Keyboard.isKeyDown(50))
+            ;
         if (type == IItemRenderer.ItemRenderType.INVENTORY) {
             scale = 0.04557239F;
             GL11.glScalef(scale, scale, scale);
@@ -226,5 +263,4 @@ public class RenderItemForceFlask implements IItemRenderer {
             GL11.glScalef(scale, scale, scale);
         }
     }
-
 }

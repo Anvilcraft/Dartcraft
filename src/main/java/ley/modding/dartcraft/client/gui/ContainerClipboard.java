@@ -1,6 +1,5 @@
 package ley.modding.dartcraft.client.gui;
 
-
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.item.ItemClipboard;
 import ley.modding.dartcraft.util.ItemCraftingInventory;
@@ -41,25 +40,37 @@ public class ContainerClipboard extends Container {
         this.hasInitialized = false;
         this.contents = inv;
         this.user = player;
-        this.playerInv = (IInventory)player.inventory;
+        this.playerInv = (IInventory) player.inventory;
         this.contents.setCraftingListener(this);
         this.neiBuffer = new ItemStack[9];
         int i;
         for (i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++)
-                addSlotToContainer(new ClipSlot((IInventory)this.contents, i * 3 + j, 25 + j * 18, 12 + i * 18));
+                addSlotToContainer(new ClipSlot(
+                    (IInventory) this.contents, i * 3 + j, 25 + j * 18, 12 + i * 18
+                ));
         }
-        addSlotToContainer((Slot)new ClipSlotCrafting(this.user, (IInventory)this.contents, (IInventory)this.craftResult, 0, 113, 30));
+        addSlotToContainer((Slot) new ClipSlotCrafting(
+            this.user,
+            (IInventory) this.contents,
+            (IInventory) this.craftResult,
+            0,
+            113,
+            30
+        ));
         for (i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++)
-                addSlotToContainer(new Slot(this.playerInv, 9 + i * 9 + j, 8 + 18 * j, 75 + 18 * i));
+                addSlotToContainer(
+                    new Slot(this.playerInv, 9 + i * 9 + j, 8 + 18 * j, 75 + 18 * i)
+                );
         }
         for (i = 0; i < 9; i++)
             addSlotToContainer(new Slot(this.playerInv, i, 8 + 18 * i, 133));
         this.hasInitialized = true;
-        onCraftMatrixChanged((IInventory)this.contents);
+        onCraftMatrixChanged((IInventory) this.contents);
         this.originStack = inv.parent;
-        if (this.originStack == null || !(this.originStack.getItem() instanceof ItemClipboard))
+        if (this.originStack == null
+            || !(this.originStack.getItem() instanceof ItemClipboard))
             player.closeScreen();
         this.useInventory = this.originStack.getTagCompound().getBoolean("useInventory");
         canStayOpen(player);
@@ -68,7 +79,12 @@ public class ContainerClipboard extends Container {
     public void onCraftMatrixChanged(IInventory inv) {
         if (!this.hasInitialized)
             return;
-        this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe((InventoryCrafting) this.contents, ((Entity)this.user).worldObj));
+        this.craftResult.setInventorySlotContents(
+            0,
+            CraftingManager.getInstance().findMatchingRecipe(
+                (InventoryCrafting) this.contents, ((Entity) this.user).worldObj
+            )
+        );
     }
 
     public ItemStack slotClick(int slot, int button, int par3, EntityPlayer player) {
@@ -103,7 +119,8 @@ public class ContainerClipboard extends Container {
                 if (!mergeItemStack(stack, 10, 46, true))
                     return null;
             if (index == 9) {
-                int maxCraftable = this.craftResult.getStackInSlot(0).getMaxStackSize() / (this.craftResult.getStackInSlot(0)).stackSize;
+                int maxCraftable = this.craftResult.getStackInSlot(0).getMaxStackSize()
+                    / (this.craftResult.getStackInSlot(0)).stackSize;
                 int i;
                 for (i = 0; i < 9; i++) {
                     ItemStack tempStack = this.contents.getStackInSlot(i);
@@ -126,7 +143,7 @@ public class ContainerClipboard extends Container {
                     return null;
             }
             if (stack.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+                slot.putStack((ItemStack) null);
             } else {
                 slot.onSlotChanged();
             }
@@ -144,12 +161,13 @@ public class ContainerClipboard extends Container {
 
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
-        if (!Dartcraft.proxy.isSimulating(((Entity)player).worldObj))
+        if (!Dartcraft.proxy.isSimulating(((Entity) player).worldObj))
             return;
         this.contents.onGuiSaved(player);
     }
 
-    protected void retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
+    protected void
+    retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
 
     public void grabItems(ItemStack[] items) {
         if (items == null || items.length != 9 || this.contents == null)
@@ -166,8 +184,12 @@ public class ContainerClipboard extends Container {
                 boolean found = false;
                 int j;
                 for (j = 0; j < this.user.inventory.mainInventory.length; j++) {
-                    if (isItemEquivalent(items[i], this.user.inventory.mainInventory[j])) {
-                        this.contents.setInventorySlotContents(i, this.user.inventory.mainInventory[j].copy());
+                    if (isItemEquivalent(
+                            items[i], this.user.inventory.mainInventory[j]
+                        )) {
+                        this.contents.setInventorySlotContents(
+                            i, this.user.inventory.mainInventory[j].copy()
+                        );
                         this.user.inventory.mainInventory[j] = null;
                         found = true;
                         break;
@@ -179,7 +201,9 @@ public class ContainerClipboard extends Container {
                             break;
                         if (isItemEquivalent(items[i], this.contents.getStackInSlot(j)))
                             if ((this.contents.getStackInSlot(j)).stackSize > 1) {
-                                this.contents.setInventorySlotContents(i, this.contents.getStackInSlot(j).copy());
+                                this.contents.setInventorySlotContents(
+                                    i, this.contents.getStackInSlot(j).copy()
+                                );
                                 (this.contents.getStackInSlot(i)).stackSize = 1;
                                 (this.contents.getStackInSlot(j)).stackSize--;
                                 break;
@@ -194,8 +218,8 @@ public class ContainerClipboard extends Container {
         ArrayList<ItemStack> checked = new ArrayList<ItemStack>();
         for (int i = 0; i < 9; i++) {
             ItemStack contentAt = this.contents.getStackInSlot(i);
-            if (contentAt != null && contentAt.getMaxStackSize() > 1 &&
-                    !containsItem(checked, contentAt)) {
+            if (contentAt != null && contentAt.getMaxStackSize() > 1
+                && !containsItem(checked, contentAt)) {
                 checked.add(contentAt.copy());
                 int total = 0;
                 int stacks = 0;
@@ -228,8 +252,9 @@ public class ContainerClipboard extends Container {
         int[] iterator = { 0, 1, 2, 5, 8, 7, 6, 3 };
         int freeSlots = 0;
         for (int i : iterator) {
-            if (this.contents.getStackInSlot(i) != null && (this.contents.getStackInSlot(i)).stackSize > 1 && this.contents
-                    .getStackInSlot(i).getMaxStackSize() > 1)
+            if (this.contents.getStackInSlot(i) != null
+                && (this.contents.getStackInSlot(i)).stackSize > 1
+                && this.contents.getStackInSlot(i).getMaxStackSize() > 1)
                 if (firstStack == null) {
                     firstStack = this.contents.getStackInSlot(i);
                 } else if (secondStack == null) {
@@ -247,38 +272,58 @@ public class ContainerClipboard extends Container {
                 if (this.contents.getStackInSlot(i) == null)
                     if (turn) {
                         if (firstStack.stackSize > 1) {
-                            this.contents.setInventorySlotContents(i, new ItemStack(firstStack.getItem(), 1, firstStack
-                                    .getItemDamage()));
+                            this.contents.setInventorySlotContents(
+                                i,
+                                new ItemStack(
+                                    firstStack.getItem(), 1, firstStack.getItemDamage()
+                                )
+                            );
                             if (firstStack.hasTagCompound())
-                                this.contents.getStackInSlot(i).setTagCompound((NBTTagCompound) firstStack
-                                        .getTagCompound().copy());
+                                this.contents.getStackInSlot(i).setTagCompound(
+                                    (NBTTagCompound) firstStack.getTagCompound().copy()
+                                );
                             firstStack.stackSize--;
                             hasChanged = true;
                         } else if (secondStack != null && secondStack.stackSize > 1) {
-                            this.contents.setInventorySlotContents(i, new ItemStack(secondStack.getItem(), 1, secondStack
-                                    .getItemDamage()));
+                            this.contents.setInventorySlotContents(
+                                i,
+                                new ItemStack(
+                                    secondStack.getItem(), 1, secondStack.getItemDamage()
+                                )
+                            );
                             if (secondStack.hasTagCompound())
-                                this.contents.getStackInSlot(i).setTagCompound((NBTTagCompound)secondStack
-                                        .getTagCompound().copy());
+                                this.contents.getStackInSlot(i).setTagCompound(
+                                    (NBTTagCompound) secondStack.getTagCompound().copy()
+                                );
                             secondStack.stackSize--;
                             hasChanged = true;
                         }
                         turn = (secondStack == null);
                     } else {
                         if (secondStack.stackSize > 1) {
-                            this.contents.setInventorySlotContents(i, new ItemStack(secondStack.getItem(), 1, secondStack
-                                    .getItemDamage()));
+                            this.contents.setInventorySlotContents(
+                                i,
+                                new ItemStack(
+                                    secondStack.getItem(), 1, secondStack.getItemDamage()
+                                )
+                            );
                             if (secondStack.hasTagCompound())
-                                this.contents.getStackInSlot(i).setTagCompound((NBTTagCompound)secondStack
-                                        .getTagCompound().copy());
+                                this.contents.getStackInSlot(i).setTagCompound(
+                                    (NBTTagCompound) secondStack.getTagCompound().copy()
+                                );
                             secondStack.stackSize--;
                             hasChanged = true;
                         } else if (firstStack != null && firstStack.stackSize > 1) {
-                            this.contents.setInventorySlotContents(i, new ItemStack(firstStack.getItem(), 1, firstStack
-                                    .getItemDamage()));
+                            this.contents.setInventorySlotContents(
+                                i,
+                                new ItemStack(
+                                    firstStack.getItem(), 1, firstStack.getItemDamage()
+                                )
+                            );
                             if (firstStack.hasTagCompound())
-                                this.contents.getStackInSlot(i).setTagCompound((NBTTagCompound)firstStack
-                                        .getTagCompound().copy());
+                                this.contents.getStackInSlot(i).setTagCompound(
+                                    (NBTTagCompound) firstStack.getTagCompound().copy()
+                                );
                             firstStack.stackSize--;
                             hasChanged = true;
                         }
@@ -309,10 +354,13 @@ public class ContainerClipboard extends Container {
     private boolean areStacksSameItem(ItemStack stack1, ItemStack stack2) {
         if (stack1 == null || stack2 == null)
             return (stack1 == null && stack2 == null);
-        return (stack1.getItem() == stack2.getItem() && stack1.getItemDamage() == stack2
-                .getItemDamage() && ((stack1.hasTagCompound() && stack2.hasTagCompound() &&
-                ItemStack.areItemStackTagsEqual(stack1, stack2)) || (
-                !stack1.hasTagCompound() && !stack2.hasTagCompound())));
+        return (
+            stack1.getItem() == stack2.getItem()
+            && stack1.getItemDamage() == stack2.getItemDamage()
+            && ((stack1.hasTagCompound() && stack2.hasTagCompound()
+                 && ItemStack.areItemStackTagsEqual(stack1, stack2))
+                || (!stack1.hasTagCompound() && !stack2.hasTagCompound()))
+        );
     }
 
     public void clearMatrix() {
@@ -357,13 +405,15 @@ public class ContainerClipboard extends Container {
         public void onSlotChanged() {
             super.onSlotChanged();
             if (getHasStack() && (getStack()).stackSize <= 0)
-                this.inventory.setInventorySlotContents(this.index, (ItemStack)null);
+                this.inventory.setInventorySlotContents(this.index, (ItemStack) null);
             ContainerClipboard.this.save();
         }
     }
 
     private class ClipSlotCrafting extends SlotCrafting {
-        public ClipSlotCrafting(EntityPlayer player, IInventory inv, IInventory inv2, int slot, int x, int y) {
+        public ClipSlotCrafting(
+            EntityPlayer player, IInventory inv, IInventory inv2, int slot, int x, int y
+        ) {
             super(player, inv, inv2, slot, x, y);
         }
 
@@ -380,7 +430,8 @@ public class ContainerClipboard extends Container {
             return false;
         int firstID = OreDictionary.getOreID(first);
         if (firstID > 0) {
-            ArrayList<ItemStack> firstOres = OreDictionary.getOres(Integer.valueOf(firstID));
+            ArrayList<ItemStack> firstOres
+                = OreDictionary.getOres(Integer.valueOf(firstID));
             if (firstOres != null && firstOres.size() > 0)
                 for (ItemStack tempStack : firstOres) {
                     if (OreDictionary.itemMatches(tempStack, second, false))
@@ -389,5 +440,4 @@ public class ContainerClipboard extends Container {
         }
         return false;
     }
-
 }

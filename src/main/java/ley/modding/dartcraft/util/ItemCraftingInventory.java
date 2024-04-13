@@ -46,7 +46,8 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
         int id = comp.getInteger("ID");
         for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
             if (player.inventory.getStackInSlot(i) != null) {
-                NBTTagCompound playerComp = player.inventory.getStackInSlot(i).getTagCompound();
+                NBTTagCompound playerComp
+                    = player.inventory.getStackInSlot(i).getTagCompound();
                 if (playerComp != null)
                     if (id == playerComp.getInteger("ID"))
                         return player.inventory.getStackInSlot(i);
@@ -82,7 +83,7 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
         if (comp == null)
             return;
         if (comp.hasKey("contents")) {
-            NBTTagList contentList = (NBTTagList)comp.getTag("contents");
+            NBTTagList contentList = (NBTTagList) comp.getTag("contents");
             this.contents = new ItemStack[getSizeInventory()];
             for (int i = 0; i < contentList.tagCount(); i++) {
                 NBTTagCompound tempComp = contentList.getCompoundTagAt(i);
@@ -98,9 +99,9 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
         for (int i = 0; i < this.contents.length; i++) {
             if (this.contents[i] != null) {
                 NBTTagCompound tempComp = new NBTTagCompound();
-                tempComp.setByte("Slot", (byte)i);
+                tempComp.setByte("Slot", (byte) i);
                 this.contents[i].writeToNBT(tempComp);
-                contentList.appendTag((NBTBase)tempComp);
+                contentList.appendTag((NBTBase) tempComp);
             }
             comp.setTag("contents", (NBTBase) contentList);
         }
@@ -111,7 +112,8 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
     }
 
     public ItemStack decrStackSize(int i, int j) {
-        if (this.contents == null || this.contents.length <= i || i < 0 || this.contents[i] == null)
+        if (this.contents == null || this.contents.length <= i || i < 0
+            || this.contents[i] == null)
             return null;
         if ((this.contents[i]).stackSize <= j) {
             ItemStack itemStack = this.contents[i];
@@ -127,7 +129,8 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
     }
 
     public ItemStack getStackInSlotOnClosing(int slot) {
-        if (this.contents == null || this.contents.length <= slot || slot < 0 || this.contents[slot] == null)
+        if (this.contents == null || this.contents.length <= slot || slot < 0
+            || this.contents[slot] == null)
             return null;
         ItemStack returnVal = this.contents[slot];
         this.contents[slot] = null;
@@ -173,4 +176,3 @@ public class ItemCraftingInventory extends InventoryCrafting implements IInvento
         return true;
     }
 }
-

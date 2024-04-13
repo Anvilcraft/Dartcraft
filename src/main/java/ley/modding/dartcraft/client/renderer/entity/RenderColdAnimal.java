@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 
 @SideOnly(Side.CLIENT)
 public class RenderColdAnimal extends RenderLiving {
-    private final ResourceLocation texture; 
+    private final ResourceLocation texture;
 
     public RenderColdAnimal(ModelBase par1ModelBase, float par2, String textureLocation) {
         super(par1ModelBase, par2);

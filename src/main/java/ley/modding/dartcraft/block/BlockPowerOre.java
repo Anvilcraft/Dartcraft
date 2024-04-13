@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockPowerOre extends Block {
-
     public static IIcon stoneicon;
     public static IIcon nethericon;
     public static IIcon powericon;
@@ -62,16 +61,15 @@ public class BlockPowerOre extends Block {
     }
 
     @Override
-    public void dropXpOnBlockBreak(World world, int x, int y, int z, int exp)
-    {
+    public void dropXpOnBlockBreak(World world, int x, int y, int z, int exp) {
         exp = world.rand.nextInt(3) + 2;
-        if (Dartcraft.proxy.isSimulating(world))
-        {
-            while (exp > 0)
-            {
+        if (Dartcraft.proxy.isSimulating(world)) {
+            while (exp > 0) {
                 int amt = EntityXPOrb.getXPSplit(exp);
                 exp -= amt;
-                world.spawnEntityInWorld(new EntityXPOrb(world, x + 0.5D, y + 0.5D, z + 0.5D, amt));
+                world.spawnEntityInWorld(
+                    new EntityXPOrb(world, x + 0.5D, y + 0.5D, z + 0.5D, amt)
+                );
             }
         }
     }

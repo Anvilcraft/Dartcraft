@@ -38,8 +38,13 @@ public abstract class DartPacket implements IMessage {
                     this.receiver += buf.readChar();
             }
             if (buf.readBoolean())
-                this
-                        .point = new NetworkRegistry.TargetPoint(buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+                this.point = new NetworkRegistry.TargetPoint(
+                    buf.readInt(),
+                    buf.readDouble(),
+                    buf.readDouble(),
+                    buf.readDouble(),
+                    buf.readDouble()
+                );
         } catch (Exception e) {
             e.printStackTrace();
         }

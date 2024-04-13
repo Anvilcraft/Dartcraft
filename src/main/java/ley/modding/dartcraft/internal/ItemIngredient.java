@@ -4,7 +4,6 @@ import ley.modding.tileralib.api.IIngredient;
 import net.minecraft.item.Item;
 
 public class ItemIngredient implements IIngredient {
-
     char key;
     int count;
     Item item;

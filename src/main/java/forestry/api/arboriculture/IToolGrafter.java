@@ -20,5 +20,7 @@ public interface IToolGrafter {
      * @param z z-Coordinate of the broken leaf block.
      * @return Float representing the factor the usual drop chance is to be multiplied by.
      */
-    float getSaplingModifier(ItemStack stack, World world, EntityPlayer player, int x, int y, int z);
+    float getSaplingModifier(
+        ItemStack stack, World world, EntityPlayer player, int x, int y, int z
+    );
 }

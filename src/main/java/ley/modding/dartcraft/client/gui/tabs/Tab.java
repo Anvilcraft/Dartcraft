@@ -7,7 +7,8 @@ import net.minecraft.client.gui.Gui;
 import org.lwjgl.opengl.GL11;
 
 public abstract class Tab {
-    protected static FontRenderer tabFontRenderer = (FMLClientHandler.instance().getClient()).fontRenderer;
+    protected static FontRenderer tabFontRenderer
+        = (FMLClientHandler.instance().getClient()).fontRenderer;
 
     private boolean open;
 
@@ -48,16 +49,48 @@ public abstract class Tab {
         GL11.glColor4f(colorR, colorG, colorB, 1.0F);
         if (this.leftSide) {
             Dartcraft.proxy.bindTexture("tab_left.png");
-            this.myGui.drawTexturedModalRect(x - this.currentWidth, y + 4, 0, 256 - this.currentHeight + 4, 4, this.currentHeight - 4);
-            this.myGui.drawTexturedModalRect(x - this.currentWidth + 4, y, 256 - this.currentWidth + 4, 0, this.currentWidth - 4, 4);
+            this.myGui.drawTexturedModalRect(
+                x - this.currentWidth,
+                y + 4,
+                0,
+                256 - this.currentHeight + 4,
+                4,
+                this.currentHeight - 4
+            );
+            this.myGui.drawTexturedModalRect(
+                x - this.currentWidth + 4,
+                y,
+                256 - this.currentWidth + 4,
+                0,
+                this.currentWidth - 4,
+                4
+            );
             this.myGui.drawTexturedModalRect(x - this.currentWidth, y, 0, 0, 4, 4);
-            this.myGui.drawTexturedModalRect(x - this.currentWidth + 4, y + 4, 256 - this.currentWidth + 4, 256 - this.currentHeight + 4, this.currentWidth - 4, this.currentHeight - 4);
+            this.myGui.drawTexturedModalRect(
+                x - this.currentWidth + 4,
+                y + 4,
+                256 - this.currentWidth + 4,
+                256 - this.currentHeight + 4,
+                this.currentWidth - 4,
+                this.currentHeight - 4
+            );
         } else {
             Dartcraft.proxy.bindTexture("tab_right.png");
-            this.myGui.drawTexturedModalRect(x, y, 0, 256 - this.currentHeight, 4, this.currentHeight);
-            this.myGui.drawTexturedModalRect(x + 4, y, 256 - this.currentWidth + 4, 0, this.currentWidth - 4, 4);
+            this.myGui.drawTexturedModalRect(
+                x, y, 0, 256 - this.currentHeight, 4, this.currentHeight
+            );
+            this.myGui.drawTexturedModalRect(
+                x + 4, y, 256 - this.currentWidth + 4, 0, this.currentWidth - 4, 4
+            );
             this.myGui.drawTexturedModalRect(x, y, 0, 0, 4, 4);
-            this.myGui.drawTexturedModalRect(x + 4, y + 4, 256 - this.currentWidth + 4, 256 - this.currentHeight + 4, this.currentWidth - 4, this.currentHeight - 4);
+            this.myGui.drawTexturedModalRect(
+                x + 4,
+                y + 4,
+                256 - this.currentWidth + 4,
+                256 - this.currentHeight + 4,
+                this.currentWidth - 4,
+                this.currentHeight - 4
+            );
         }
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     }
@@ -67,7 +100,9 @@ public abstract class Tab {
         Dartcraft.proxy.bindTexture(texture);
         int textureRow = iconIndex >> 4;
         int textureColumn = iconIndex - 16 * textureRow;
-        this.myGui.drawTexturedModalRect(x, y, 16 * textureColumn, 16 * textureRow, 16, 16);
+        this.myGui.drawTexturedModalRect(
+            x, y, 16 * textureColumn, 16 * textureRow, 16, 16
+        );
     }
 
     public int getHeight() {
@@ -82,7 +117,8 @@ public abstract class Tab {
 
     public boolean intersectsWith(int mouseX, int mouseY, int shiftX, int shiftY) {
         if (this.leftSide) {
-            if (mouseX <= shiftX && mouseX >= shiftX - this.currentWidth && mouseY >= shiftY && mouseY <= shiftY + this.currentHeight)
+            if (mouseX <= shiftX && mouseX >= shiftX - this.currentWidth
+                && mouseY >= shiftY && mouseY <= shiftY + this.currentHeight)
                 return true;
         } else if (mouseX >= shiftX && mouseX <= shiftX + this.currentWidth && mouseY >= shiftY && mouseY <= shiftY + this.currentHeight) {
             return true;

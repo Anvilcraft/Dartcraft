@@ -3,9 +3,7 @@ package ley.modding.dartcraft.api;
 import net.minecraft.item.ItemStack;
 
 public interface IBottleRenderable {
+    ItemStack getEntityItem();
 
-   ItemStack getEntityItem();
-
-   void setEntityItem(ItemStack var1);
-
+    void setEntityItem(ItemStack var1);
 }

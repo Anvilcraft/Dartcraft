@@ -24,7 +24,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
 public class BlockLiquidForce extends BlockFluidClassic {
-
     public IIcon still;
     public IIcon flowing;
     public IIcon milk;
@@ -42,7 +41,8 @@ public class BlockLiquidForce extends BlockFluidClassic {
         return 15;
     }
 
-    public void velocityToAddToEntity(World world, int x, int y, int z, Entity entity, Vec3 vec) {
+    public void
+    velocityToAddToEntity(World world, int x, int y, int z, Entity entity, Vec3 vec) {
         if (entity == null)
             return;
         try {
@@ -53,16 +53,20 @@ public class BlockLiquidForce extends BlockFluidClassic {
         } catch (Exception e) {}
     }
 
-    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+    public void
+    onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
         try {
             if (entity instanceof EntityLivingBase) {
-                EntityLivingBase living = (EntityLivingBase)entity;
-                if (living.isEntityUndead() || living instanceof net.minecraft.entity.monster.EntityBlaze) {
-                    living.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 1, 9, false));
+                EntityLivingBase living = (EntityLivingBase) entity;
+                if (living.isEntityUndead()
+                    || living instanceof net.minecraft.entity.monster.EntityBlaze) {
+                    living.addPotionEffect(
+                        new PotionEffect(Potion.weakness.getId(), 1, 9, false)
+                    );
                     /*if (Config.baneForce) {
-                        living.attackEntityFrom((DamageSource) PunishDamage.instance, 2.0F);
-                    } else {*/
-                        living.attackEntityFrom(DamageSource.magic, 2.0F);
+                        living.attackEntityFrom((DamageSource)
+                    PunishDamage.instance, 2.0F); } else {*/
+                    living.attackEntityFrom(DamageSource.magic, 2.0F);
                     //}
                 } else {
                     if (living.getAir() < 255)
@@ -73,26 +77,37 @@ public class BlockLiquidForce extends BlockFluidClassic {
                 }
                 if (Dartcraft.proxy.isSimulating(world)) {
                     float chance = 0.9925F;
-                    if (living instanceof EntityColdCow && living.getRNG().nextFloat() > chance) {
-                        EntityColdCow cow = (EntityColdCow)living;
+                    if (living instanceof EntityColdCow
+                        && living.getRNG().nextFloat() > chance) {
+                        EntityColdCow cow = (EntityColdCow) living;
                         //cow.shouldRevert = true;
                     }
-                    if (living instanceof EntityColdChicken && living.getRNG().nextFloat() > chance) {
-                        EntityColdChicken chicken = (EntityColdChicken)living;
+                    if (living instanceof EntityColdChicken
+                        && living.getRNG().nextFloat() > chance) {
+                        EntityColdChicken chicken = (EntityColdChicken) living;
                         //chicken.shouldRevert = true;
                     }
-                    if (living instanceof EntityColdPig && living.getRNG().nextFloat() > chance) {
-                        EntityColdPig pig = (EntityColdPig)living;
+                    if (living instanceof EntityColdPig
+                        && living.getRNG().nextFloat() > chance) {
+                        EntityColdPig pig = (EntityColdPig) living;
                         //pig.shouldRevert = true;
                     }
-                    if (living instanceof EntitySheep && living.getRNG().nextFloat() > chance) {
-                        EntitySheep sheep = (EntitySheep)living;
+                    if (living instanceof EntitySheep
+                        && living.getRNG().nextFloat() > chance) {
+                        EntitySheep sheep = (EntitySheep) living;
                         sheep.eatGrassBonus();
                     }
-                    if (living instanceof EntityAgeable && !(living instanceof net.minecraft.entity.passive.EntityHorse)) {
-                        EntityAgeable animal = (EntityAgeable)living;
+                    if (living instanceof EntityAgeable
+                        && !(
+                            living instanceof net.minecraft.entity.passive.EntityHorse
+                        )) {
+                        EntityAgeable animal = (EntityAgeable) living;
                         if (animal.getGrowingAge() < 0)
-                            animal.setGrowingAge((animal.getGrowingAge() < -20) ? (animal.getGrowingAge() + 20) : 0);
+                            animal.setGrowingAge(
+                                (animal.getGrowingAge() < -20)
+                                    ? (animal.getGrowingAge() + 20)
+                                    : 0
+                            );
                     }
                 }
             }
@@ -118,4 +133,3 @@ public class BlockLiquidForce extends BlockFluidClassic {
         }
     }
 }
-

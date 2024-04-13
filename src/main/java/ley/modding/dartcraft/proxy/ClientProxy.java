@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
-
     public static RenderTileForceEngine engineRender;
 
     public boolean isSimulating(World world) {
@@ -33,24 +32,49 @@ public class ClientProxy extends CommonProxy {
 
     public void bindTexture(String texture) {
         if (texture != null)
-            getClientInstance().getTextureManager().bindTexture(new ResourceLocation(Dartcraft.MODID, texture));
+            getClientInstance().getTextureManager().bindTexture(
+                new ResourceLocation(Dartcraft.MODID, texture)
+            );
     }
 
     public void init() {
         super.init();
-        MinecraftForgeClient.registerItemRenderer(DartItems.forceflask, RenderItemForceFlask.instance);
-        MinecraftForgeClient.registerItemRenderer(DartItems.entitybottle, RenderItemForceFlask.instance);
+        MinecraftForgeClient.registerItemRenderer(
+            DartItems.forceflask, RenderItemForceFlask.instance
+        );
+        MinecraftForgeClient.registerItemRenderer(
+            DartItems.entitybottle, RenderItemForceFlask.instance
+        );
         RenderEntityBottle bottleRenderer = new RenderEntityBottle();
-        RenderingRegistry.registerEntityRenderingHandler(EntityBottle.class, bottleRenderer);
-        RenderingRegistry.registerEntityRenderingHandler(EntityFlyingFlask.class, bottleRenderer);
-        RenderingRegistry.registerEntityRenderingHandler(EntityColdChicken.class, new RenderColdAnimal(new ModelChicken(), 0.6f, "textures/entity/coldChicken.png"));
-        RenderingRegistry.registerEntityRenderingHandler(EntityColdCow.class, new RenderColdAnimal(new ModelCow(), 0.6f, "textures/entity/coldCow.png"));
-        RenderingRegistry.registerEntityRenderingHandler(EntityColdPig.class, new RenderColdAnimal(new ModelPig(), 0.6f, "textures/entity/coldPig.png"));
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityBottle.class, bottleRenderer
+        );
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityFlyingFlask.class, bottleRenderer
+        );
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityColdChicken.class,
+            new RenderColdAnimal(
+                new ModelChicken(), 0.6f, "textures/entity/coldChicken.png"
+            )
+        );
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityColdCow.class,
+            new RenderColdAnimal(new ModelCow(), 0.6f, "textures/entity/coldCow.png")
+        );
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntityColdPig.class,
+            new RenderColdAnimal(new ModelPig(), 0.6f, "textures/entity/coldPig.png")
+        );
         Config.powerOreRenderID = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(new PowerOreRenderer());
         engineRender = new RenderTileForceEngine();
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityForceEngine.class, engineRender);
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(DartBlocks.engine), new RenderItemEngine());
+        ClientRegistry.bindTileEntitySpecialRenderer(
+            TileEntityForceEngine.class, engineRender
+        );
+        MinecraftForgeClient.registerItemRenderer(
+            Item.getItemFromBlock(DartBlocks.engine), new RenderItemEngine()
+        );
     }
 
     public void sendPacketToServer(DartPacket packet) {
@@ -60,5 +84,4 @@ public class ClientProxy extends CommonProxy {
             e.printStackTrace();
         }
     }
-
 }
