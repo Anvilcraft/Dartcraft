@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.fx.FXDisney;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFireworkStarterFX;
@@ -386,16 +387,15 @@ public class FXUtils {
         }
 
         for (int i = 0; i < num; ++i) {
-            // TODO: WTF
-            //FXDisney fx = new FXDisney(
-            //    world,
-            //    x + offset + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    y + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    z + offset + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    color,
-            //    type
-            //);
-            //renderer.addEffect(fx);
+            FXDisney fx = new FXDisney(
+                world,
+                x + offset + world.rand.nextDouble() - world.rand.nextDouble(),
+                y + world.rand.nextDouble() - world.rand.nextDouble(),
+                z + offset + world.rand.nextDouble() - world.rand.nextDouble(),
+                color,
+                type
+            );
+            renderer.addEffect(fx);
         }
     }
 

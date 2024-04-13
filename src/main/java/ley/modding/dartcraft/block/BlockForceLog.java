@@ -5,6 +5,7 @@ import ley.modding.dartcraft.util.Util;
 import net.minecraft.block.BlockLog;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 
 public class BlockForceLog extends BlockLog {
     private IIcon sideIcon;
@@ -28,5 +29,20 @@ public class BlockForceLog extends BlockLog {
     @Override
     protected IIcon getSideIcon(int p_150163_1_) {
         return this.sideIcon;
+    }
+
+    @Override
+    public boolean canSustainLeaves(IBlockAccess arg0, int arg1, int arg2, int arg3) {
+        return true;
+    }
+
+    @Override
+    public boolean canBeReplacedByLeaves(IBlockAccess arg0, int arg1, int arg2, int arg3) {
+        return false;
+    }
+
+    @Override
+    public boolean isWood(IBlockAccess arg0, int arg1, int arg2, int arg3) {
+        return true;
     }
 }

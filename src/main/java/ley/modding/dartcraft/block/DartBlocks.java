@@ -10,7 +10,9 @@ public class DartBlocks {
     public static Block forcebrick;
     public static Block forceleaves;
     public static Block forcelog;
+    public static Block forceplanks;
     public static Block forcesapling;
+    public static Block forceslab;
     public static Block liquidforce;
     public static Block powerore;
 
@@ -25,7 +27,9 @@ public class DartBlocks {
         DartBlocks.forcebrick = reg.registerBlock(new BlockForceBrick());
         DartBlocks.forceleaves = reg.registerBlock(new BlockForceLeaves());
         DartBlocks.forcelog = reg.registerBlock(new BlockForceLog());
+        DartBlocks.forceplanks = reg.registerBlock(new BlockForcePlanks());
         DartBlocks.forcesapling = reg.registerBlock(new BlockForceSapling());
+        DartBlocks.forceslab = reg.registerBlock(new BlockForceSlab());
         DartBlocks.liquidforce = reg.registerBlock(new BlockLiquidForce());
         DartBlocks.powerore = reg.registerBlock(new BlockPowerOre());
     }

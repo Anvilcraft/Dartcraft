@@ -26,17 +26,20 @@ import net.minecraftforge.client.MinecraftForgeClient;
 public class ClientProxy extends CommonProxy {
     public static RenderTileForceEngine engineRender;
 
+    @Override
     public boolean isSimulating(World world) {
         return world != null && !world.isRemote;
     }
 
+    @Override
     public void bindTexture(String texture) {
         if (texture != null)
-            getClientInstance().getTextureManager().bindTexture(
+            this.getClientInstance().getTextureManager().bindTexture(
                 new ResourceLocation(Dartcraft.MODID, texture)
             );
     }
 
+    @Override
     public void init() {
         super.init();
         MinecraftForgeClient.registerItemRenderer(
@@ -77,6 +80,7 @@ public class ClientProxy extends CommonProxy {
         );
     }
 
+    @Override
     public void sendPacketToServer(DartPacket packet) {
         try {
             Dartcraft.channel.sendToServer(packet);

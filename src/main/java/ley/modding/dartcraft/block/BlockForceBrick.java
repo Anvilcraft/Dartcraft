@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ley.modding.dartcraft.item.ItemBlockForceBrick;
+import ley.modding.dartcraft.item.AbstractItemBlockMetadata;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.dartcraft.util.Util;
@@ -99,13 +99,13 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
         }
     }
 
-    // TODO: WTF
-    //@Override
+    @Override
     @SideOnly(Side.CLIENT)
-    public boolean addBlockDestroyEffects(
+    public boolean addDestroyEffects(
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
         int color = world.getBlockMetadata(x, y, z);
+        System.out.println("ALEC: " + color + " " + Integer.toHexString(DartUtils.getMcColor(color)));
         FXUtils.makeShiny(
             world,
             (double) x,
@@ -119,10 +119,9 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
         return true;
     }
 
-    // TODO: WTF
-    //@Override
+    @Override
     @SideOnly(Side.CLIENT)
-    public boolean addBlockHitEffects(
+    public boolean addHitEffects(
         World world, MovingObjectPosition target, EffectRenderer renderer
     ) {
         int color = world.getBlockMetadata(target.blockX, target.blockY, target.blockZ);
@@ -150,6 +149,17 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
 
     @Override
     public Class<? extends ItemBlock> getItemBlockClass() {
-        return ItemBlockForceBrick.class;
+        return BlockItem.class;
+    }
+
+    public static class BlockItem extends AbstractItemBlockMetadata {
+        public BlockItem(Block block) {
+            super(block);
+        }
+
+        @Override
+        public String getID() {
+            return "forcebrick";
+        }
     }
 }

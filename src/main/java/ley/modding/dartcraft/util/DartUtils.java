@@ -104,24 +104,24 @@ public class DartUtils {
 
     public static int getMcColor(int color) {
         int[] lookup = new int[] {
-            0x333333,
+            0xff333333,
             Color.red.getRGB(),
             Color.green.getRGB(),
-            0x6e5334,
+            0xff6e5334,
             Color.blue.getRGB(),
-            0x6b47b8,
+            0xff6b47b8,
             Color.cyan.getRGB(),
             Color.lightGray.getRGB(),
             Color.gray.getRGB(),
             Color.pink.getRGB(),
-            0x9ed843,
+            0xff9ed843,
             Color.yellow.getRGB(),
-            0x51a8f4,
+            0xff51a8f4,
             Color.magenta.getRGB(),
             Color.orange.getRGB(),
             Color.white.getRGB(),
         };
 
-        return color > 0 && color < lookup.length ? lookup[color] : 0;
+        return color >= 0 && color < lookup.length ? lookup[color] : 0;
     }
 }

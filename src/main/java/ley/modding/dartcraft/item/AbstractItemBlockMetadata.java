@@ -5,12 +5,14 @@ import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBlockForceBrick extends ItemBlock {
-    public ItemBlockForceBrick(Block block) {
+public abstract class AbstractItemBlockMetadata extends ItemBlock {
+    public AbstractItemBlockMetadata(Block block) {
         super(block);
-        Util.configureItem(this, "forcebrick");
+        Util.configureItem(this, this.getID());
         this.setHasSubtypes(true);
     }
+
+    public abstract String getID();
 
     @Override
     public int getMetadata(int damage) {
@@ -19,6 +21,6 @@ public class ItemBlockForceBrick extends ItemBlock {
 
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "tile.forcebrick" + stack.getItemDamage();
+        return "tile." + this.getID() + stack.getItemDamage();
     }
 }
