@@ -1,32 +1,22 @@
 package ley.modding.dartcraft.block;
 
-import java.util.List;
-import java.util.stream.IntStream;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import ley.modding.dartcraft.item.AbstractItemBlockMetadata;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.dartcraft.util.Util;
-import ley.modding.tileralib.api.ICustomItemBlockProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockForceBrick extends Block {
+public class BlockForceBrick extends BaseBlock {
     int type;
 
     public BlockForceBrick(int type) {
@@ -82,38 +72,8 @@ public class BlockForceBrick extends Block {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public boolean addDestroyEffects(
-        World world, int x, int y, int z, int meta, EffectRenderer renderer
-    ) {
-        FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
-            2,
-            DartUtils.getMcColor(this.type),
-            32,
-            true
-        );
-        return true;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
-        FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
-            2,
-            DartUtils.getMcColor(this.type),
-            4,
-            true
-        );
-        return true;
+    public int getColor() {
+        return DartUtils.getMcColor(this.type);
     }
 
     @Override

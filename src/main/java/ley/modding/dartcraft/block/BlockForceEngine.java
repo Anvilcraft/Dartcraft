@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.util.DartUtils;
+import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.tileralib.api.ITEProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -131,22 +132,38 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
             : false;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean addDestroyEffects(
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
-        //FXUtils.makeShiny(world, (double)x, (double)y, (double)z, 2, 16776960, 16,
-        //true);
+        FXUtils.makeShiny(
+            world,
+            (double) x,
+            (double) y,
+            (double) z,
+            2,
+            BaseBlock.DEFAULT_COLOR,
+            32,
+            true
+        );
         return true;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
     public boolean
     addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
-        if (world != null && target != null) { //TODO FX
-            //FXUtils.makeShiny(world, (double)target.blockX, (double)target.blockY,
-            //(double)target.blockZ, 2, 16776960, 3, true);
-        }
+        FXUtils.makeShiny(
+            world,
+            (double) target.blockX,
+            (double) target.blockY,
+            (double) target.blockZ,
+            2,
+            BaseBlock.DEFAULT_COLOR,
+            4,
+            true
+        );
         return true;
     }
 

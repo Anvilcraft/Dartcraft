@@ -6,6 +6,7 @@ import ley.modding.dartcraft.block.BlockPowerOre;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
@@ -18,9 +19,9 @@ public class PowerOreRenderer
         renderer.setRenderBoundsFromBlock(block);
         IIcon bgIcon = null;
         if (meta == 1) {
-            bgIcon = BlockPowerOre.nethericon;
+            bgIcon = Blocks.netherrack.getIcon(0, 0);
         } else {
-            bgIcon = BlockPowerOre.stoneicon;
+            bgIcon = Blocks.stone.getIcon(0, 0);
         }
         DrawFaces(renderer, block, bgIcon, false);
         GL11.glColor3f(1.0F, 1.0F, 0.0F);
@@ -38,7 +39,7 @@ public class PowerOreRenderer
         int modelId,
         RenderBlocks renderer
     ) {
-        int brightness = setBrightness(world, x, y, z, block);
+        BlockRenderer.setBrightness(world, x, y, z, block);
         block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
         renderer.setRenderBoundsFromBlock(block);
         renderer.renderStandardBlock(block, x, y, z);
