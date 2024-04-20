@@ -120,6 +120,7 @@ public class DartUtils {
             Color.magenta.getRGB(),
             Color.orange.getRGB(),
             Color.white.getRGB(),
+            Color.yellow.getRGB(),
         };
 
         return color >= 0 && color < lookup.length ? lookup[color] : 0;

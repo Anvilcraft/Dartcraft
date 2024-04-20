@@ -26,40 +26,22 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
-    public IIcon[] icons;
+public class BlockForceBrick extends Block {
+    int type;
 
-    public BlockForceBrick() {
+    public BlockForceBrick(int type) {
         super(Material.rock);
-        Util.configureBlock(this, "forcebrick");
+        Util.configureBlock(this, "forcebrick" + type);
         this.setHardness(2.0F);
         this.setResistance(2000.0F);
         this.setStepSound(Block.soundTypeStone);
+        this.type = type;
     }
 
     @Override
     public boolean
     canCreatureSpawn(EnumCreatureType type, IBlockAccess world, int x, int y, int z) {
         return false;
-    }
-
-    @Override
-    public IIcon getIcon(int side, int meta) {
-        return meta >= 0 && meta < 16 ? this.icons[meta] : this.blockIcon;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public void getSubBlocks(Item par1, CreativeTabs tab, List list) {
-        IntStream.range(0, 16)
-            .mapToObj(i -> new ItemStack(this, 1, i))
-            .forEach(list::add);
-    }
-
-    @Override
-    public int damageDropped(int meta) {
-        return meta;
     }
 
     @Override
@@ -104,15 +86,13 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
     public boolean addDestroyEffects(
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
-        int color = world.getBlockMetadata(x, y, z);
-        System.out.println("ALEC: " + color + " " + Integer.toHexString(DartUtils.getMcColor(color)));
         FXUtils.makeShiny(
             world,
             (double) x,
             (double) y,
             (double) z,
             2,
-            DartUtils.getMcColor(color),
+            DartUtils.getMcColor(this.type),
             32,
             true
         );
@@ -121,17 +101,15 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addHitEffects(
-        World world, MovingObjectPosition target, EffectRenderer renderer
-    ) {
-        int color = world.getBlockMetadata(target.blockX, target.blockY, target.blockZ);
+    public boolean
+    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
         FXUtils.makeShiny(
             world,
             (double) target.blockX,
             (double) target.blockY,
             (double) target.blockZ,
             2,
-            DartUtils.getMcColor(color),
+            DartUtils.getMcColor(this.type),
             4,
             true
         );
@@ -141,25 +119,6 @@ public class BlockForceBrick extends Block implements ICustomItemBlockProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister reggie) {
-        this.icons = IntStream.range(0, 16)
-                         .mapToObj(i -> "dartcraft:brick" + i)
-                         .map(reggie::registerIcon)
-                         .toArray(IIcon[] ::new);
-    }
-
-    @Override
-    public Class<? extends ItemBlock> getItemBlockClass() {
-        return BlockItem.class;
-    }
-
-    public static class BlockItem extends AbstractItemBlockMetadata {
-        public BlockItem(Block block) {
-            super(block);
-        }
-
-        @Override
-        public String getID() {
-            return "forcebrick";
-        }
+        this.blockIcon = reggie.registerIcon("dartcraft:brick" + this.type);
     }
 }
