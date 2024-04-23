@@ -12,29 +12,29 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class FXDisney extends EntityFX {
+public class FXTime extends EntityFX {
     public static final int TYPE_FALL = 0;
     public static final int TYPE_CHANGE = 1;
     public static final int TYPE_BREAK = 2;
-    private int iconIndex = 0;
-    private int changeTime;
+    public static final int TYPE_FREEZE = 3;
+    public static final int TYPE_FREEZE_ENTITY = 4;
+    private int iconIndex = 22;
     private int type;
     private Color color;
 
-    public FXDisney(
+    public FXTime(
         World world, double x, double y, double z, double vx, double vy, double vz
     ) {
         super(world, x, y, z, vx, vy, vz);
     }
 
-    public FXDisney(World world, double x, double y, double z, int color, int type) {
+    public FXTime(World world, double x, double y, double z, int type) {
         super(world, x, y, z);
-        this.color = new Color(color);
-        this.particleRed = ((float) this.color.getRed()) / 255f;
-        this.particleGreen = ((float) this.color.getGreen()) / 255f;
-        this.particleBlue = ((float) this.color.getBlue()) / 255f;
-        this.setSize(0.01F, 0.01F);
-        this.changeTime = 0;
+        this.color = new Color(3574754);
+        this.particleRed = (float) this.color.getRed();
+        this.particleGreen = (float) this.color.getGreen();
+        this.particleBlue = (float) this.color.getBlue();
+        this.setSize(0.02F, 0.02F);
         this.noClip = true;
         this.type = type;
         float velModifier;
@@ -47,14 +47,14 @@ public class FXDisney extends EntityFX {
                                                 + 0.8999999761581421D));
                 break;
             case 1:
-                velModifier = 0.25F;
+                velModifier = 0.15F;
                 this.motionX = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
                                          * velModifier);
                 this.motionY = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
                                          * velModifier);
                 this.motionZ = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
                                          * velModifier);
-                this.particleMaxAge = (int) (10.0D
+                this.particleMaxAge = (int) (15.0D
                                              * ((double) world.rand.nextFloat() * 0.2D
                                                 + 0.8999999761581421D));
                 break;
@@ -65,33 +65,45 @@ public class FXDisney extends EntityFX {
                 this.motionY = (double) velModifier;
                 this.motionZ = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
                                          * velModifier);
-                this.particleMaxAge = (int) (10.0D
+                this.particleMaxAge = (int) (15.0D
                                              * ((double) world.rand.nextFloat() * 0.2D
                                                 + 0.8999999761581421D));
                 this.particleGravity = 0.5F;
+                break;
+            case 4:
+                this.particleAlpha = 0.5F;
+            case 3:
+                velModifier = 0.01F;
+                this.motionX = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
+                                         * velModifier);
+                this.motionY = (double) velModifier;
+
+                this.motionZ = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F)
+                                         * velModifier);
+                this.particleMaxAge = (int) (15.0D
+                                             * ((double) world.rand.nextFloat() * 0.2D
+                                                + 0.8999999761581421D));
+                this.particleGravity = 0.0F;
         }
+
+        this.particleMaxAge = (int) ((float) this.particleMaxAge * 2.0F);
+        this.particleScale *= 1.25F;
+        this.particleGravity *= 0.5F;
+        this.particleAlpha *= 0.3F;
     }
 
-    @Override
     public void onUpdate() {
         super.onUpdate();
-        ++this.changeTime;
-        if (this.changeTime > 5) {
-            ++this.iconIndex;
-            this.changeTime = 0;
-        }
-
-        if (this.iconIndex > 4) {
-            this.iconIndex = 0;
-        }
-
+        this.rotationPitch += 0.01F;
         switch (this.type) {
-            case 2:
+            case 3:
+                if (this.particleAge > this.particleMaxAge / 2) {
+                    this.particleAlpha -= 0.075F;
+                }
             default:
         }
     }
 
-    @Override
     public void renderParticle(
         Tessellator tessy,
         float par2,
@@ -114,15 +126,15 @@ public class FXDisney extends EntityFX {
         float var11 = var10 + 0.124875F;
         float var12 = 0.1F * this.particleScale;
         float var13 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) par2
-                               - EntityFX.interpPosX);
+                               - interpPosX);
         float var14 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) par2
-                               - EntityFX.interpPosY);
+                               - interpPosY);
         float var15 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) par2
-                               - EntityFX.interpPosZ);
+                               - interpPosZ);
         tessy.startDrawingQuads();
         tessy.setBrightness(240);
         tessy.setColorRGBA_F(
-            this.particleRed, this.particleGreen, this.particleBlue, 1.0F
+            this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha
         );
         tessy.addVertexWithUV(
             (double) (var13 - par3 * var12 - par6 * var12),

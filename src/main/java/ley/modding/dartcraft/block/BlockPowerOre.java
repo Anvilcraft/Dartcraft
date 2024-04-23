@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 
-import ley.modding.dartcraft.Config;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.renderer.block.RenderBlockPowerOre;
 import ley.modding.dartcraft.item.AbstractItemBlockMetadata;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.Util;
@@ -60,7 +60,7 @@ public class BlockPowerOre extends BaseBlock implements ICustomItemBlockProvider
 
     @Override
     public int getRenderType() {
-        return Config.powerOreRenderID;
+        return RenderBlockPowerOre.RI;
     }
 
     @Override

@@ -4,6 +4,7 @@ import ley.modding.dartcraft.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 
 public abstract class AbstractItemBlockMetadata extends ItemBlock {
     public AbstractItemBlockMetadata(Block block) {
@@ -17,6 +18,11 @@ public abstract class AbstractItemBlockMetadata extends ItemBlock {
     @Override
     public int getMetadata(int damage) {
         return damage;
+    }
+
+    @Override
+    public IIcon getIconFromDamage(int meta) {
+        return this.field_150939_a.getIcon(0, meta);
     }
 
     @Override

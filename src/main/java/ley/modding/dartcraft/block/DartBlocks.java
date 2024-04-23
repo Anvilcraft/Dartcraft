@@ -16,6 +16,7 @@ public class DartBlocks {
     public static Block forcesapling;
     public static Block[] forceslab;
     public static Block[] forcestairs;
+    public static Block forcetorch;
     public static Block liquidforce;
     public static Block powerore;
 
@@ -43,6 +44,7 @@ public class DartBlocks {
                                      .mapToObj(BlockForceStairs::new)
                                      .map(reg::registerBlock)
                                      .toArray(Block[] ::new);
+        DartBlocks.forcetorch = reg.registerBlock(new BlockForceTorch());
         DartBlocks.liquidforce = reg.registerBlock(new BlockLiquidForce());
         DartBlocks.powerore = reg.registerBlock(new BlockPowerOre());
     }

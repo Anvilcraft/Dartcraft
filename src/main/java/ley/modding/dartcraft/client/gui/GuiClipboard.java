@@ -1,7 +1,6 @@
 package ley.modding.dartcraft.client.gui;
 
 import ley.modding.dartcraft.Dartcraft;
-import ley.modding.dartcraft.network.DartPacket;
 import ley.modding.dartcraft.network.PacketClipButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -69,22 +68,19 @@ public class GuiClipboard extends GuiContainer {
         if (this.balanceBounds.contains(pos)) {
             getClass();
             this.balanceRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket
-            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 0));
+            Dartcraft.channel.sendToServer(new PacketClipButton(0));
             this.container.balanceItems();
         }
         if (this.distBounds.contains(pos)) {
             getClass();
             this.distRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket
-            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 1));
+            Dartcraft.channel.sendToServer(new PacketClipButton(1));
             this.container.doDistribute();
         }
         if (this.clearBounds.contains(pos)) {
             getClass();
             this.clearRender = 8;
-            Dartcraft.proxy.sendPacketToServer((DartPacket
-            ) new PacketClipButton((EntityPlayer) ((GuiScreen) this).mc.thePlayer, 2));
+            Dartcraft.channel.sendToServer(new PacketClipButton(2));
             this.container.clearMatrix();
         }
     }

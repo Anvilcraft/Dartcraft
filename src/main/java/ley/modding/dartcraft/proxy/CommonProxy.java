@@ -4,7 +4,6 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.client.gui.GuiHandler;
-import ley.modding.dartcraft.network.DartPacket;
 import ley.modding.dartcraft.util.ForceUpgradeManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,6 +33,4 @@ public class CommonProxy {
         ForceUpgradeManager.load();
         NetworkRegistry.INSTANCE.registerGuiHandler(Dartcraft.instance, new GuiHandler());
     }
-
-    public void sendPacketToServer(DartPacket packet) {}
 }

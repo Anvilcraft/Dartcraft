@@ -9,6 +9,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.client.fx.FXDisney;
+import ley.modding.dartcraft.client.fx.FXTime;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFireworkStarterFX;
@@ -503,33 +504,31 @@ public class FXUtils {
                 for (int fx = -area; fx < area + 1; ++fx) {
                     for (int k = -area; k < area + 1; ++k) {
                         for (int l = 0; l < num; ++l) {
-                            // TODO
-                            //FXTime fx1 = new FXTime(
-                            //    world,
-                            //    x + (double) i + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    y + (double) fx + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    z + (double) k + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    type
-                            //);
-                            //renderer.addEffect(fx1);
+                            FXTime fx1 = new FXTime(
+                                world,
+                                x + (double) i + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                y + (double) fx + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                z + (double) k + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                type
+                            );
+                            renderer.addEffect(fx1);
                         }
                     }
                 }
             }
         } else {
             for (i = 0; i < num; ++i) {
-                // TODO
-                //FXTime var16 = new FXTime(
-                //    world,
-                //    x + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    y + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    z + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    type
-                //);
-                //renderer.addEffect(var16);
+                FXTime var16 = new FXTime(
+                    world,
+                    x + world.rand.nextDouble() - world.rand.nextDouble(),
+                    y + world.rand.nextDouble() - world.rand.nextDouble(),
+                    z + world.rand.nextDouble() - world.rand.nextDouble(),
+                    type
+                );
+                renderer.addEffect(var16);
             }
         }
     }

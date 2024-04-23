@@ -11,11 +11,18 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import ley.modding.dartcraft.block.DartBlocks;
-import ley.modding.dartcraft.entity.*;
+import ley.modding.dartcraft.entity.EntityBottle;
+import ley.modding.dartcraft.entity.EntityColdChicken;
+import ley.modding.dartcraft.entity.EntityColdCow;
+import ley.modding.dartcraft.entity.EntityColdPig;
+import ley.modding.dartcraft.entity.EntityFlyingFlask;
+import ley.modding.dartcraft.entity.EntityFrozenItem;
+import ley.modding.dartcraft.entity.EntityTime;
 import ley.modding.dartcraft.event.EventHandler;
 import ley.modding.dartcraft.internal.Registry;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.network.PacketClipButton;
+import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
@@ -48,9 +55,13 @@ public class Dartcraft {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
-        channel = NetworkRegistry.INSTANCE.newSimpleChannel("Dartcraft");
+        channel = NetworkRegistry.INSTANCE.newSimpleChannel("dartcraft");
+        int desc = 0;
         channel.registerMessage(
-            PacketClipButton.Handler.class, PacketClipButton.class, 0, Side.SERVER
+            PacketClipButton.Handler.class, PacketClipButton.class, desc++, Side.SERVER
+        );
+        channel.registerMessage(
+            PacketFX.Handler.class, PacketFX.class, desc++, Side.CLIENT
         );
         FortunesUtil.load();
     }
@@ -93,6 +104,18 @@ public class Dartcraft {
         EntityRegistry.registerModEntity(
             EntityFlyingFlask.class,
             "entityFlyingFlask",
+            entityId++,
+            Dartcraft.instance,
+            40,
+            1,
+            true
+        );
+        EntityRegistry.registerModEntity(
+            EntityTime.class, "entityTime", entityId++, Dartcraft.instance, 40, 1, true
+        );
+        EntityRegistry.registerModEntity(
+            EntityFrozenItem.class,
+            "entityFrozenItem",
             entityId++,
             Dartcraft.instance,
             40,

@@ -12,7 +12,9 @@ public class Config {
     public static boolean easyWing;
     public static boolean timeUpgradeRod;
     public static boolean timeUpgradeSword;
-    public static boolean timeUpgradeTorch;
+    public static boolean timeUpgradeTorch = true;
+    public static boolean timeAffectBlocks = true;
+    public static boolean timeAffectTiles = true;
     public static boolean insaneImpervious;
 
     public static int speedLevel;
@@ -20,8 +22,6 @@ public class Config {
     public static int sturdyLevel;
 
     public static float gemValue = 0.25F;
-
-    public static int powerOreRenderID;
 
     public static File engineFile;
     public static boolean disableRodSpeed;
@@ -34,6 +34,9 @@ public class Config {
     public static double netherFreq = 1.5;
     public static int powerOreRarity = 8;
     public static int powerOreSpawnHeight = 48;
+
+    public static int torchDist = 42;
+    public static int torchFreq = 42;
 
     private static void generateDefaultEngineFile() {
         try {

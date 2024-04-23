@@ -38,6 +38,7 @@ tile.forcebrick12.name=Light Blue Force Brick
 tile.forcebrick13.name=Magenta Force Brick
 tile.forcebrick14.name=Orange Force Brick
 tile.forcebrick15.name=White Force Brick
+
 tile.forceslab0.name=Black Force Slab
 tile.forceslab1.name=Red Force Slab
 tile.forceslab2.name=Green Force Slab
@@ -55,6 +56,7 @@ tile.forceslab13.name=Magenta Force Slab
 tile.forceslab14.name=Orange Force Slab
 tile.forceslab15.name=White Force Slab
 tile.forceslab16.name=Wooden Force Slab
+
 tile.forcestairs0.name=Black Force Stairs
 tile.forcestairs1.name=Red Force Stairs
 tile.forcestairs2.name=Green Force Stairs
@@ -72,5 +74,28 @@ tile.forcestairs13.name=Magenta Force Stairs
 tile.forcestairs14.name=Orange Force Stairs
 tile.forcestairs15.name=White Force Stairs
 tile.forcestairs16.name=Wooden Force Stairs
+
+tile.forcetorch0.name=Black Force Torch
+tile.forcetorch1.name=Red Force Torch
+tile.forcetorch2.name=Green Force Torch
+tile.forcetorch3.name=Brown Force Torch
+tile.forcetorch4.name=Blue Force Torch
+tile.forcetorch5.name=Purple Force Torch
+tile.forcetorch6.name=Cyan Force Torch
+tile.forcetorch7.name=Light Gray Force Torch
+tile.forcetorch8.name=Gray Force Torch
+tile.forcetorch9.name=Pink Force Torch
+tile.forcetorch10.name=Lime Force Torch
+tile.forcetorch11.name=Yellow Force Torch
+tile.forcetorch12.name=Light Blue Force Torch
+tile.forcetorch13.name=Magenta Force Torch
+tile.forcetorch14.name=Orange Force Torch
+tile.forcetorch15.name=White Force Torch
+tile.forcetorch16.name=Heat Torch
+tile.forcetorch17.name=Healing Torch
+tile.forcetorch18.name=Bane Torch
+tile.forcetorch19.name=Camo Torch
+tile.forcetorch20.name=Aspect Torch
+tile.forcetorch21.name=Time Torch
 
 itemGroup.dartcraft=Dartcraft
