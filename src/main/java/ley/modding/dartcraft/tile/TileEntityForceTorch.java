@@ -3,9 +3,12 @@ package ley.modding.dartcraft.tile;
 import java.util.List;
 
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import ley.modding.dartcraft.Config;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.entity.EntityTime;
+import ley.modding.dartcraft.integration.ThaumCraftIntegration;
+import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.util.DartUtils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
@@ -78,14 +81,28 @@ public class TileEntityForceTorch extends TileEntity {
                                     if (entity.getHealth() < entityUpgrades) {
                                         entity.heal((float) (tile * 2));
                                         k = true;
-                                        // TODO
-                                        //PacketHelper.sendCureFXToClients(
-                                        //    entity, 8 * tile
-                                        //);
+
+                                        Dartcraft.channel.sendToAllAround(
+                                            new PacketFX(
+                                                entity.posX,
+                                                entity.posY + (entity.height / 2d),
+                                                entity.posZ,
+                                                PacketFX.Type.CURE,
+                                                2,
+                                                0,
+                                                8 * tile
+                                            ),
+                                            new TargetPoint(
+                                                this.worldObj.provider.dimensionId,
+                                                entity.posX,
+                                                entity.posY,
+                                                entity.posZ,
+                                                80f
+                                            )
+                                        );
                                     }
                                 } else {
-                                    // TODO
-                                    //entity.attackEntityFrom(PunishDamage.instance, 2.0F);
+                                    entity.attackEntityFrom(DamageSource.magic, 2f);
                                 }
 
                                 if (k) {
@@ -120,17 +137,33 @@ public class TileEntityForceTorch extends TileEntity {
                         );
                         boolean k = false;
 
-                        for (EntityLivingBase var18 : j) {
-                            if (var18 != null
-                                && (var18 instanceof EntityMob
-                                    || var18 instanceof EntitySlime
-                                    || var18 instanceof EntityGhast)
-                                && !(var18 instanceof EntityWitch)
-                                && !(var18 instanceof EntityWither)) {
-                                this.worldObj.removeEntity(var18);
+                        for (EntityLivingBase remEnt : j) {
+                            if ((remEnt instanceof EntityMob
+                                 || remEnt instanceof EntitySlime
+                                 || remEnt instanceof EntityGhast)
+                                && !(remEnt instanceof EntityWitch)
+                                && !(remEnt instanceof EntityWither)) {
+                                this.worldObj.removeEntity(remEnt);
                                 k = true;
-                                // TODO
-                                //PacketHelper.sendChangeFXToClients(var18, 16);
+
+                                Dartcraft.channel.sendToAllAround(
+                                    new PacketFX(
+                                        remEnt.posX,
+                                        remEnt.posY + (remEnt.height / 2d),
+                                        remEnt.posZ,
+                                        PacketFX.Type.CHANGE,
+                                        1,
+                                        0,
+                                        16
+                                    ),
+                                    new TargetPoint(
+                                        this.worldObj.provider.dimensionId,
+                                        remEnt.posX,
+                                        remEnt.posY + (remEnt.height / 2d),
+                                        remEnt.posZ,
+                                        80f
+                                    )
+                                );
                             }
                         }
 
@@ -181,9 +214,25 @@ public class TileEntityForceTorch extends TileEntity {
                                         DamageSource.inFire, 0.5F * (float) tile
                                     );
                                     k = true;
-                                    // TODO
-                                    //PacketHelper.sendHeatFXToClients(entity, 8 * tile,
-                                    //0);
+
+                                    Dartcraft.channel.sendToAllAround(
+                                        new PacketFX(
+                                            entity.posX,
+                                            entity.posY + (entity.height / 2d),
+                                            entity.posZ,
+                                            PacketFX.Type.HEAT,
+                                            0,
+                                            0,
+                                            8 * tile
+                                        ),
+                                        new TargetPoint(
+                                            this.worldObj.provider.dimensionId,
+                                            entity.posX,
+                                            entity.posY,
+                                            entity.posZ,
+                                            80f
+                                        )
+                                    );
                                 }
                             }
                         }
@@ -205,23 +254,24 @@ public class TileEntityForceTorch extends TileEntity {
 
                 if (this.upgrades.hasKey("Repair") && Loader.isModLoaded("Thaumcraft")) {
                     try {
+                    outer:
                         for (time = -Config.torchDist; time < Config.torchDist; ++time) {
                             for (int var15 = -Config.torchDist; var15 < Config.torchDist;
                                  ++var15) {
                                 for (int var19 = -Config.torchDist;
                                      var19 < Config.torchDist;
                                      ++var19) {
-                                    TileEntity var17 = this.worldObj.getTileEntity(
+                                    TileEntity tile = this.worldObj.getTileEntity(
                                         this.xCoord + time,
                                         this.yCoord + var15,
                                         this.zCoord + var19
                                     );
-                                    // TODO: TC
-                                    //if (var17 != null
-                                    //    && ThaumCraftIntegration.isDeconstructor(var17))
-                                    //    { ThaumCraftIntegration.setDeconAspect(var17);
-                                    //    break label110;
-                                    //}
+
+                                    if (ThaumCraftIntegration
+                                            .isDeconstructorWithoutAspect(tile)) {
+                                        ThaumCraftIntegration.setDeconAspect(tile);
+                                        break outer;
+                                    }
                                 }
                             }
                         }

@@ -19,6 +19,7 @@ import ley.modding.dartcraft.entity.EntityFlyingFlask;
 import ley.modding.dartcraft.entity.EntityFrozenItem;
 import ley.modding.dartcraft.entity.EntityTime;
 import ley.modding.dartcraft.event.EventHandler;
+import ley.modding.dartcraft.handlers.TimeHandler;
 import ley.modding.dartcraft.internal.Registry;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.network.PacketClipButton;
@@ -55,6 +56,7 @@ public class Dartcraft {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
+        MinecraftForge.EVENT_BUS.register(new TimeHandler());
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("dartcraft");
         int desc = 0;
         channel.registerMessage(

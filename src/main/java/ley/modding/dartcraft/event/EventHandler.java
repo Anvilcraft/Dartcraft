@@ -12,6 +12,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -116,16 +117,14 @@ public class EventHandler {
         }
 
         ItemStack getDrop() {
-            // gotta use full names here, because tilera had the brilliant idea to call
-            // the mod item class "Items"
             switch (this) {
                 case COW:
-                    return new ItemStack(net.minecraft.init.Items.leather);
+                    return new ItemStack(Items.leather);
                 case PIG:
                     // TODO: add bacon item
-                    return new ItemStack(net.minecraft.init.Items.porkchop);
+                    return new ItemStack(Items.porkchop);
                 case CHICKEN:
-                    return new ItemStack(net.minecraft.init.Items.feather);
+                    return new ItemStack(Items.feather);
 
                 // why is the compiler so stupid to think that this is required?
                 default:

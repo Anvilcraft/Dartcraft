@@ -8,8 +8,10 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.fx.FXCure;
 import ley.modding.dartcraft.client.fx.FXDisney;
 import ley.modding.dartcraft.client.fx.FXTime;
+import ley.modding.dartcraft.client.fx.FXWindWaker;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFireworkStarterFX;
@@ -155,23 +157,17 @@ public class FXUtils {
         if (!Dartcraft.proxy.isSimulating(world)) {
             for (int i = 0; i < number; ++i) {
                 double var19 = (double) i / ((double) number - 1.0D);
-                CommonProxy var10000 = Dartcraft.proxy;
                 float var21 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
-                var10000 = Dartcraft.proxy;
                 float var22 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
-                var10000 = Dartcraft.proxy;
                 float var23 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
                 double var221 = prevX + (entity.posX - prevX) * var19;
-                CommonProxy var10001 = Dartcraft.proxy;
                 double var24 = var221
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
                 var221 = prevY + (entity.posY - prevY) * var19;
-                var10001 = Dartcraft.proxy;
                 double var26
                     = var221 + CommonProxy.rand.nextDouble() * (double) entity.height;
                 var221 = prevZ + (entity.posZ - prevZ) * var19;
-                var10001 = Dartcraft.proxy;
                 double var28 = var221
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
@@ -246,24 +242,18 @@ public class FXUtils {
         World world, double x2, double y2, double z2, int type, int particles
     ) {
         float modifier = 0.5F;
-        float velModifier = 1.0F;
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
 
         for (int i = 0; i < particles; ++i) {
-            CommonProxy var10001 = Dartcraft.proxy;
             float x = (float) (x2 + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            var10001 = Dartcraft.proxy;
             float y = (float) (y2 + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            var10001 = Dartcraft.proxy;
             float z = (float) (z2 + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            // TODO
-            //renderer.addEffect(
-            //    new FXWindWaker(world, (double) x, (double) y, (double) z, 16777215,
-            //    type)
-            //);
+            renderer.addEffect(
+                new FXWindWaker(world, (double) x, (double) y, (double) z, 0xffffff, type)
+            );
         }
     }
 
@@ -274,17 +264,12 @@ public class FXUtils {
         float modifier = 1.0F;
 
         for (int i = 0; i < particles; ++i) {
-            CommonProxy var10001 = Dartcraft.proxy;
             float x2 = (float) (x + (double) (CommonProxy.rand.nextFloat() * modifier));
-            var10001 = Dartcraft.proxy;
             float y2 = (float) (y + (double) (CommonProxy.rand.nextFloat() * modifier));
-            var10001 = Dartcraft.proxy;
             float z2 = (float) (z + (double) (CommonProxy.rand.nextFloat() * modifier));
-            // TODO
-            //renderer.addEffect(
-            //    new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff',
-            //    0)
-            //);
+            renderer.addEffect(
+                new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff', 0)
+            );
         }
     }
 
@@ -295,17 +280,12 @@ public class FXUtils {
         float modifier = 1.0F;
 
         for (int i = 0; i < particles; ++i) {
-            CommonProxy var10001 = Dartcraft.proxy;
             float x2 = (float) (x + (double) (CommonProxy.rand.nextFloat() * modifier));
-            var10001 = Dartcraft.proxy;
             float y2 = (float) (y + (double) (CommonProxy.rand.nextFloat() * modifier));
-            var10001 = Dartcraft.proxy;
             float z2 = (float) (z + (double) (CommonProxy.rand.nextFloat() * modifier));
-            // TODO
-            //renderer.addEffect(
-            //    new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff',
-            //    3)
-            //);
+            renderer.addEffect(
+                new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff', 3)
+            );
         }
     }
 
@@ -407,16 +387,15 @@ public class FXUtils {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
 
         for (int i = 0; i < num; ++i) {
-            // TODO
-            //FXCure fx = new FXCure(
-            //    world,
-            //    x + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    y + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    z + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    color,
-            //    type
-            //);
-            //renderer.addEffect(fx);
+            FXCure fx = new FXCure(
+                world,
+                x + world.rand.nextDouble() - world.rand.nextDouble(),
+                y + world.rand.nextDouble() - world.rand.nextDouble(),
+                z + world.rand.nextDouble() - world.rand.nextDouble(),
+                color,
+                type
+            );
+            renderer.addEffect(fx);
         }
     }
 
@@ -544,35 +523,33 @@ public class FXUtils {
                 for (int fx = -area; fx < area + 1; ++fx) {
                     for (int k = -area; k < area + 1; ++k) {
                         for (int l = 0; l < num; ++l) {
-                            // TODO
-                            //FXWindWaker fx1 = new FXWindWaker(
-                            //    world,
-                            //    x + (double) i + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    y + (double) fx + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    z + (double) k + world.rand.nextDouble()
-                            //        - world.rand.nextDouble(),
-                            //    color,
-                            //    type
-                            //);
-                            //renderer.addEffect(fx1);
+                            FXWindWaker fx1 = new FXWindWaker(
+                                world,
+                                x + (double) i + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                y + (double) fx + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                z + (double) k + world.rand.nextDouble()
+                                    - world.rand.nextDouble(),
+                                color,
+                                type
+                            );
+                            renderer.addEffect(fx1);
                         }
                     }
                 }
             }
         } else {
             for (i = 0; i < num; ++i) {
-                // TODO
-                //FXWindWaker var17 = new FXWindWaker(
-                //    world,
-                //    x + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    y + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    z + world.rand.nextDouble() - world.rand.nextDouble(),
-                //    color,
-                //    type
-                //);
-                //renderer.addEffect(var17);
+                FXWindWaker var17 = new FXWindWaker(
+                    world,
+                    x + world.rand.nextDouble() - world.rand.nextDouble(),
+                    y + world.rand.nextDouble() - world.rand.nextDouble(),
+                    z + world.rand.nextDouble() - world.rand.nextDouble(),
+                    color,
+                    type
+                );
+                renderer.addEffect(var17);
             }
         }
     }

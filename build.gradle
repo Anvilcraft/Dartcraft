@@ -32,7 +32,12 @@ minecraft {
     runDir = "run"
 }
 
+repositories {
+    maven { url = "https://maven.tilera.xyz" }
+}
+
 dependencies {
+    implementation "thaumcraft:Thaumcraft:1.7.10-4.2.3.5:deobf"
 }
 
 processResources {
@@ -52,6 +57,12 @@ task deobfJar(type: Jar) {
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'sources'
+}
+
+jar {
+    manifest {
+        attributes "FMLAT": "dartcraft_at.cfg"
+    }
 }
 
 publishing {

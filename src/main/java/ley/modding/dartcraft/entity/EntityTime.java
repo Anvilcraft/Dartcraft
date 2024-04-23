@@ -109,9 +109,7 @@ public class EntityTime extends Entity {
                                 );
                                 this.worldObj.removeEntity(j);
                                 this.worldObj.spawnEntityInWorld(chance);
-                            }
-
-                            if (j instanceof EntityItem) {
+                            } else if (j instanceof EntityItem) {
                                 EntityItem var19 = (EntityItem) j;
                                 if (k.hasKey("timeImmune")) {
                                     k.setInteger(
@@ -247,7 +245,7 @@ public class EntityTime extends Entity {
                     this.posX,
                     this.posY,
                     this.posZ,
-                    80d
+                    80f
                 )
             );
         }

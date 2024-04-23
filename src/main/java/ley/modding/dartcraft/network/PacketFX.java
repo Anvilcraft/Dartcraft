@@ -8,6 +8,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 import ley.modding.dartcraft.util.FXUtils;
+import net.minecraft.world.World;
 
 public class PacketFX implements IMessage {
     public double x;
@@ -58,7 +59,10 @@ public class PacketFX implements IMessage {
     }
 
     public static enum Type {
-        TIME;
+        TIME,
+        CHANGE,
+        CURE,
+        HEAT;
 
         public static Type fromInt(int i) {
             if (i >= 0 && i < Type.values().length)
@@ -71,16 +75,36 @@ public class PacketFX implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketFX pkt, MessageContext ctx) {
+            World world = FMLClientHandler.instance().getClientPlayerEntity().worldObj;
             switch (pkt.type) {
                 case TIME:
                     FXUtils.makeTimeEffects(
-                        FMLClientHandler.instance().getClientPlayerEntity().worldObj,
+                        world, pkt.x, pkt.y, pkt.z, pkt.subType, pkt.amount, pkt.area
+                    );
+                    break;
+
+                case CHANGE:
+                    FXUtils.makeWWEffects(
+                        world,
                         pkt.x,
                         pkt.y,
                         pkt.z,
-                        1,
+                        0xffffff,
+                        pkt.subType,
                         pkt.amount,
                         pkt.area
+                    );
+                    break;
+
+                case CURE:
+                    FXUtils.makeCureEffects(
+                        world, pkt.x, pkt.y, pkt.z, pkt.subType, 0x4bb218, pkt.amount
+                    );
+                    break;
+
+                case HEAT:
+                    FXUtils.makeHeatEffects(
+                        world, pkt.x, pkt.y, pkt.z, pkt.amount, pkt.area
                     );
                     break;
             }
