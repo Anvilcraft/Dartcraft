@@ -1,6 +1,7 @@
 package ley.modding.dartcraft.item;
 
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.gui.GuiType;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import ley.modding.dartcraft.util.EntityUtils;
 import ley.modding.dartcraft.util.Util;
@@ -49,7 +50,7 @@ public class ItemClipboard extends Item {
             if (Dartcraft.proxy.isSimulating(world))
                 player.openGui(
                     Dartcraft.instance,
-                    0,
+                    GuiType.CLIPBOARD.ordinal(),
                     world,
                     (int) ((Entity) player).posX,
                     (int) ((Entity) player).posY,

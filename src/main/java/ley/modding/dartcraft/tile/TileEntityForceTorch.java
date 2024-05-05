@@ -10,6 +10,7 @@ import ley.modding.dartcraft.entity.EntityTime;
 import ley.modding.dartcraft.integration.ThaumCraftIntegration;
 import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.util.DartUtils;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.EntityGhast;
@@ -82,23 +83,13 @@ public class TileEntityForceTorch extends TileEntity {
                                         entity.heal((float) (tile * 2));
                                         k = true;
 
+                                        WorldVec pktPos = new WorldVec(entity);
+                                        pktPos.y += entity.height / 2d;
                                         Dartcraft.channel.sendToAllAround(
                                             new PacketFX(
-                                                entity.posX,
-                                                entity.posY + (entity.height / 2d),
-                                                entity.posZ,
-                                                PacketFX.Type.CURE,
-                                                2,
-                                                0,
-                                                8 * tile
+                                                pktPos, PacketFX.Type.CURE, 2, 0, 8 * tile
                                             ),
-                                            new TargetPoint(
-                                                this.worldObj.provider.dimensionId,
-                                                entity.posX,
-                                                entity.posY,
-                                                entity.posZ,
-                                                80f
-                                            )
+                                            pktPos.targetPoint(80d)
                                         );
                                     }
                                 } else {
@@ -146,23 +137,11 @@ public class TileEntityForceTorch extends TileEntity {
                                 this.worldObj.removeEntity(remEnt);
                                 k = true;
 
+                                WorldVec pktPos = new WorldVec(remEnt);
+                                pktPos.y += remEnt.height / 2d;
                                 Dartcraft.channel.sendToAllAround(
-                                    new PacketFX(
-                                        remEnt.posX,
-                                        remEnt.posY + (remEnt.height / 2d),
-                                        remEnt.posZ,
-                                        PacketFX.Type.CHANGE,
-                                        1,
-                                        0,
-                                        16
-                                    ),
-                                    new TargetPoint(
-                                        this.worldObj.provider.dimensionId,
-                                        remEnt.posX,
-                                        remEnt.posY + (remEnt.height / 2d),
-                                        remEnt.posZ,
-                                        80f
-                                    )
+                                    new PacketFX(pktPos, PacketFX.Type.CHANGE, 1, 0, 16),
+                                    pktPos.targetPoint(80d)
                                 );
                             }
                         }
@@ -215,23 +194,13 @@ public class TileEntityForceTorch extends TileEntity {
                                     );
                                     k = true;
 
+                                    WorldVec pktPos = new WorldVec(entity);
+                                    pktPos.y += entity.height / 2d;
                                     Dartcraft.channel.sendToAllAround(
                                         new PacketFX(
-                                            entity.posX,
-                                            entity.posY + (entity.height / 2d),
-                                            entity.posZ,
-                                            PacketFX.Type.HEAT,
-                                            0,
-                                            0,
-                                            8 * tile
+                                            pktPos, PacketFX.Type.HEAT, 0, 0, 8 * tile
                                         ),
-                                        new TargetPoint(
-                                            this.worldObj.provider.dimensionId,
-                                            entity.posX,
-                                            entity.posY,
-                                            entity.posZ,
-                                            80f
-                                        )
+                                        pktPos.targetPoint(80d)
                                     );
                                 }
                             }

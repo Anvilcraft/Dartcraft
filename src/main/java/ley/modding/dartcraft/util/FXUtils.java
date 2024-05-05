@@ -8,11 +8,14 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.fx.FXCharge;
 import ley.modding.dartcraft.client.fx.FXCure;
 import ley.modding.dartcraft.client.fx.FXDisney;
 import ley.modding.dartcraft.client.fx.FXTime;
 import ley.modding.dartcraft.client.fx.FXWindWaker;
 import ley.modding.dartcraft.proxy.CommonProxy;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFireworkStarterFX;
 import net.minecraft.client.renderer.Tessellator;
@@ -27,25 +30,27 @@ public class FXUtils {
 
     @SideOnly(Side.CLIENT)
     public static void bindGLColor(int color) {
-        byte e = (byte) (color << 24);
+        byte red = (byte) (color << 24);
         byte green = (byte) (color << 16);
         byte blue = (byte) (color << 8);
-        GL11.glColor4f((float) e, (float) green, (float) blue, -1.0F);
+        GL11.glColor4f((float) red, (float) green, (float) blue, -1.0F);
     }
 
-    public static void
-    makeEnderEffects(World world, double x, double y, double z, int number) {
-        if (!Dartcraft.proxy.isSimulating(world)) {
+    public static void makeEnderEffects(WorldVec pos, int number) {
+        if (!Dartcraft.proxy.isSimulating(pos.world)) {
             float modifier = 0.1F;
 
             for (int i = 0; i < number; ++i) {
-                double var10002 = x + world.rand.nextDouble() - world.rand.nextDouble();
-                double var10003 = y + world.rand.nextDouble() - world.rand.nextDouble();
-                double var10004 = z + world.rand.nextDouble() - world.rand.nextDouble();
+                double var10002
+                    = pos.x + pos.world.rand.nextDouble() - pos.world.rand.nextDouble();
+                double var10003
+                    = pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble();
+                double var10004
+                    = pos.z + pos.world.rand.nextDouble() - pos.world.rand.nextDouble();
                 double var10
                     = (double) ((CommonProxy.rand.nextFloat() * 2.0F - 1.0F) * modifier);
                 double var10006 = (double) modifier;
-                world.spawnParticle(
+                pos.world.spawnParticle(
                     "portal",
                     var10002,
                     var10003,
@@ -58,28 +63,12 @@ public class FXUtils {
         }
     }
 
-    public static void
-    makeHeatEffects(World world, int x, int y, int z, int number, int area) {
-        makeHeatEffects(
-            world,
-            (double) x + 0.5D,
-            (double) y + 1.0D,
-            (double) z + 0.5D,
-            number,
-            area,
-            1
-        );
+    public static void makeHeatEffects(WorldVec pos, int number, int area) {
+        makeHeatEffects((WorldVec) pos.offset(0.5d, 1.0d, 0.5d), number, area, 1);
     }
 
-    public static void
-    makeHeatEffects(World world, double x, double y, double z, int number, int area) {
-        makeHeatEffects(world, x, y, z, number, area, 0);
-    }
-
-    public static void makeHeatEffects(
-        World world, double x, double y, double z, int number, int area, int type
-    ) {
-        if (!Dartcraft.proxy.isSimulating(world)) {
+    public static void makeHeatEffects(WorldVec pos, int number, int area, int type) {
+        if (!Dartcraft.proxy.isSimulating(pos.world)) {
             float modifier = 0.1F;
             int i;
             if (area > 0) {
@@ -103,14 +92,14 @@ public class FXUtils {
                                     dist1 *= 0.5D;
                                 }
 
-                                world.spawnParticle(
+                                pos.world.spawnParticle(
                                     "flame",
-                                    x + world.rand.nextDouble() * dist1
-                                        - world.rand.nextDouble() * dist1,
-                                    y + world.rand.nextDouble() * dist1
-                                        - world.rand.nextDouble() * dist1,
-                                    z + world.rand.nextDouble() * dist1
-                                        - world.rand.nextDouble() * dist1,
+                                    pos.x + pos.world.rand.nextDouble() * dist1
+                                        - pos.world.rand.nextDouble() * dist1,
+                                    pos.y + pos.world.rand.nextDouble() * dist1
+                                        - pos.world.rand.nextDouble() * dist1,
+                                    pos.z + pos.world.rand.nextDouble() * dist1
+                                        - pos.world.rand.nextDouble() * dist1,
                                     velX1,
                                     (double) modifier,
                                     velZ1
@@ -133,14 +122,14 @@ public class FXUtils {
                         dist *= 0.5D;
                     }
 
-                    world.spawnParticle(
+                    pos.world.spawnParticle(
                         "flame",
-                        x + world.rand.nextDouble() * dist
-                            - world.rand.nextDouble() * dist,
-                        y + world.rand.nextDouble() * dist
-                            - world.rand.nextDouble() * dist,
-                        z + world.rand.nextDouble() * dist
-                            - world.rand.nextDouble() * dist,
+                        pos.x + pos.world.rand.nextDouble() * dist
+                            - pos.world.rand.nextDouble() * dist,
+                        pos.y + pos.world.rand.nextDouble() * dist
+                            - pos.world.rand.nextDouble() * dist,
+                        pos.z + pos.world.rand.nextDouble() * dist
+                            - pos.world.rand.nextDouble() * dist,
                         var21,
                         (double) modifier,
                         var22
@@ -150,9 +139,8 @@ public class FXUtils {
         }
     }
 
-    public static void makeEnderEffects(
-        Entity entity, double prevX, double prevY, double prevZ, int number, boolean sound
-    ) {
+    public static void
+    makeEnderEffects(Entity entity, Vec3 prev, int number, boolean sound) {
         World world = entity.worldObj;
         if (!Dartcraft.proxy.isSimulating(world)) {
             for (int i = 0; i < number; ++i) {
@@ -160,14 +148,14 @@ public class FXUtils {
                 float var21 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
                 float var22 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
                 float var23 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
-                double var221 = prevX + (entity.posX - prevX) * var19;
+                double var221 = prev.x + (entity.posX - prev.x) * var19;
                 double var24 = var221
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
-                var221 = prevY + (entity.posY - prevY) * var19;
+                var221 = prev.y + (entity.posY - prev.y) * var19;
                 double var26
                     = var221 + CommonProxy.rand.nextDouble() * (double) entity.height;
-                var221 = prevZ + (entity.posZ - prevZ) * var19;
+                var221 = prev.z + (entity.posZ - prev.z) * var19;
                 double var28 = var221
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
@@ -183,7 +171,12 @@ public class FXUtils {
             }
         } else if (sound) {
             world.playSoundEffect(
-                prevX, prevY, prevZ, "mob.endermen.portal", 2.0F, DartUtils.randomPitch()
+                prev.x,
+                prev.y,
+                prev.z,
+                "mob.endermen.portal",
+                2.0F,
+                DartUtils.randomPitch()
             );
             world.playSoundAtEntity(
                 entity, "mob.endermen.portal", 2.0F, DartUtils.randomPitch()
@@ -191,31 +184,22 @@ public class FXUtils {
         }
     }
 
-    public static void makeEnderEffects(
-        Entity entity,
-        double posX,
-        double posY,
-        double posZ,
-        double prevX,
-        double prevY,
-        double prevZ,
-        int number,
-        boolean sound
-    ) {
+    public static void
+    makeEnderEffects(Entity entity, Vec3 pos, Vec3 prev, int number, boolean sound) {
         if (!Dartcraft.proxy.isSimulating(entity.worldObj)) {
             for (int i = 0; i < number; ++i) {
                 double var19 = (double) i / ((double) number - 1.0D);
                 float var21 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
                 float var22 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
                 float var23 = (CommonProxy.rand.nextFloat() - 0.5F) * 0.2F;
-                double var27 = prevX + (posX - prevX) * var19;
+                double var27 = prev.x + (pos.x - prev.x) * var19;
                 double var24 = var27
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
-                var27 = prevY + (posY - prevY) * var19;
+                var27 = prev.y + (pos.y - prev.y) * var19;
                 double var26
                     = var27 + CommonProxy.rand.nextDouble() * (double) entity.height;
-                var27 = prevZ + (posZ - prevZ) * var19;
+                var27 = prev.z + (pos.z - prev.z) * var19;
                 double var28 = var27
                     + (CommonProxy.rand.nextDouble() - 0.5D) * (double) entity.width
                         * 2.0D;
@@ -231,81 +215,83 @@ public class FXUtils {
             }
         } else if (sound) {
             entity.worldObj.playSoundEffect(
-                prevX, prevY, prevZ, "mob.endermen.portal", 2.0F, 1.0F
+                prev.x, prev.y, prev.z, "mob.endermen.portal", 2.0F, 1.0F
             );
             entity.worldObj.playSoundAtEntity(entity, "mob.endermen.portal", 2.0F, 1.0F);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeChangeEffects(
-        World world, double x2, double y2, double z2, int type, int particles
-    ) {
+    public static void makeChangeEffects(WorldVec pos, int type, int particles) {
         float modifier = 0.5F;
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
 
         for (int i = 0; i < particles; ++i) {
-            float x = (float) (x2 + (double) (CommonProxy.rand.nextFloat() * modifier)
+            float x = (float) (pos.x + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            float y = (float) (y2 + (double) (CommonProxy.rand.nextFloat() * modifier)
+            float y = (float) (pos.y + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            float z = (float) (z2 + (double) (CommonProxy.rand.nextFloat() * modifier)
+            float z = (float) (pos.z + (double) (CommonProxy.rand.nextFloat() * modifier)
                                - (double) (modifier / 2.0F));
-            renderer.addEffect(
-                new FXWindWaker(world, (double) x, (double) y, (double) z, 0xffffff, type)
-            );
+            renderer.addEffect(new FXWindWaker(
+                pos.world, (double) x, (double) y, (double) z, 0xffffff, type
+            ));
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public static void
-    makeWingEffects(World world, double x, double y, double z, int particles) {
+    public static void makeWingEffects(WorldVec pos, int particles) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         float modifier = 1.0F;
 
         for (int i = 0; i < particles; ++i) {
-            float x2 = (float) (x + (double) (CommonProxy.rand.nextFloat() * modifier));
-            float y2 = (float) (y + (double) (CommonProxy.rand.nextFloat() * modifier));
-            float z2 = (float) (z + (double) (CommonProxy.rand.nextFloat() * modifier));
-            renderer.addEffect(
-                new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff', 0)
-            );
+            float x2
+                = (float) (pos.x + (double) (CommonProxy.rand.nextFloat() * modifier));
+            float y2
+                = (float) (pos.y + (double) (CommonProxy.rand.nextFloat() * modifier));
+            float z2
+                = (float) (pos.z + (double) (CommonProxy.rand.nextFloat() * modifier));
+            renderer.addEffect(new FXWindWaker(
+                pos.world, (double) x2, (double) y2, (double) z2, 0xe4ff00, 0
+            ));
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public static void
-    makeSkateEffects(World world, double x, double y, double z, int particles) {
+    public static void makeSkateEffects(WorldVec pos, int particles) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         float modifier = 1.0F;
 
         for (int i = 0; i < particles; ++i) {
-            float x2 = (float) (x + (double) (CommonProxy.rand.nextFloat() * modifier));
-            float y2 = (float) (y + (double) (CommonProxy.rand.nextFloat() * modifier));
-            float z2 = (float) (z + (double) (CommonProxy.rand.nextFloat() * modifier));
-            renderer.addEffect(
-                new FXWindWaker(world, (double) x2, (double) y2, (double) z2, '\ue4ff', 3)
-            );
+            float x2
+                = (float) (pos.x + (double) (CommonProxy.rand.nextFloat() * modifier));
+            float y2
+                = (float) (pos.y + (double) (CommonProxy.rand.nextFloat() * modifier));
+            float z2
+                = (float) (pos.z + (double) (CommonProxy.rand.nextFloat() * modifier));
+            renderer.addEffect(new FXWindWaker(
+                pos.world, (double) x2, (double) y2, (double) z2, 0xe4ff00, 3
+            ));
         }
     }
 
-    public static void spawnFlameFX(World world, int x, int y, int z) {
+    public static void spawnFlameFX(WorldVec pos) {
         for (int i = 0; i < 10; ++i) {
-            float posX = (float) x + world.rand.nextFloat() * 1.0F;
-            float posY = (float) y + world.rand.nextFloat() * 1.0F;
-            float posZ = (float) z + world.rand.nextFloat() * 1.0F;
-            world.spawnParticle(
+            float posX = (float) pos.x + pos.world.rand.nextFloat() * 1.0F;
+            float posY = (float) pos.y + pos.world.rand.nextFloat() * 1.0F;
+            float posZ = (float) pos.z + pos.world.rand.nextFloat() * 1.0F;
+            pos.world.spawnParticle(
                 "flame", (double) posX, (double) posY, (double) posZ, 0.0D, 0.0D, 0.0D
             );
         }
     }
 
-    public static void makeBreakFX(World world, int x, int y, int z) {
+    public static void makeBreakFX(WorldVec pos) {
         for (int i = 0; i < 10; ++i) {
-            float posX = (float) x + world.rand.nextFloat() * 1.0F;
-            float posY = (float) y + world.rand.nextFloat() * 1.0F;
-            float posZ = (float) z + world.rand.nextFloat() * 1.0F;
-            world.spawnParticle(
+            float posX = (float) pos.x + pos.world.rand.nextFloat() * 1.0F;
+            float posY = (float) pos.y + pos.world.rand.nextFloat() * 1.0F;
+            float posZ = (float) pos.z + pos.world.rand.nextFloat() * 1.0F;
+            pos.world.spawnParticle(
                 "portal", (double) posX, (double) posY, (double) posZ, 0.0D, 0.0D, 0.0D
             );
         }
@@ -351,16 +337,8 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeShiny(
-        World world,
-        double x,
-        double y,
-        double z,
-        int type,
-        int color,
-        int num,
-        boolean add
-    ) {
+    public static void
+    makeShiny(WorldVec pos, int type, int color, int num, boolean add) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         double offset = 0.0D;
         if (add) {
@@ -369,10 +347,12 @@ public class FXUtils {
 
         for (int i = 0; i < num; ++i) {
             FXDisney fx = new FXDisney(
-                world,
-                x + offset + world.rand.nextDouble() - world.rand.nextDouble(),
-                y + world.rand.nextDouble() - world.rand.nextDouble(),
-                z + offset + world.rand.nextDouble() - world.rand.nextDouble(),
+                pos.world,
+                pos.x + offset + pos.world.rand.nextDouble()
+                    - pos.world.rand.nextDouble(),
+                pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                pos.z + offset + pos.world.rand.nextDouble()
+                    - pos.world.rand.nextDouble(),
                 color,
                 type
             );
@@ -381,17 +361,16 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeCureEffects(
-        World world, double x, double y, double z, int type, int color, int num
-    ) {
+    public static void
+    makeCureEffects(WorldVec pos, int type, int color, int num) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
 
         for (int i = 0; i < num; ++i) {
             FXCure fx = new FXCure(
-                world,
-                x + world.rand.nextDouble() - world.rand.nextDouble(),
-                y + world.rand.nextDouble() - world.rand.nextDouble(),
-                z + world.rand.nextDouble() - world.rand.nextDouble(),
+                pos.world,
+                pos.x + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                pos.z + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
                 color,
                 type
             );
@@ -400,16 +379,8 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeChargeEffects(
-        World world,
-        double x,
-        double y,
-        double z,
-        int type,
-        int color,
-        int num,
-        boolean add
-    ) {
+    public static void
+    makeChargeEffects(WorldVec pos, int type, int color, int num, boolean add) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         double offset = 0.0D;
         if (add) {
@@ -417,23 +388,22 @@ public class FXUtils {
         }
 
         for (int i = 0; i < num; ++i) {
-            // TODO
-            //FXCharge fx = new FXCharge(
-            //    world,
-            //    x + offset + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    y + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    z + offset + world.rand.nextDouble() - world.rand.nextDouble(),
-            //    color,
-            //    type
-            //);
-            //renderer.addEffect(fx);
+            FXCharge fx = new FXCharge(
+                pos.world,
+                pos.x + offset + pos.world.rand.nextDouble()
+                    - pos.world.rand.nextDouble(),
+                pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                pos.z + offset + pos.world.rand.nextDouble()
+                    - pos.world.rand.nextDouble(),
+                color,
+                type
+            );
+            renderer.addEffect(fx);
         }
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeIceEffects(
-        World world, double x, double y, double z, int type, int num, int area
-    ) {
+    public static void makeIceEffects(WorldVec pos, int type, int num, int area) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         int i;
         if (area > 0) {
@@ -473,9 +443,7 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeTimeEffects(
-        World world, double x, double y, double z, int type, int num, int area
-    ) {
+    public static void makeTimeEffects(WorldVec pos, int type, int num, int area) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         int i;
         if (area > 0) {
@@ -484,13 +452,13 @@ public class FXUtils {
                     for (int k = -area; k < area + 1; ++k) {
                         for (int l = 0; l < num; ++l) {
                             FXTime fx1 = new FXTime(
-                                world,
-                                x + (double) i + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
-                                y + (double) fx + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
-                                z + (double) k + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
+                                pos.world,
+                                pos.x + (double) i + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
+                                pos.y + (double) fx + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
+                                pos.z + (double) k + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
                                 type
                             );
                             renderer.addEffect(fx1);
@@ -501,10 +469,10 @@ public class FXUtils {
         } else {
             for (i = 0; i < num; ++i) {
                 FXTime var16 = new FXTime(
-                    world,
-                    x + world.rand.nextDouble() - world.rand.nextDouble(),
-                    y + world.rand.nextDouble() - world.rand.nextDouble(),
-                    z + world.rand.nextDouble() - world.rand.nextDouble(),
+                    pos.world,
+                    pos.x + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                    pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                    pos.z + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
                     type
                 );
                 renderer.addEffect(var16);
@@ -513,9 +481,8 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void makeWWEffects(
-        World world, double x, double y, double z, int color, int type, int num, int area
-    ) {
+    public static void
+    makeWWEffects(WorldVec pos, int color, int type, int num, int area) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         int i;
         if (area > 0) {
@@ -524,13 +491,13 @@ public class FXUtils {
                     for (int k = -area; k < area + 1; ++k) {
                         for (int l = 0; l < num; ++l) {
                             FXWindWaker fx1 = new FXWindWaker(
-                                world,
-                                x + (double) i + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
-                                y + (double) fx + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
-                                z + (double) k + world.rand.nextDouble()
-                                    - world.rand.nextDouble(),
+                                pos.world,
+                                pos.x + (double) i + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
+                                pos.y + (double) fx + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
+                                pos.z + (double) k + pos.world.rand.nextDouble()
+                                    - pos.world.rand.nextDouble(),
                                 color,
                                 type
                             );
@@ -542,10 +509,10 @@ public class FXUtils {
         } else {
             for (i = 0; i < num; ++i) {
                 FXWindWaker var17 = new FXWindWaker(
-                    world,
-                    x + world.rand.nextDouble() - world.rand.nextDouble(),
-                    y + world.rand.nextDouble() - world.rand.nextDouble(),
-                    z + world.rand.nextDouble() - world.rand.nextDouble(),
+                    pos.world,
+                    pos.x + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                    pos.y + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
+                    pos.z + pos.world.rand.nextDouble() - pos.world.rand.nextDouble(),
                     color,
                     type
                 );
@@ -555,15 +522,15 @@ public class FXUtils {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void randomFireworkAt(World world, double x, double y, double z) {
+    public static void randomFireworkAt(WorldVec pos) {
         EffectRenderer renderer = Dartcraft.proxy.getClientInstance().effectRenderer;
         NBTTagCompound comp = new NBTTagCompound();
         NBTTagList fireworks = new NBTTagList();
 
-        for (int fx = 0; fx < world.rand.nextInt(5) + 1; ++fx) {
+        for (int fx = 0; fx < pos.world.rand.nextInt(5) + 1; ++fx) {
             NBTTagCompound tempComp = new NBTTagCompound();
-            tempComp.setBoolean("Flicker", world.rand.nextBoolean());
-            tempComp.setBoolean("Trails", world.rand.nextBoolean());
+            tempComp.setBoolean("Flicker", pos.world.rand.nextBoolean());
+            tempComp.setBoolean("Trails", pos.world.rand.nextBoolean());
             tempComp.setIntArray("Colors", randomColorArray());
             tempComp.setIntArray("FadeColors", randomColorArray());
             fireworks.appendTag(tempComp);
@@ -571,16 +538,16 @@ public class FXUtils {
 
         comp.setTag("Explosions", fireworks);
         EntityFireworkStarterFX var12 = new EntityFireworkStarterFX(
-            world, x, y, z, 0.0D, 0.0D, 0.0D, renderer, comp
+            pos.world, pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D, renderer, comp
         );
         renderer.addEffect(var12);
     }
 
     @SideOnly(Side.CLIENT)
-    public static void wrathAt(World world, int x, int y, int z) {
+    public static void wrathAt(WorldVec pos) {
         EntityLightningBolt bolt
-            = new EntityLightningBolt(world, (double) x, (double) y, (double) z);
-        world.spawnEntityInWorld(bolt);
+            = new EntityLightningBolt(pos.world, pos.x, pos.y, pos.z);
+        pos.world.spawnEntityInWorld(bolt);
     }
 
     public static int[] randomColorArray() {

@@ -1,18 +1,20 @@
 package ley.modding.dartcraft.util;
 
+import java.util.ArrayList;
+
 import ley.modding.dartcraft.Config;
+import ley.modding.dartcraft.api.recipe.ForceWildCard;
 import ley.modding.dartcraft.api.upgrades.IForceUpgradable;
-import ley.modding.dartcraft.api.upgrades.IForceUpgrade;
+import ley.modding.dartcraft.api.upgrades.ForceUpgrade;
 import ley.modding.dartcraft.api.upgrades.IForceUpgradeMaterial;
 import ley.modding.dartcraft.api.upgrades.UpgradeMaterialHelper;
 import ley.modding.dartcraft.block.DartBlocks;
+import ley.modding.dartcraft.infusion.ForceWildCards;
 import ley.modding.dartcraft.item.DartItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
 
 public class ForceUpgradeManager {
     public static int firstUniqueID = 0;
@@ -87,248 +89,248 @@ public class ForceUpgradeManager {
     public static final String timeDesc
         = "Time is relative.  At least it will be when you place this upgrade on a Force Sword or Force Rod.  Shift right clicking the rod will change modes while right clicking will use it.  Try it out!";
 
-    public static IForceUpgrade INFO;
-    public static IForceUpgrade FORCE;
-    public static IForceUpgrade SPEED;
-    public static IForceUpgrade LUMBERJACK;
-    public static IForceUpgrade DAMAGE;
-    public static IForceUpgrade LUCK;
-    public static IForceUpgrade GRINDING;
-    public static IForceUpgrade RAINBOW;
-    public static IForceUpgrade STORAGE;
-    public static IForceUpgrade EXP;
-    public static IForceUpgrade TOUCH;
-    public static IForceUpgrade FALSE;
-    public static IForceUpgrade BLEED;
-    public static IForceUpgrade CRAFT;
-    public static IForceUpgrade BANE;
-    public static IForceUpgrade CHARGE;
-    public static IForceUpgrade FORGE;
-    public static IForceUpgrade HEAT;
-    public static IForceUpgrade FREEZING;
-    public static IForceUpgrade STORAGE2;
-    public static IForceUpgrade WING;
-    public static IForceUpgrade CHARGE2;
-    public static IForceUpgrade HEALING;
-    public static IForceUpgrade CAMO;
-    public static IForceUpgrade SIGHT;
-    public static IForceUpgrade ENDER;
-    public static IForceUpgrade STURDY;
-    public static IForceUpgrade TIME;
-    public static IForceUpgrade EXPLOSION;
-    public static IForceUpgrade GRAFTING;
-    public static IForceUpgrade REPAIR;
-    public static IForceUpgrade SOUL;
-    public static IForceUpgrade LIGHT;
-    public static IForceUpgrade TREASURE;
-    public static IForceUpgrade IMPERVIOUS;
+    public static ForceUpgrade INFO;
+    public static ForceUpgrade FORCE;
+    public static ForceUpgrade SPEED;
+    public static ForceUpgrade LUMBERJACK;
+    public static ForceUpgrade DAMAGE;
+    public static ForceUpgrade LUCK;
+    public static ForceUpgrade GRINDING;
+    public static ForceUpgrade RAINBOW;
+    public static ForceUpgrade STORAGE;
+    public static ForceUpgrade EXP;
+    public static ForceUpgrade TOUCH;
+    public static ForceUpgrade FALSE;
+    public static ForceUpgrade BLEED;
+    public static ForceUpgrade CRAFT;
+    public static ForceUpgrade BANE;
+    public static ForceUpgrade CHARGE;
+    public static ForceUpgrade FORGE;
+    public static ForceUpgrade HEAT;
+    public static ForceUpgrade FREEZING;
+    public static ForceUpgrade STORAGE2;
+    public static ForceUpgrade WING;
+    public static ForceUpgrade CHARGE2;
+    public static ForceUpgrade HEALING;
+    public static ForceUpgrade CAMO;
+    public static ForceUpgrade SIGHT;
+    public static ForceUpgrade ENDER;
+    public static ForceUpgrade STURDY;
+    public static ForceUpgrade TIME;
+    public static ForceUpgrade EXPLOSION;
+    public static ForceUpgrade GRAFTING;
+    public static ForceUpgrade REPAIR;
+    public static ForceUpgrade SOUL;
+    public static ForceUpgrade LIGHT;
+    public static ForceUpgrade TREASURE;
+    public static ForceUpgrade IMPERVIOUS;
 
-    public static ArrayList<IForceUpgrade> upgrades = new ArrayList();
-    public static ArrayList<IForceUpgradeMaterial> materials = new ArrayList();
+    public static ArrayList<ForceUpgrade> upgrades = new ArrayList<>();
+    public static ArrayList<IForceUpgradeMaterial> materials = new ArrayList<>();
 
     public static void load() {
         loadUpgrades();
         addUpgrades();
         loadUpgradeMaterials();
-        //loadWildCards();
+        loadWildCards();
     }
 
     private static void loadUpgrades() {
-        INFO = new IForceUpgrade(0, "Info", 1, "");
-        FORCE = new IForceUpgrade(
+        INFO = new ForceUpgrade(0, "Info", 1, "");
+        FORCE = new ForceUpgrade(
             1,
             "Force",
             2,
             "This upgrade can be used to turn certain items into more Forceful versions of themselves.  It also seems to imbue Force Swords with Knockback."
         );
-        SPEED = new IForceUpgrade(
+        SPEED = new ForceUpgrade(
             1,
             "Speed",
             Config.speedLevel,
             "This upgrade imbues Force Tools with the ability to break blocks faster, and gives an overall speed boost to players when used on a Force Rod.  If used to upgrade armor the player will move faster."
         );
-        LUMBERJACK = new IForceUpgrade(
+        LUMBERJACK = new ForceUpgrade(
             1,
             "Lumberjack",
             1,
             "This upgrade transforms a Force Axe into a treebliterating tool of mass destruction, although the durability cost for such a monstrous tool is also, well, monstrous."
         );
-        DAMAGE = new IForceUpgrade(
+        DAMAGE = new ForceUpgrade(
             1,
             "Damage",
             Config.damageLevel,
             "This upgrade serves to boost the damage of the weapon to which it is attached.  On Force Swords it gives Sharpness, while Punch is given to Force Bows."
         );
-        LUCK = new IForceUpgrade(
+        LUCK = new ForceUpgrade(
             2,
             "Luck",
             4,
             "The Luck upgrade enhances the amount of loot one receives for performing almost any task.  On the Force Sword it gives Looting, causing enemies slain to drop more loot.  On any standard block breaking tool it will give Fortune, which increases the drop rate of certain items."
         );
-        GRINDING = new IForceUpgrade(
+        GRINDING = new ForceUpgrade(
             2,
             "Grinding",
             1,
             "This upgrade allows for certain items and drops to be ground into powdery substances or other useful materials.  Try mining some ore with it and you'll get more return than usual."
         );
-        RAINBOW = new IForceUpgrade(
+        RAINBOW = new ForceUpgrade(
             2,
             "Rainbow",
             1,
             "This upgrade is only valid on the Force Shears and randomly changes the color of wool dropped from sheep.  Try it out!"
         );
-        STORAGE = new IForceUpgrade(
+        STORAGE = new ForceUpgrade(
             2,
             "Holding",
             1,
             "This unique upgrade serves to increase the storage capacity of Force Packs by 8 slots per upgrade, up to a total size of 40 slots.  Force Packs can only be upgraded once per tier, so you'll have to get to tier 5 before you can max out any Force Pack."
         );
-        EXP = new IForceUpgrade(
+        EXP = new ForceUpgrade(
             2,
             "Experience",
             1,
             "This upgrade has only one function: to upgrade a normal book into an Experience Tome, which is able to store an infinite amount of experience for the player.  Shift right-click it to store experience, and right-click to recall it.  There is a small percent loss, but it's free."
         );
-        TOUCH = new IForceUpgrade(
+        TOUCH = new ForceUpgrade(
             3,
             "Touch",
             1,
             "This upgrade imbues basic Force Tools with Silk Touch, which generally applies before upgrades like Grinding or Heat."
         );
-        FALSE = new IForceUpgrade(
+        FALSE = new ForceUpgrade(
             3,
             "False",
             1,
             "The False upgrade, when present on a Force Sword will never deal a finishing blow to an enemy when struck.  This could be useful for weakening monsters so they can be easily captured in Force Flasks."
         );
-        BLEED = new IForceUpgrade(
+        BLEED = new ForceUpgrade(
             3,
             "Bleed",
             3,
             "Bleeding will cause entities that are struck to quickly take small amounts of bleed damage over time.  This works on both the Force Sword and Bow and does stack with burning damage."
         );
-        CRAFT = new IForceUpgrade(
+        CRAFT = new ForceUpgrade(
             3,
             "Craft",
             1,
             "This upgrade is only valid for the Item Card, and will allow the card to automatically craft the configured recipe from inside a Force Pack or Force Transport Pipe."
         );
-        BANE = new IForceUpgrade(
+        BANE = new ForceUpgrade(
             3,
             "Bane",
             1,
             "When an entity is struck with a Bane imbued weapon they are likely to lose some of their inherent abilities.  Creepers and Endermen are perfect examples of this principle."
         );
-        TIME = new IForceUpgrade(
+        TIME = new ForceUpgrade(
             3,
             "Time",
             1,
             "Time is relative.  At least it will be when you place this upgrade on a Force Sword or Force Rod.  Shift right clicking the rod will change modes while right clicking will use it.  Try it out!"
         );
-        CHARGE = new IForceUpgrade(
+        CHARGE = new ForceUpgrade(
             4,
             "Charge",
             5,
             "This upgrade can only be added to Force Armor.  Each IC2 battery added gives 10k EU storage, and of course allows the Force Armor to be recharged with IC2 power."
         );
-        FORGE = new IForceUpgrade(
+        FORGE = new ForceUpgrade(
             4,
             "Forge",
             1,
             "This upgrade is only valid for Item Cards, and allows them to transmute freely between items marked as 'equivalent' on the Ore Dictionary."
         );
-        HEAT = new IForceUpgrade(
+        HEAT = new ForceUpgrade(
             4,
             "Heat",
             1,
             "Heat is valid on every iteration of Force Tool, and has a tendency to ignite things it comes into contact with.  If you put Heat on shears...you're a terrible person."
         );
-        FREEZING = new IForceUpgrade(
+        FREEZING = new ForceUpgrade(
             4,
             "Freezing",
             1,
             "Don't eat that cookie!  It doesn't do anything anyway.  Upgrading your Force Bow with Freezing will allow it to shoot Ice Arrows which will freeze your enemies in place for a short time, and even change some blocks in the world."
         );
-        STORAGE2 = new IForceUpgrade(
+        STORAGE2 = new ForceUpgrade(
             4,
             "Storage",
             1,
             "This unique upgrade serves to increase the storage capacity of Storage Units by approximately one Storage Unit per upgrade.  You can only use one upgrade per tier and max size is dependent upon config settings."
         );
-        WING = new IForceUpgrade(
+        WING = new ForceUpgrade(
             5,
             "Wing",
             1,
             "Wing Swords will fling their user when they right-click while holding the jump key, or allow small amounts of flight with a sneak jump right-click combination.  On armor it will also allow flight and increase the maximum duration of flight."
         );
-        CHARGE2 = new IForceUpgrade(
+        CHARGE2 = new ForceUpgrade(
             5,
             "Charge2",
             5,
             "A more potent version of Charge, holding 100,000 EU per upgrade.  Multiple Charge2 upgrades are recommended for chest pieces as they will function like Lappacks."
         );
-        HEALING = new IForceUpgrade(
+        HEALING = new ForceUpgrade(
             5,
             "Healing",
             2,
             "Healing will heal any entity it hits for 1 heart per level, unless of course that entity happens to be undead.  Healing can be placed on a sword, bow and rod, and will heal the user when the rod is used."
         );
-        CAMO = new IForceUpgrade(
+        CAMO = new ForceUpgrade(
             5,
             "Camo",
             1,
             "Camo will make Force Armor invisible, if you'd rather not appear to be wearing armor, or it can be placed on a Force Rod to give short spurts of invisibility to its user."
         );
-        SIGHT = new IForceUpgrade(
+        SIGHT = new ForceUpgrade(
             5,
             "Sight",
             1,
             "Upgrading a Force Rod with Sight will give Night Vision to the user for about a minute per use.  It's worth noting that only an unmodified Potion of Night Vision may be used."
         );
-        ENDER = new IForceUpgrade(
+        ENDER = new ForceUpgrade(
             6,
             "Ender",
             1,
             "Teleportation - not just for endermen anymore!  Harness this space-bending upgrade on a Force Sword or Rod for easy transportation, or have loads of fun griefing your buddies with the Ender Bow.  Teleport responsibly."
         );
-        STURDY = new IForceUpgrade(
+        STURDY = new ForceUpgrade(
             6,
             "Sturdy",
             Config.sturdyLevel,
             "This upgrade can be used to imbue Unbreaking on all Force Tools but the Shears and Sword, or it can be attached to Force Armor once to reduce incoming damage by a fairly signifcant amount.  Sturdy can also be used to upgrade packs and belts to make them immune to damage and despawning."
         );
-        SOUL = new IForceUpgrade(
+        SOUL = new ForceUpgrade(
             6,
             "Soul",
             1,
             "The Soul upgrade on Force Swords and socketed Power Saws will occasionally cause Mob Chunks to drop, which can be used to craft vanilla spawners for that mob or even be smelted into colored Mob Ingots."
         );
-        EXPLOSION = new IForceUpgrade(7, "Explosion", 1, "This upgrade is not yet used.");
-        GRAFTING = new IForceUpgrade(
+        EXPLOSION = new ForceUpgrade(7, "Explosion", 1, "This upgrade is not yet used.");
+        GRAFTING = new ForceUpgrade(
             7,
             "Grafting",
             1,
             "This upgrade will give the Force Axe the potential to function as a Forestry Grafter on leaves that a grafter would normally function on.  Of course this uses significant durability each time, so be prepared to throw some serious Liquid Force at this tool and apply some Sturdy upgrades if possible."
         );
-        REPAIR = new IForceUpgrade(
+        REPAIR = new ForceUpgrade(
             7,
             "Repair",
             1,
             "This upgrade gives the Repair enchant from Thaumcraft on Force Tools.  Repair will attempt to repair one durability damage per 10 seconds."
         );
-        LIGHT = new IForceUpgrade(
+        LIGHT = new ForceUpgrade(
             7,
             "Light",
             5,
             "At the moment this can only be used to add Smite to Force Swords.  (This will change eventually.)"
         );
-        TREASURE = new IForceUpgrade(
+        TREASURE = new ForceUpgrade(
             7,
             "Treasure",
             1,
             "When entities are killed with a Treasure imbued weapon they will occasionally drop Treasure Cards, which can then be crafted into a Spoils Bag for some phat loot.  Fortune increases the drop rate as well."
         );
-        IMPERVIOUS = new IForceUpgrade(
+        IMPERVIOUS = new ForceUpgrade(
             7,
             "Impervious",
             1,
@@ -667,18 +669,22 @@ public class ForceUpgradeManager {
         ));
     }
 
-    /*private static void loadWildCards() {
-        ForceWildCards.addWildCard(new IForceWildCard(new ItemStack(Block.stoneBrick, 1,
-    0), new ItemStack(DartBlock.forceBrick, 1, 11), FORCE)); ItemStack tomeStack = new
-    ItemStack((Item)DartItem.forceTome);
+    private static void loadWildCards() {
+        ForceWildCards.addWildCard(new ForceWildCard(
+            new ItemStack(Blocks.brick_block, 1, 0),
+            new ItemStack(DartBlocks.forcebrick[11], 1, 0),
+            FORCE
+        ));
+        ItemStack tomeStack = new ItemStack((Item) DartItems.forcetome);
         tomeStack.setTagCompound(TomeUtils.initExpComp());
-        ForceWildCards.addWildCard(new IForceWildCard(new ItemStack(Items.book),
-    tomeStack, EXP));
-    }*/
+        ForceWildCards.addWildCard(
+            new ForceWildCard(new ItemStack(Items.book), tomeStack, EXP)
+        );
+    }
 
-    public static boolean addUpgrade(IForceUpgrade upgrade) {
+    public static boolean addUpgrade(ForceUpgrade upgrade) {
         if (upgrades.size() > 0)
-            for (IForceUpgrade temp : upgrades) {
+            for (ForceUpgrade temp : upgrades) {
                 if (temp.getID() == upgrade.getID())
                     return false;
             }
@@ -701,9 +707,9 @@ public class ForceUpgradeManager {
         }
     }
 
-    public static IForceUpgrade getFromID(int id) {
+    public static ForceUpgrade getFromID(int id) {
         if (upgrades.size() > 0)
-            for (IForceUpgrade temp : upgrades) {
+            for (ForceUpgrade temp : upgrades) {
                 if (temp.getID() == id)
                     return temp;
             }
@@ -724,7 +730,7 @@ public class ForceUpgradeManager {
         return null;
     }
 
-    public static boolean isUpgradeValid(IForceUpgrade upgrade, IForceUpgradable item) {
+    public static boolean isUpgradeValid(ForceUpgrade upgrade, IForceUpgradable item) {
         if (item.validUpgrades() != null)
             for (int id : item.validUpgrades()) {
                 if (upgrade.getID() == id)

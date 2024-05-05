@@ -154,14 +154,15 @@ public class ForceConsumerUtils {
             return false;
         }
 
-        player.openGui(
-            Dartcraft.instance,
-            16,
-            player.worldObj,
-            (int) player.posX,
-            (int) player.posY,
-            (int) player.posZ
-        );
+        // TODO
+        //player.openGui(
+        //    Dartcraft.instance,
+        //    16,
+        //    player.worldObj,
+        //    (int) player.posX,
+        //    (int) player.posY,
+        //    (int) player.posZ
+        //);
         return true;
     }
 }

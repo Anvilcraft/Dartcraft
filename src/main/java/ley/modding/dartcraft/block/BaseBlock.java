@@ -5,6 +5,8 @@ import java.awt.Color;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.util.FXUtils;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
@@ -27,33 +29,15 @@ public class BaseBlock extends Block {
     public boolean addDestroyEffects(
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
-        FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
-            2,
-            this.getColor(),
-            32,
-            true
-        );
+        FXUtils.makeShiny(new WorldVec(world, x, y, z), 2, this.getColor(), 32, true);
         return true;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
-        FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
-            2,
-            this.getColor(),
-            4,
-            true
-        );
+    addHitEffects(World world, MovingObjectPosition mop, EffectRenderer renderer) {
+        FXUtils.makeShiny(new Vec3(mop).withWorld(world), 2, this.getColor(), 4, true);
         return true;
     }
 }

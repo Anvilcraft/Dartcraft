@@ -1,13 +1,14 @@
 package ley.modding.dartcraft.client.gui.tabs;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
 
 public abstract class GuiTab extends GuiContainer {
     protected enum SlotColor {
@@ -23,7 +24,7 @@ public abstract class GuiTab extends GuiContainer {
         //SINGLE, OUTPUT, DOUBLEOUTPUT;
         TOP,
         BOTTOM,
-        FULL
+        FULL;
     }
 
     protected enum SlotRender {
@@ -58,7 +59,8 @@ public abstract class GuiTab extends GuiContainer {
         super(container);
     }
 
-    protected void func_74189_g(int i, int j) {
+    @Override
+    protected void drawGuiContainerForegroundLayer(int i, int j) {
         GL11.glDisable(2896);
         GL11.glDisable(2929);
         drawTabs(this.mouseX, this.mouseY);
@@ -115,7 +117,7 @@ public abstract class GuiTab extends GuiContainer {
                 offsetY += sizeY;
                 break;
         }
-        drawTexturedModalRect(x, y, offsetX, offsetY, sizeX, sizeY);
+        this.drawTexturedModalRect(x, y, offsetX, offsetY, sizeX, sizeY);
     }
 
     protected void drawColoredSlotWithBorder(
@@ -217,6 +219,7 @@ public abstract class GuiTab extends GuiContainer {
         return (xWidth - fontRendererObj.getStringWidth(string)) / 2;
     }
 
+    @Override
     protected void mouseClicked(int x, int y, int mouseButton) {
         super.mouseClicked(x, y, mouseButton);
         Tab tab = getTabAtPosition(this.mouseX, this.mouseY);
@@ -237,6 +240,7 @@ public abstract class GuiTab extends GuiContainer {
         }
     }
 
+    @Override
     public void handleMouseInput() {
         int x = Mouse.getEventX() * this.width / this.mc.displayWidth;
         int y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;

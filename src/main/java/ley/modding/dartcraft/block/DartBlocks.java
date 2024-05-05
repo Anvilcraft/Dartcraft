@@ -17,6 +17,7 @@ public class DartBlocks {
     public static Block[] forceslab;
     public static Block[] forcestairs;
     public static Block forcetorch;
+    public static Block infuser;
     public static Block liquidforce;
     public static Block powerore;
 
@@ -45,6 +46,7 @@ public class DartBlocks {
                                      .map(reg::registerBlock)
                                      .toArray(Block[] ::new);
         DartBlocks.forcetorch = reg.registerBlock(new BlockForceTorch());
+        DartBlocks.infuser = reg.registerBlock(new BlockInfuser());
         DartBlocks.liquidforce = reg.registerBlock(new BlockLiquidForce());
         DartBlocks.powerore = reg.registerBlock(new BlockPowerOre());
     }

@@ -9,6 +9,8 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.dartcraft.util.Util;
 import ley.modding.dartcraft.worldgen.GenForceTree;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.client.particle.EffectRenderer;
@@ -40,6 +42,7 @@ public class BlockForceSapling extends BlockSapling {
     }
 
     @Override
+    @SuppressWarnings({ "rawtypes", "unchecked", "alec" })
     public void getSubBlocks(Item item, CreativeTabs tabs, List list) {
         list.add(new ItemStack(item));
     }
@@ -60,14 +63,7 @@ public class BlockForceSapling extends BlockSapling {
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
         FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            32,
-            true
+            new WorldVec(world, x, y, z), 2, BaseBlock.DEFAULT_COLOR, 32, true
         );
         return true;
     }
@@ -75,16 +71,9 @@ public class BlockForceSapling extends BlockSapling {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
+    addHitEffects(World world, MovingObjectPosition mop, EffectRenderer renderer) {
         FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            4,
-            true
+            new Vec3(mop).withWorld(world), 2, BaseBlock.DEFAULT_COLOR, 4, true
         );
         return true;
     }

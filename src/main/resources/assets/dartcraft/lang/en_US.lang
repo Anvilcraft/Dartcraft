@@ -6,6 +6,7 @@ item.forceshard.name=Force Shard
 item.forcemitts.name=Force Mitts
 item.forceshears.name=Force Shears
 item.forceshovel.name=Force Shovel
+item.forcepickaxe.name=Force Pickaxe
 item.forceaxe.name=Force Axe
 item.forceflask_empty.name=Force Flask
 item.forceflask_milk.name=Milk Flask
@@ -14,12 +15,16 @@ item.forceflask_potion_green.name=Green Liquid Flask
 item.forceflask_potion_blue.name=Blue Liquid Flask
 item.forceflask_potion_red.name=Red Liquid Flask
 item.clipboard.name=Clipboard
+item.forcetome_upgrade.name=Upgrade Tome
+item.forcetome_experience.name=Experience Tome
+item.claw.name=Claw
+
 tile.powerore0.name=Power Ore
 tile.powerore1.name=Nether Power Ore
 tile.forcelog.name=Force Log
 tile.forceleaves.name=Force Leaves
 tile.forcesapling.name=Force Sapling
-tile.forcepickaxe.name=Force Pickaxe
+tile.infuser.name=Force Infuser
 
 tile.forceplanks.name=Force Planks
 tile.forcebrick0.name=Black Force Brick

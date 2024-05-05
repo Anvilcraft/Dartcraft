@@ -22,19 +22,19 @@ public class ContainerForceEngine extends Container {
         this.user = player;
         this.engine = engine;
         this.playerInv = (IInventory) player.inventory;
-        addSlotToContainer(new FuelSlot((IInventory) engine.liquidInventory, 0, 38, 33));
-        addSlotToContainer(
+        this.addSlotToContainer(new FuelSlot((IInventory) engine.liquidInventory, 0, 38, 33));
+        this.addSlotToContainer(
             new ThrottleSlot((IInventory) engine.liquidInventory, 1, 122, 33)
         );
         int i;
         for (i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++)
-                addSlotToContainer(
+                this.addSlotToContainer(
                     new Slot(this.playerInv, i * 9 + j + 9, 8 + 18 * j, 79 + 18 * i)
                 );
         }
         for (i = 0; i < 9; i++)
-            addSlotToContainer(new Slot(this.playerInv, i, 8 + 18 * i, 137));
+            this.addSlotToContainer(new Slot(this.playerInv, i, 8 + 18 * i, 137));
     }
 
     public void detectAndSendChanges() {

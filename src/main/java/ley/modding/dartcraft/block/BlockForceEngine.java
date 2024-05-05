@@ -3,10 +3,13 @@ package ley.modding.dartcraft.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.gui.GuiType;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.tileralib.api.ITEProvider;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -68,7 +71,9 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
                 }
 
                 if (!player.isSneaking() && !DartUtils.isHoldingWrench(player)) {
-                    player.openGui(Dartcraft.instance, 7, world, x, y, z);
+                    player.openGui(
+                        Dartcraft.instance, GuiType.ENGINE.ordinal(), world, x, y, z
+                    );
                 }
             }
 
@@ -138,14 +143,7 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
         FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            32,
-            true
+            new WorldVec(world, x, y, z), 2, BaseBlock.DEFAULT_COLOR, 32, true
         );
         return true;
     }
@@ -153,16 +151,9 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
+    addHitEffects(World world, MovingObjectPosition mop, EffectRenderer renderer) {
         FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            4,
-            true
+            new Vec3(mop).withWorld(world), 2, BaseBlock.DEFAULT_COLOR, 4, true
         );
         return true;
     }

@@ -52,6 +52,15 @@
             }
         ]
     },
+    "socket": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "socket",
+                "stream": false
+            }
+        ]
+    },
     "swipe": {
         "category": "master",
         "sounds": [

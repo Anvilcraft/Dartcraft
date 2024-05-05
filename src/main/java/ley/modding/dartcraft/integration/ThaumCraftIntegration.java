@@ -1,11 +1,16 @@
 package ley.modding.dartcraft.integration;
 
 import ley.modding.dartcraft.proxy.CommonProxy;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.tileentity.TileEntity;
+import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.common.tiles.TileDeconstructionTable;
 
 public class ThaumCraftIntegration {
+    public static final Enchantment ENCH_REPAIR
+        = Enchantment.enchantmentsList[ThaumcraftApi.enchantRepair];
+
     public static final Aspect[] PRIMAL_ASPECTS
         = { Aspect.AIR,   Aspect.EARTH, Aspect.FIRE,
             Aspect.WATER, Aspect.ORDER, Aspect.ENTROPY };

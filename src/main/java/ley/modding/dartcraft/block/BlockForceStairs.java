@@ -5,6 +5,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.dartcraft.util.Util;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.client.particle.EffectRenderer;
@@ -53,10 +55,7 @@ public class BlockForceStairs extends BlockStairs {
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
         FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
+            new WorldVec(world, x, y, z),
             2,
             DartUtils.getMcColor(this.type),
             32,
@@ -68,12 +67,9 @@ public class BlockForceStairs extends BlockStairs {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
+    addHitEffects(World world, MovingObjectPosition mop, EffectRenderer renderer) {
         FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
+            new Vec3(mop).withWorld(world),
             2,
             DartUtils.getMcColor(this.type),
             4,

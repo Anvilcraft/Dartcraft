@@ -3,6 +3,7 @@ package ley.modding.dartcraft.block;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.client.IconDirectory;
 import ley.modding.dartcraft.entity.EntityColdChicken;
 import ley.modding.dartcraft.entity.EntityColdCow;
 import ley.modding.dartcraft.entity.EntityColdPig;
@@ -131,5 +132,6 @@ public class BlockLiquidForce extends BlockFluidClassic {
         if (fmilk != null && milk != null) {
             fmilk.setIcons(milk, milk);
         }
+        IconDirectory.registerBlockTextures(reggie);
     }
 }

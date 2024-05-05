@@ -150,7 +150,7 @@ public class GuiEngine extends GuiTab {
                 output = throttle = 0.0F;
             int subColor = 15000804;
             Tab.tabFontRenderer.drawStringWithShadow("Output", x + 22, y + 6, 16777215);
-            Tab.tabFontRenderer.drawStringWithShadow("MJ/t:", x + 8, y + 20, 16777215);
+            Tab.tabFontRenderer.drawStringWithShadow("RF/t:", x + 8, y + 20, 16777215);
             if (output > 0.0F) {
                 Tab.tabFontRenderer.drawStringWithShadow(
                     "" + GuiEngine.this.engine.getEnergyPerProcess(),

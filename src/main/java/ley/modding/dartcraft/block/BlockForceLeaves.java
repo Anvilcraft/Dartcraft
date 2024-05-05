@@ -7,6 +7,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.dartcraft.util.Util;
+import net.anvilcraft.anvillib.vector.Vec3;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -89,14 +91,7 @@ public class BlockForceLeaves extends BlockLeaves {
         World world, int x, int y, int z, int meta, EffectRenderer renderer
     ) {
         FXUtils.makeShiny(
-            world,
-            (double) x,
-            (double) y,
-            (double) z,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            32,
-            true
+            new WorldVec(world, x, y, z), 2, BaseBlock.DEFAULT_COLOR, 32, true
         );
         return true;
     }
@@ -104,16 +99,9 @@ public class BlockForceLeaves extends BlockLeaves {
     @Override
     @SideOnly(Side.CLIENT)
     public boolean
-    addHitEffects(World world, MovingObjectPosition target, EffectRenderer renderer) {
+    addHitEffects(World world, MovingObjectPosition mop, EffectRenderer renderer) {
         FXUtils.makeShiny(
-            world,
-            (double) target.blockX,
-            (double) target.blockY,
-            (double) target.blockZ,
-            2,
-            BaseBlock.DEFAULT_COLOR,
-            4,
-            true
+            new Vec3(mop).withWorld(world), 2, BaseBlock.DEFAULT_COLOR, 4, true
         );
         return true;
     }

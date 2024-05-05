@@ -1,14 +1,25 @@
 package ley.modding.dartcraft.util;
 
 import java.awt.Color;
+
 import buildcraft.api.tools.IToolWrench;
 import ley.modding.dartcraft.Dartcraft;
+import ley.modding.dartcraft.api.IForceConsumer;
+import ley.modding.dartcraft.api.upgrades.IForceUpgradable;
+import ley.modding.dartcraft.entity.EntityInvincibleItem;
+import ley.modding.dartcraft.item.DartItems;
+import ley.modding.dartcraft.item.ItemClipboard;
+import ley.modding.dartcraft.network.PacketFX;
+import ley.modding.dartcraft.network.PacketFX.Type;
 import ley.modding.dartcraft.proxy.CommonProxy;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -124,5 +135,92 @@ public class DartUtils {
         };
 
         return color >= 0 && color < lookup.length ? lookup[color] : 0;
+    }
+
+    public static boolean canUpgrade(ItemStack stack) {
+        if (stack == null)
+            return false;
+
+        if (stack.getItem() == Items.bucket
+            || stack.getItem() == DartItems.forceflask && stack.getItemDamage() == 0)
+            return true;
+
+        if ((!hasDartUpgrade(stack) /*|| stack.getItem() instanceof ItemForcePack*/
+             || stack.getItem() instanceof IForceConsumer
+             || stack.getItem() instanceof ItemClipboard)
+            && (stack.getItem() instanceof IForceUpgradable
+                || stack.getItem() instanceof IForceConsumer
+                /*|| ForceWildCards.isWildCard(stack)*/))
+            return true;
+
+        return false;
+    }
+
+    public static boolean hasDartUpgrade(ItemStack stack) {
+        if (stack != null && stack.hasTagCompound()) {
+            NBTTagCompound comp = stack.getTagCompound();
+            if (comp.hasKey("upgrades") || comp.hasKey("ench")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void punishPlayer(EntityPlayer player, float amount) {
+        try {
+            player.attackEntityFrom(DamageSource.outOfWorld, amount);
+            player.worldObj.playSoundAtEntity(
+                player, "dartcraft:nope", 1.0F, randomPitch()
+            );
+
+            WorldVec pktPos = new WorldVec(player);
+            pktPos.y += player.height / 2f;
+            Dartcraft.channel.sendToAllAround(
+                new PacketFX(pktPos, Type.CHARGE, 1, 0, 32), pktPos.targetPoint(32d)
+            );
+        } catch (Exception var3) {}
+    }
+
+    public static void dropInvincibleItem(
+        ItemStack stack, World world, double x, double y, double z, int life
+    ) {
+        if (stack != null && Dartcraft.proxy.isSimulating(world)) {
+            float xRand = CommonProxy.rand.nextFloat() * 0.2F + 0.1F;
+            float yRand = CommonProxy.rand.nextFloat() * 0.8F + 0.1F;
+            float zRand = CommonProxy.rand.nextFloat() * 0.2F + 0.1F;
+
+            EntityInvincibleItem droppedItem = new EntityInvincibleItem(
+                world,
+                (double) ((float) x + xRand),
+                (double) ((float) y + yRand),
+                (double) ((float) z + zRand),
+                stack,
+                life
+            );
+
+            // TODO: WTF
+            //if (stack.itemID == DartItem.forceTome.itemID) {
+            //    droppedItem.delayBeforeCanPickup = 100;
+            //} else {
+            //    droppedItem.delayBeforeCanPickup = 10;
+            //}
+            droppedItem.delayBeforeCanPickup = 10;
+
+            if (stack.hasTagCompound()) {
+                droppedItem.getEntityItem().setTagCompound(
+                    (NBTTagCompound) stack.getTagCompound().copy()
+                );
+            }
+
+            float modifier = 0.025F;
+            droppedItem.motionX
+                = (double) ((float) CommonProxy.rand.nextGaussian() * modifier);
+            droppedItem.motionY
+                = (double) ((float) CommonProxy.rand.nextGaussian() * modifier + 0.2F);
+            droppedItem.motionZ
+                = (double) ((float) CommonProxy.rand.nextGaussian() * modifier);
+            world.spawnEntityInWorld(droppedItem);
+        }
     }
 }

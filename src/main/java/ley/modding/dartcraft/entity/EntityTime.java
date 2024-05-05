@@ -8,6 +8,7 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.tile.TileEntityForceTorch;
 import ley.modding.dartcraft.util.UpgradeHelper;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -236,17 +237,9 @@ public class EntityTime extends Entity {
                     type = 1;
             }
 
+            WorldVec pos = new WorldVec(this);
             Dartcraft.channel.sendToAllAround(
-                new PacketFX(
-                    this.posX, this.posY, this.posZ, PacketFX.Type.TIME, type, 0, 1
-                ),
-                new TargetPoint(
-                    this.worldObj.provider.dimensionId,
-                    this.posX,
-                    this.posY,
-                    this.posZ,
-                    80f
-                )
+                new PacketFX(pos, PacketFX.Type.TIME, type, 0, 1), pos.targetPoint(80d)
             );
         }
     }

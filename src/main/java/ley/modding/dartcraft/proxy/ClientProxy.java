@@ -6,13 +6,16 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.client.renderer.block.RenderBlockPowerOre;
 import ley.modding.dartcraft.client.renderer.block.RenderBlockTorch;
-import ley.modding.dartcraft.client.renderer.block.RenderTileForceEngine;
 import ley.modding.dartcraft.client.renderer.entity.RenderColdAnimal;
 import ley.modding.dartcraft.client.renderer.entity.RenderEntityBottle;
 import ley.modding.dartcraft.client.renderer.entity.RenderEntityFrozenItem;
 import ley.modding.dartcraft.client.renderer.entity.RenderEntityTime;
 import ley.modding.dartcraft.client.renderer.item.RenderItemEngine;
 import ley.modding.dartcraft.client.renderer.item.RenderItemForceFlask;
+import ley.modding.dartcraft.client.renderer.item.RenderItemInfuser;
+import ley.modding.dartcraft.client.renderer.item.RenderItemMachine;
+import ley.modding.dartcraft.client.renderer.tile.RenderTileEntityForceEngine;
+import ley.modding.dartcraft.client.renderer.tile.RenderTileEntityInfuser;
 import ley.modding.dartcraft.entity.EntityBottle;
 import ley.modding.dartcraft.entity.EntityColdChicken;
 import ley.modding.dartcraft.entity.EntityColdCow;
@@ -22,6 +25,7 @@ import ley.modding.dartcraft.entity.EntityFrozenItem;
 import ley.modding.dartcraft.entity.EntityTime;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
+import ley.modding.dartcraft.tile.TileEntityInfuser;
 import net.minecraft.client.model.ModelChicken;
 import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelPig;
@@ -31,7 +35,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 
 public class ClientProxy extends CommonProxy {
-    public static RenderTileForceEngine engineRender;
+    public static RenderTileEntityForceEngine engineRender;
+    public static RenderTileEntityInfuser infuserRender;
 
     @Override
     public boolean isSimulating(World world) {
@@ -54,6 +59,9 @@ public class ClientProxy extends CommonProxy {
         );
         MinecraftForgeClient.registerItemRenderer(
             DartItems.entitybottle, RenderItemForceFlask.instance
+        );
+        MinecraftForgeClient.registerItemRenderer(
+            Item.getItemFromBlock(DartBlocks.infuser), new RenderItemInfuser()
         );
         RenderEntityBottle bottleRenderer = new RenderEntityBottle();
         RenderingRegistry.registerEntityRenderingHandler(
@@ -86,9 +94,13 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler(new RenderBlockPowerOre());
         RenderBlockTorch.RI = RenderingRegistry.getNextAvailableRenderId();
         RenderingRegistry.registerBlockHandler(new RenderBlockTorch());
-        engineRender = new RenderTileForceEngine();
+        engineRender = new RenderTileEntityForceEngine();
         ClientRegistry.bindTileEntitySpecialRenderer(
             TileEntityForceEngine.class, engineRender
+        );
+        infuserRender = new RenderTileEntityInfuser();
+        ClientRegistry.bindTileEntitySpecialRenderer(
+            TileEntityInfuser.class, infuserRender
         );
         MinecraftForgeClient.registerItemRenderer(
             Item.getItemFromBlock(DartBlocks.engine), new RenderItemEngine()

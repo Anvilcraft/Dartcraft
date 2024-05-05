@@ -1,6 +1,5 @@
 package ley.modding.dartcraft.item;
 
-import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.item.tool.ItemForceAxe;
 import ley.modding.dartcraft.item.tool.ItemForceMitts;
 import ley.modding.dartcraft.item.tool.ItemForcePickaxe;
@@ -23,6 +22,7 @@ public class DartItems {
     public static Item forceshears;
     public static Item forceshovel;
     public static Item forcestick;
+    public static Item forcetome;
 
     // Useless Items
     public static Item claw;
@@ -32,24 +32,25 @@ public class DartItems {
     public static Item soulwafer;
 
     public static void regsiter(IRegistry reg) {
-        DartItems.entitybottle = reg.registerItem(new ItemEntityBottle());
-        DartItems.forceaxe = reg.registerItem(new ItemForceAxe());
-        DartItems.forceflask = reg.registerItem(new ItemForceFlask());
-        DartItems.forcegem = reg.registerItem(new BaseItem("forcegem"));
-        DartItems.forceingot = reg.registerItem(new BaseItem("forceingot"));
-        DartItems.forcemitts = reg.registerItem(new ItemForceMitts());
-        DartItems.forcenugget = reg.registerItem(new BaseItem("forcenugget"));
-        DartItems.forcepickaxe = reg.registerItem(new ItemForcePickaxe());
-        DartItems.forceshard = reg.registerItem(new BaseItem("forceshard"));
-        DartItems.forceshears = reg.registerItem(new ItemForceShears());
-        DartItems.forceshovel = reg.registerItem(new ItemForceShovel());
-        DartItems.forcestick = reg.registerItem(new BaseItem("forcestick"));
+        entitybottle = reg.registerItem(new ItemEntityBottle());
+        forceaxe = reg.registerItem(new ItemForceAxe());
+        forceflask = reg.registerItem(new ItemForceFlask());
+        forcegem = reg.registerItem(new BaseItem("forcegem"));
+        forceingot = reg.registerItem(new BaseItem("forceingot"));
+        forcemitts = reg.registerItem(new ItemForceMitts());
+        forcenugget = reg.registerItem(new BaseItem("forcenugget"));
+        forcepickaxe = reg.registerItem(new ItemForcePickaxe());
+        forceshard = reg.registerItem(new BaseItem("forceshard"));
+        forceshears = reg.registerItem(new ItemForceShears());
+        forceshovel = reg.registerItem(new ItemForceShovel());
+        forcestick = reg.registerItem(new BaseItem("forcestick"));
+        forcetome = reg.registerItem(new ItemForceTome());
 
-        DartItems.claw = reg.registerItem(new BaseItem("claw"));
-        DartItems.clipboard = reg.registerItem(new ItemClipboard());
-        DartItems.fortune = reg.registerItem(new BaseItem("fortune"));
-        DartItems.goldenpower = reg.registerItem(new BaseItem("goldenpower"));
-        DartItems.resource = reg.registerItem(new BaseItem("resource"));
-        DartItems.soulwafer = reg.registerItem(new BaseItem("soulwafer"));
+        claw = reg.registerItem(new BaseItem("claw"));
+        clipboard = reg.registerItem(new ItemClipboard());
+        fortune = reg.registerItem(new BaseItem("fortune"));
+        goldenpower = reg.registerItem(new BaseItem("goldenpower"));
+        resource = reg.registerItem(new BaseItem("resource"));
+        soulwafer = reg.registerItem(new BaseItem("soulwafer"));
     }
 }
