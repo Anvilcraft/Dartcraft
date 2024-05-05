@@ -3,7 +3,6 @@ package ley.modding.dartcraft.tile;
 import java.util.List;
 
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import ley.modding.dartcraft.Config;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.entity.EntityTime;

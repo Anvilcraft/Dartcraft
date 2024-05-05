@@ -22,7 +22,9 @@ public class ContainerForceEngine extends Container {
         this.user = player;
         this.engine = engine;
         this.playerInv = (IInventory) player.inventory;
-        this.addSlotToContainer(new FuelSlot((IInventory) engine.liquidInventory, 0, 38, 33));
+        this.addSlotToContainer(
+            new FuelSlot((IInventory) engine.liquidInventory, 0, 38, 33)
+        );
         this.addSlotToContainer(
             new ThrottleSlot((IInventory) engine.liquidInventory, 1, 122, 33)
         );
@@ -37,16 +39,7 @@ public class ContainerForceEngine extends Container {
             this.addSlotToContainer(new Slot(this.playerInv, i, 8 + 18 * i, 137));
     }
 
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-        for (int i = 0; i < crafters.size(); i++)
-            this.engine.sendGuiNetworkData(this, (ICrafting) crafters.get(i));
-    }
-
-    public void updateProgressBar(int i, int j) {
-        this.engine.receiveGuiNetworkData(i, j);
-    }
-
+    @Override
     public ItemStack transferStackInSlot(EntityPlayer player, int index) {
         ItemStack returnStack = null;
         Slot slot = (Slot) inventorySlots.get(index);
@@ -78,9 +71,11 @@ public class ContainerForceEngine extends Container {
         return returnStack;
     }
 
+    @Override
     protected void
     retrySlotClick(int par1, int par2, boolean par3, EntityPlayer par4EntityPlayer) {}
 
+    @Override
     public boolean canInteractWith(EntityPlayer player) {
         return true;
     }
@@ -90,6 +85,7 @@ public class ContainerForceEngine extends Container {
             super(par1iInventory, par2, par3, par4);
         }
 
+        @Override
         public boolean isItemValid(ItemStack stack) {
             if (stack.getItem() == DartItems.forcegem)
                 return true;
@@ -104,6 +100,7 @@ public class ContainerForceEngine extends Container {
             super(par1iInventory, par2, par3, par4);
         }
 
+        @Override
         public boolean isItemValid(ItemStack stack) {
             return ForceEngineLiquids.isThrottle(
                 FluidContainerRegistry.getFluidForFilledItem(stack)

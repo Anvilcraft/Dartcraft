@@ -7,6 +7,8 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.energy.EngineLiquid;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
+import net.anvilcraft.alec.jalec.AlecLogger;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -195,6 +197,7 @@ public class TileEntityForceEngine extends TileEntity
                 && this.throttleTank.getFluid().amount <= 0) {
                 this.throttleTank.setFluid(null);
             }
+            new WorldVec(this).markForUpdate();
         }
     }
 
@@ -246,6 +249,7 @@ public class TileEntityForceEngine extends TileEntity
                         } else {
                             this.liquidInventory.decrStackSize(0, 1);
                         }
+                        new WorldVec(this).markForUpdate();
                     }
                 }
 
@@ -260,6 +264,7 @@ public class TileEntityForceEngine extends TileEntity
                         new FluidStack(curCycle, (int) (1000.0F * Config.gemValue)), true
                     );
                     this.liquidInventory.decrStackSize(0, 1);
+                    new WorldVec(this).markForUpdate();
                 }
             }
 
@@ -284,6 +289,7 @@ public class TileEntityForceEngine extends TileEntity
                             );
                         } else {
                             this.liquidInventory.decrStackSize(1, 1);
+                            new WorldVec(this).markForUpdate();
                         }
                     }
                 }
@@ -311,7 +317,7 @@ public class TileEntityForceEngine extends TileEntity
             } else {
                 this.isActive = false;
             }
-            //TODO Fix Cycling update
+            // TODO Fix Cycling update
         }
     }
 
@@ -325,12 +331,16 @@ public class TileEntityForceEngine extends TileEntity
             this.fuelTank.setFluid(
                 FluidStack.loadFluidStackFromNBT(data.getCompoundTag("fuel"))
             );
+        } else {
+            this.fuelTank.setFluid(null);
         }
 
         if (data.hasKey("throttle")) {
             this.throttleTank.setFluid(
                 FluidStack.loadFluidStackFromNBT(data.getCompoundTag("throttle"))
             );
+        } else {
+            this.throttleTank.setFluid(null);
         }
 
         if (data.hasKey("fuelSlot")) {
@@ -338,7 +348,7 @@ public class TileEntityForceEngine extends TileEntity
                 0, ItemStack.loadItemStackFromNBT(data.getCompoundTag("fuelSlot"))
             );
         } else {
-            this.liquidInventory.setInventorySlotContents(0, (ItemStack) null);
+            this.liquidInventory.setInventorySlotContents(0, null);
         }
 
         if (data.hasKey("throttleSlot")) {
@@ -346,7 +356,7 @@ public class TileEntityForceEngine extends TileEntity
                 1, ItemStack.loadItemStackFromNBT(data.getCompoundTag("throttleSlot"))
             );
         } else {
-            this.liquidInventory.setInventorySlotContents(1, (ItemStack) null);
+            this.liquidInventory.setInventorySlotContents(1, null);
         }
     }
 
@@ -515,95 +525,17 @@ public class TileEntityForceEngine extends TileEntity
                                      this.throttleTank.getInfo() };
     }
 
+    @Override
     public Packet getDescriptionPacket() {
         NBTTagCompound comp = new NBTTagCompound();
         this.writeToNBT(comp);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, comp);
+        return new S35PacketUpdateTileEntity(
+            xCoord, yCoord, zCoord, this.getBlockMetadata(), comp
+        );
     }
 
+    @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        if (pkt != null && pkt.func_148857_g() != null) {
-            this.readFromNBT(pkt.func_148857_g());
-            worldObj.markBlockForUpdate(xCoord, yCoord, zCoord); //TODO Lighting
-            //worldObj.updateAllLightTypes(this.field_70329_l, this.field_70330_m,
-            //this.field_70327_n);
-        }
-    }
-
-    public void sendGuiNetworkData(Container container, ICrafting craft) {
-        byte throttleMeta = 0;
-        int throttleID = 0;
-        int throttleAmount = 0;
-        byte fuelMeta = 0;
-        int fuelID = 0;
-        int fuelAmount = 0;
-        if (this.fuelTank.getFluid() != null) {
-            fuelID = this.fuelTank.getFluid().getFluidID();
-            fuelAmount = this.fuelTank.getFluid().amount;
-        }
-
-        if (this.throttleTank.getFluid() != null) {
-            throttleID = this.throttleTank.getFluid().getFluidID();
-            throttleAmount = this.throttleTank.getFluid().amount;
-        }
-
-        craft.sendProgressBarUpdate(container, 0, fuelID);
-        craft.sendProgressBarUpdate(container, 1, fuelMeta);
-        craft.sendProgressBarUpdate(container, 2, fuelAmount);
-        craft.sendProgressBarUpdate(container, 3, throttleID);
-        craft.sendProgressBarUpdate(container, 4, throttleMeta);
-        craft.sendProgressBarUpdate(container, 5, throttleAmount);
-        if (craft instanceof EntityPlayerMP && Dartcraft.proxy.isSimulating(worldObj)) {
-            ((EntityPlayerMP) craft)
-                .playerNetServerHandler.sendPacket(getDescriptionPacket());
-        }
-    }
-
-    public void receiveGuiNetworkData(int i, int j) {
-        FluidStack tempStack = this.fuelTank.getFluid();
-        FluidStack tempStack2 = this.throttleTank.getFluid();
-        switch (i) {
-            case 0:
-                if (this.fuelTank.getFluid() != null) {
-                    this.fuelTank.setFluid(
-                        new FluidStack(j, tempStack.amount, tempStack.tag)
-                    );
-                } else if (j > 0) {
-                    this.fuelTank.setFluid(new FluidStack(j, 0));
-                }
-                break;
-            case 1:
-                if (this.fuelTank.getFluid() != null) {
-                    this.fuelTank.setFluid(new FluidStack(
-                        tempStack.getFluidID(), tempStack.amount, (NBTTagCompound) null
-                    ));
-                }
-                break;
-            case 2:
-                if (this.fuelTank.getFluid() != null) {
-                    this.fuelTank.getFluid().amount = j;
-                }
-                break;
-            case 3:
-                if (this.throttleTank.getFluid() != null) {
-                    this.throttleTank.setFluid(
-                        new FluidStack(j, tempStack2.amount, tempStack2.tag)
-                    );
-                } else if (j > 0) {
-                    this.throttleTank.setFluid(new FluidStack(j, 0));
-                }
-                break;
-            case 4:
-                if (this.throttleTank.getFluid() != null) {
-                    this.throttleTank.setFluid(new FluidStack(
-                        tempStack2.getFluidID(), tempStack2.amount, (NBTTagCompound) null
-                    ));
-                }
-                break;
-            case 5:
-                if (this.throttleTank.getFluid() != null) {
-                    this.throttleTank.getFluid().amount = j;
-                }
-        }
+        this.readFromNBT(pkt.func_148857_g());
     }
 }

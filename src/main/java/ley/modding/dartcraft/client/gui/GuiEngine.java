@@ -1,5 +1,13 @@
 package ley.modding.dartcraft.client.gui;
 
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lwjgl.opengl.GL11;
+
+import codechicken.nei.guihook.IContainerTooltipHandler;
 import cpw.mods.fml.common.Loader;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.energy.EngineLiquid;
@@ -8,18 +16,16 @@ import ley.modding.dartcraft.client.gui.tabs.Tab;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
 import ley.modding.dartcraft.util.FortunesUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-
-public class GuiEngine extends GuiTab {
+public class GuiEngine extends GuiTab implements IContainerTooltipHandler {
     private TileEntityForceEngine engine;
 
     private ContainerForceEngine container;
@@ -48,8 +54,26 @@ public class GuiEngine extends GuiTab {
         this.throttleBounds = new Rectangle(this.guiLeft + 94, this.guiTop + 11, 16, 58);
     }
 
+    @Override
     public List<String>
-    handleItemTooltip(ItemStack stack, int x, int y, List<String> tooltip) {
+    handleTooltip(GuiContainer gui, int mousex, int mousey, List<String> currenttip) {
+        return currenttip;
+    }
+
+    @Override
+    public List<String> handleItemDisplayName(
+        GuiContainer gui, ItemStack itemstack, List<String> currenttip
+    ) {
+        return currenttip;
+    }
+
+    @Override
+    protected void drawTooltips() {}
+
+    @Override
+    public List<String> handleItemTooltip(
+        GuiContainer gui, ItemStack itemstack, int x, int y, List<String> tooltip
+    ) {
         Point pointerLoc = new Point(x, y);
         if (this.fuelBounds.contains(pointerLoc))
             try {
@@ -78,15 +102,15 @@ public class GuiEngine extends GuiTab {
         Dartcraft.proxy.bindTexture("engineGui.png");
         int posX = (this.width - this.xSize) / 2;
         int posY = (this.height - this.ySize) / 2;
-        drawTexturedModalRect(posX, posY, 0, 0, this.xSize, this.ySize);
+        this.drawTexturedModalRect(posX, posY, 0, 0, this.xSize, this.ySize);
         if (this.engine.fuelTank.getFluid() != null
             && (this.engine.fuelTank.getFluid()).amount > 0)
-            displayGauge(
+            this.displayGauge(
                 this.fuelBounds.x, this.fuelBounds.y, this.engine.fuelTank.getFluid()
             );
         if (this.engine.throttleTank.getFluid() != null
             && (this.engine.throttleTank.getFluid()).amount > 0)
-            displayGauge(
+            this.displayGauge(
                 this.throttleBounds.x,
                 this.throttleBounds.y,
                 this.engine.throttleTank.getFluid()
@@ -99,7 +123,9 @@ public class GuiEngine extends GuiTab {
             return;
         int start = 0;
         int squaled = (int) (58.0F * liquid.amount / 10000.0F);
-        Dartcraft.proxy.bindTexture("textures/atlas/blocks.png");
+        Minecraft.getMinecraft().getTextureManager().bindTexture(
+            TextureMap.locationBlocksTexture
+        );
         do {
             tempx = 0;
             if (squaled > 16) {
@@ -112,16 +138,14 @@ public class GuiEngine extends GuiTab {
             IIcon icon = liquid.getFluid().getStillIcon();
             if (icon == null)
                 icon = FluidRegistry.LAVA.getStillIcon();
-            drawTexturedModelRectFromIcon(
-                x, y + 58 - tempx - start, icon, 16, 16 - 16 - tempx
+            this.drawTexturedModelRectFromIcon(
+                x, y + 58 - tempx - start, icon, 16, 16 - (16 - tempx)
             );
             start += 16;
         } while (tempx != 0 && squaled != 0);
         Dartcraft.proxy.bindTexture("engineGui.png");
-        drawTexturedModalRect(x, y, 176, 0, 16, 58);
+        this.drawTexturedModalRect(x, y, 176, 0, 16, 58);
     }
-
-    protected void drawTooltips() {}
 
     private class EnergyTab extends Tab {
         public EnergyTab(Gui gui) {

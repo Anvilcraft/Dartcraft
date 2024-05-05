@@ -33,10 +33,12 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         setBlockName("forceengine");
     }
 
+    @Override
     public TileEntity createNewTileEntity(World world, int var2) {
         return new TileEntityForceEngine();
     }
 
+    @Override
     public boolean onBlockActivated(
         World world,
         int x,
@@ -81,6 +83,7 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         }
     }
 
+    @Override
     public void onBlockPlacedBy(
         World world, int x, int y, int z, EntityLivingBase living, ItemStack stack
     ) {
@@ -91,6 +94,7 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
         }
     }
 
+    @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         return te instanceof TileEntityForceEngine
@@ -98,18 +102,22 @@ public class BlockForceEngine extends BlockContainer implements ITEProvider {
             : 0;
     }
 
+    @Override
     public int getRenderType() {
         return -1;
     }
 
+    @Override
     public boolean isOpaqueCube() {
         return false;
     }
 
+    @Override
     public boolean renderAsNormalBlock() {
         return false;
     }
 
+    @Override
     public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
         if (Dartcraft.proxy.isSimulating(world)) {
             TileEntity tile = world.getTileEntity(x, y, z);
