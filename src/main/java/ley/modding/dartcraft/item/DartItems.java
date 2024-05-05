@@ -24,9 +24,9 @@ public class DartItems {
     public static Item forcestick;
     public static Item forcetome;
 
-    // Useless Items
     public static Item claw;
     public static Item fortune;
+    public static Item fortunecookie;
     public static Item goldenpower;
     public static Item resource;
     public static Item soulwafer;
@@ -48,7 +48,8 @@ public class DartItems {
 
         claw = reg.registerItem(new BaseItem("claw"));
         clipboard = reg.registerItem(new ItemClipboard());
-        fortune = reg.registerItem(new BaseItem("fortune"));
+        fortune = reg.registerItem(new ItemFortune());
+        fortunecookie = reg.registerItem(new ItemFortuneCookie());
         goldenpower = reg.registerItem(new BaseItem("goldenpower"));
         resource = reg.registerItem(new BaseItem("resource"));
         soulwafer = reg.registerItem(new BaseItem("soulwafer"));

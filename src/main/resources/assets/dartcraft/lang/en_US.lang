@@ -18,6 +18,8 @@ item.clipboard.name=Clipboard
 item.forcetome_upgrade.name=Upgrade Tome
 item.forcetome_experience.name=Experience Tome
 item.claw.name=Claw
+item.fortune.name=Fortune
+item.fortunecookie.name=Fortune Cookie
 
 tile.powerore0.name=Power Ore
 tile.powerore1.name=Nether Power Ore

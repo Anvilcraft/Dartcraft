@@ -7,6 +7,10 @@ import java.util.Random;
 public class DartPluginFortunes {
     private static Random rand;
     private static List<String> fortunes = new ArrayList<>();
+        
+    static {
+        load();
+    }
 
     public static void addFortune(String fortune) {
         if (fortunes != null && fortune != null) {

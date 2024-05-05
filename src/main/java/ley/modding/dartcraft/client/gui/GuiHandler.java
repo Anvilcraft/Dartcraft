@@ -2,6 +2,7 @@ package ley.modding.dartcraft.client.gui;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import ley.modding.dartcraft.item.ItemClipboard;
+import ley.modding.dartcraft.item.ItemFortune;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.tile.TileEntityInfuser;
 import ley.modding.dartcraft.util.EntityUtils;
@@ -40,6 +41,9 @@ public class GuiHandler implements IGuiHandler {
                     return new ContainerInfuser(player.inventory, (TileEntityInfuser) te);
                 }
             } break;
+
+            default:
+                break;
         }
         return null;
     }
@@ -71,6 +75,12 @@ public class GuiHandler implements IGuiHandler {
                         new ContainerInfuser(player.inventory, (TileEntityInfuser) te)
                     );
                 }
+            } break;
+
+            case FORTUNE: {
+                ItemStack stack = player.getHeldItem();
+                if (stack.getItem() instanceof ItemFortune)
+                    return new GuiFortune(stack);
             } break;
         }
         return null;

@@ -13,6 +13,7 @@ import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.network.PacketFX.Type;
 import ley.modding.dartcraft.proxy.CommonProxy;
 import net.anvilcraft.anvillib.vector.WorldVec;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -199,13 +200,8 @@ public class DartUtils {
                 life
             );
 
-            // TODO: WTF
-            //if (stack.itemID == DartItem.forceTome.itemID) {
-            //    droppedItem.delayBeforeCanPickup = 100;
-            //} else {
-            //    droppedItem.delayBeforeCanPickup = 10;
-            //}
-            droppedItem.delayBeforeCanPickup = 10;
+            droppedItem.delayBeforeCanPickup
+                = stack.getItem() == DartItems.forcetome ? 100 : 10;
 
             if (stack.hasTagCompound()) {
                 droppedItem.getEntityItem().setTagCompound(
@@ -221,6 +217,40 @@ public class DartUtils {
             droppedItem.motionZ
                 = (double) ((float) CommonProxy.rand.nextGaussian() * modifier);
             world.spawnEntityInWorld(droppedItem);
+        }
+    }
+
+    public static void dropItem(ItemStack stack, WorldVec pos) {
+        if (Dartcraft.proxy.isSimulating(pos.world)) {
+            float xRand = CommonProxy.rand.nextFloat() * 0.2f + 0.1f;
+            float yRand = CommonProxy.rand.nextFloat() * 0.8f + 0.1f;
+            float zRand = CommonProxy.rand.nextFloat() * 0.2f + 0.1f;
+            while (stack.stackSize > 0) {
+                int randInt = CommonProxy.rand.nextInt(21) + 10;
+                if (randInt > stack.stackSize) {
+                    randInt = stack.stackSize;
+                }
+                stack.stackSize -= randInt;
+                EntityItem droppedItem = new EntityItem(
+                    pos.world,
+                    (double) ((float) pos.x + xRand),
+                    (double) ((float) pos.y + yRand),
+                    (double) ((float) pos.z + zRand),
+                    new ItemStack(stack.getItem(), randInt, stack.getItemDamage())
+                );
+                if (stack.hasTagCompound()) {
+                    droppedItem.getEntityItem().setTagCompound(
+                        (NBTTagCompound) stack.getTagCompound().copy()
+                    );
+                }
+                float modifier = 0.025f;
+                droppedItem.motionX = (float) CommonProxy.rand.nextGaussian() * modifier;
+                droppedItem.motionY
+                    = (float) CommonProxy.rand.nextGaussian() * modifier + 0.2f;
+                droppedItem.motionZ = (float) CommonProxy.rand.nextGaussian() * modifier;
+                droppedItem.delayBeforeCanPickup = 10;
+                pos.world.spawnEntityInWorld((Entity) droppedItem);
+            }
         }
     }
 }
