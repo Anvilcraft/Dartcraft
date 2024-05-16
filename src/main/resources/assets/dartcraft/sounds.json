@@ -8,6 +8,15 @@
             }
         ]
     },
+    "closeChest": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "closeChest",
+                "stream": false
+            }
+        ]
+    },
     "cure": {
         "category": "master",
         "sounds": [
@@ -48,6 +57,15 @@
         "sounds": [
             {
                 "name": "nope",
+                "stream": false
+            }
+        ]
+    },
+    "openChest": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "openChest",
                 "stream": false
             }
         ]

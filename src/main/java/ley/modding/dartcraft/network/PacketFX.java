@@ -79,6 +79,9 @@ public class PacketFX implements IAnvilPacket {
 
             case CHARGE:
                 FXUtils.makeChargeEffects(pos, this.subType, 0xffffff, this.amount, true);
+
+            case MAGIC:
+                FXUtils.makeShiny(pos, this.subType, 0xffff00, this.amount, false);
         }
     }
 
@@ -88,6 +91,7 @@ public class PacketFX implements IAnvilPacket {
         CURE,
         HEAT,
         SPARKLES,
-        CHARGE;
+        CHARGE,
+        MAGIC;
     }
 }

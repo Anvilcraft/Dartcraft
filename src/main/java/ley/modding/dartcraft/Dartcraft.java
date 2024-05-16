@@ -1,5 +1,8 @@
 package ley.modding.dartcraft;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,6 +28,7 @@ import ley.modding.dartcraft.network.PacketFX;
 import ley.modding.dartcraft.network.PacketInfuserStart;
 import ley.modding.dartcraft.network.PacketUpdateAccessLevel;
 import ley.modding.dartcraft.proxy.CommonProxy;
+import ley.modding.dartcraft.storage.EnderStorageHandler;
 import ley.modding.dartcraft.tab.DartcraftTab;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
 import ley.modding.dartcraft.util.FortunesUtil;
@@ -45,6 +49,8 @@ public class Dartcraft {
     public static final String MODNAME = "Dartcraft";
     public static final String VERSION = "1.0";
 
+    public static final Logger LOGGER = LogManager.getLogger();
+
     @Mod.Instance
     public static Dartcraft instance
         = new Dartcraft();
@@ -63,6 +69,7 @@ public class Dartcraft {
     public void preInit(FMLPreInitializationEvent e) {
         MinecraftForge.EVENT_BUS.register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new TimeHandler());
+        MinecraftForge.EVENT_BUS.register(EnderStorageHandler.INSTANCE);
         channel = new AnvilChannel("dartcraft");
         channel.register(PacketClipButton.class);
         channel.register(PacketFX.class);

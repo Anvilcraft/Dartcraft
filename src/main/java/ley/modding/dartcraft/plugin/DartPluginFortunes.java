@@ -187,7 +187,7 @@ public class DartPluginFortunes {
         addFortune("DO NOT feed the beast!  (After midnight)");
         addFortune("Please stop doing that.");
         addFortune("I'm not a vending machine!");
-        addFortune("Try Ubuntu.");
+        addFortune("Try NixOS.");
         addFortune("If you program for more than 20 hours straight, do not blink.");
         addFortune("Ceiling cat is watching you procrastinate.");
         addFortune("Get your hand off my thigh!  You can have the leg.");

@@ -5,9 +5,11 @@ import ley.modding.dartcraft.item.ItemClipboard;
 import ley.modding.dartcraft.item.ItemFortune;
 import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.tile.TileEntityInfuser;
+import ley.modding.dartcraft.tile.TileEntityStorageUnit;
 import ley.modding.dartcraft.util.EntityUtils;
 import ley.modding.dartcraft.util.ItemCraftingInventory;
 import net.anvilcraft.anvillib.util.AnvilUtil;
+import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,6 +21,8 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object
     getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        WorldVec pos = new WorldVec(world, x, y, z);
+
         switch (AnvilUtil.enumFromInt(GuiType.class, id)) {
             case CLIPBOARD: {
                 ItemStack clipStack = getClipboard(player);
@@ -29,16 +33,23 @@ public class GuiHandler implements IGuiHandler {
             } break;
 
             case ENGINE: {
-                TileEntity te = world.getTileEntity(x, y, z);
+                TileEntity te = pos.getTileEntity();
                 if (te instanceof TileEntityForceEngine) {
                     return new ContainerForceEngine(player, (TileEntityForceEngine) te);
                 }
             } break;
 
             case INFUSER: {
-                TileEntity te = world.getTileEntity(x, y, z);
+                TileEntity te = pos.getTileEntity();
                 if (te instanceof TileEntityInfuser) {
                     return new ContainerInfuser(player.inventory, (TileEntityInfuser) te);
+                }
+            } break;
+
+            case STORAGE: {
+                TileEntity te = pos.getTileEntity();
+                if (te instanceof TileEntityStorageUnit) {
+                    return new ContainerStorageUnit(player, (TileEntityStorageUnit) te);
                 }
             } break;
 
@@ -51,6 +62,8 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object
     getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        WorldVec pos = new WorldVec(world, x, y, z);
+
         switch (AnvilUtil.enumFromInt(GuiType.class, id)) {
             case CLIPBOARD: {
                 ItemStack clipStack = getClipboard(player);
@@ -61,7 +74,7 @@ public class GuiHandler implements IGuiHandler {
             } break;
 
             case ENGINE: {
-                TileEntity te = world.getTileEntity(x, y, z);
+                TileEntity te = pos.getTileEntity();
                 if (te instanceof TileEntityForceEngine) {
                     TileEntityForceEngine engine = (TileEntityForceEngine) te;
                     return new GuiEngine(new ContainerForceEngine(player, engine));
@@ -69,7 +82,7 @@ public class GuiHandler implements IGuiHandler {
             } break;
 
             case INFUSER: {
-                TileEntity te = world.getTileEntity(x, y, z);
+                TileEntity te = pos.getTileEntity();
                 if (te instanceof TileEntityInfuser) {
                     return new GuiInfuser(
                         new ContainerInfuser(player.inventory, (TileEntityInfuser) te)
@@ -81,6 +94,15 @@ public class GuiHandler implements IGuiHandler {
                 ItemStack stack = player.getHeldItem();
                 if (stack.getItem() instanceof ItemFortune)
                     return new GuiFortune(stack);
+            } break;
+
+            case STORAGE: {
+                TileEntity te = pos.getTileEntity();
+                if (te instanceof TileEntityStorageUnit) {
+                    return new GuiStorageUnit(
+                        new ContainerStorageUnit(player, (TileEntityStorageUnit) te)
+                    );
+                }
             } break;
         }
         return null;

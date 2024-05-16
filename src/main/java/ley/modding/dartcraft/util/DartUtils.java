@@ -21,6 +21,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -252,5 +253,47 @@ public class DartUtils {
                 pos.world.spawnEntityInWorld((Entity) droppedItem);
             }
         }
+    }
+
+    public static boolean isAllowedInPack(ItemStack stack) {
+        if (stack == null)
+            return true;
+
+        // TODO: WTF
+        //if (DartItem.packBlacklist != null && DartItem.packBlacklist.size() > 0) {
+        //    for (ItemStack tempStack : DartItem.packBlacklist) {
+        //        if (tempStack == null || tempStack.itemID != stack.itemID) continue;
+        //        return false;
+        //    }
+        //}
+        return true;
+    }
+
+    public static ForgeDirection getEntityFacing(Entity entity) {
+        ForgeDirection facing = ForgeDirection.UP;
+        if (entity != null) {
+            int dir = MathHelper.floor_double(
+                          (double) ((double) (entity.rotationYaw * 4.0f / 360.0f) + 0.5)
+                      )
+                & 3;
+            switch (dir) {
+                case 1: {
+                    facing = ForgeDirection.EAST;
+                    break;
+                }
+                case 2: {
+                    facing = ForgeDirection.SOUTH;
+                    break;
+                }
+                case 3: {
+                    facing = ForgeDirection.WEST;
+                    break;
+                }
+                case 0: {
+                    facing = ForgeDirection.NORTH;
+                }
+            }
+        }
+        return facing;
     }
 }
