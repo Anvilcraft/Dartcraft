@@ -49,7 +49,7 @@ dependencies {
     implementation "net.anvilcraft:jalec:0.1.2"
     implementation "net.anvilcraft:anvillib-7:0.1.0:deobf"
     implementation "thaumcraft:Thaumcraft:1.7.10-4.2.3.5:deobf"
-    implementation "net.industrial-craft:industrialcraft-2:2.2.827-experimental:dev"
+    implementation "net.industrial-craft:industrialcraft-2:2.2.827-experimental:deobf"
     implementation "codechicken:CodeChickenCore:1.7.10-1.0.7.48:dev"
     implementation "codechicken:CodeChickenLib:1.7.10-1.1.3.141:dev"
     implementation "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
