@@ -1,6 +1,7 @@
 package ley.modding.dartcraft.api.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
 public class EngineLiquid {
@@ -8,7 +9,7 @@ public class EngineLiquid {
 
     public static final int TYPE_THROTTLE = 1;
 
-    protected int id;
+    protected Fluid fluid;
 
     protected int burnTime;
 
@@ -19,7 +20,7 @@ public class EngineLiquid {
     protected float modifier = 1.0F;
 
     public EngineLiquid(FluidStack liquid, int type, int burnTime, float modifier) {
-        this.id = liquid.getFluidID();
+        this.fluid = liquid.getFluid();
         this.comp = liquid.tag;
         this.type = type;
         this.burnTime = burnTime;
@@ -39,6 +40,6 @@ public class EngineLiquid {
     }
 
     public FluidStack getLiquid() {
-        return new FluidStack(this.id, 1000);
+        return new FluidStack(this.fluid, 1000);
     }
 }
