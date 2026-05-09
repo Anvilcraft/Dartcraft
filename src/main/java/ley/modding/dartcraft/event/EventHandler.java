@@ -3,10 +3,13 @@ package ley.modding.dartcraft.event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.IBreakable;
+import ley.modding.dartcraft.block.IBlockWalkOver;
 import ley.modding.dartcraft.entity.EntityColdChicken;
 import ley.modding.dartcraft.entity.EntityColdCow;
 import ley.modding.dartcraft.entity.EntityColdPig;
 import ley.modding.dartcraft.item.DartItems;
+import net.minecraft.block.Block;
+import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -14,7 +17,9 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 
@@ -78,6 +83,20 @@ public class EventHandler {
             newEntity.setAIMoveSpeed(speed);
 
             world.spawnEntityInWorld(newEntity);
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingUpdate(LivingUpdateEvent ev) {
+        if (!ev.entityLiving.onGround)
+            return;
+        int x = MathHelper.floor_double(ev.entityLiving.posX),
+            y = MathHelper.floor_double(ev.entityLiving.boundingBox.minY - 0.001f),
+            z = MathHelper.floor_double(ev.entityLiving.posZ);
+
+        Block block = ev.entityLiving.worldObj.getBlock(x, y, z);
+        if (block instanceof IBlockWalkOver) {
+            ((IBlockWalkOver) block).onEntityWalking(ev.entityLiving, x, y, z);
         }
     }
 

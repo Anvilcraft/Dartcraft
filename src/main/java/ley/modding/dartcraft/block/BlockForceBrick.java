@@ -8,12 +8,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockForceBrick extends BaseBlock {
+public class BlockForceBrick extends BaseBlock implements IBlockWalkOver {
     int type;
 
     public BlockForceBrick(int type) {
@@ -32,16 +33,15 @@ public class BlockForceBrick extends BaseBlock {
     }
 
     @Override
-    public void
-    onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-        this.velocityToAddToEntity(world, x, y, z, entity, (Vec3) null);
+    public void onEntityWalking(EntityLivingBase entity, int x, int y, int z) {
+        this.velocityToAddToEntity(entity.worldObj, x, y, z, entity, (Vec3) null);
     }
 
     @Override
     public void
     velocityToAddToEntity(World world, int x, int y, int z, Entity entity, Vec3 vec) {
         double skateLimit = 0.5D;
-        double step = 0.025D;
+        double step = 0.5D;
         entity.addVelocity(step * entity.motionX, 0.0D, step * entity.motionZ);
         if (entity.motionX > skateLimit) {
             entity.motionX = skateLimit;
