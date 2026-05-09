@@ -7,6 +7,8 @@ import ley.modding.dartcraft.item.tool.ItemForceShears;
 import ley.modding.dartcraft.item.tool.ItemForceShovel;
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
+import net.minecraftforge.common.util.EnumHelper;
 
 public class DartItems {
     public static Item clipboard;
@@ -30,6 +32,14 @@ public class DartItems {
     public static Item goldenpower;
     public static Item resource;
     public static Item soulwafer;
+
+    public static int forceDamage = 1;
+    public static float forceEfficiency = 5.0F;
+    public static int forceToolLevel = 10;
+
+    public static ToolMaterial forceMaterial = EnumHelper.addToolMaterial(
+        "FORCE", forceToolLevel, 512, forceEfficiency, (float) forceDamage, 0
+    );
 
     public static void regsiter(IRegistry reg) {
         entitybottle = reg.registerItem(new ItemEntityBottle());

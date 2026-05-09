@@ -13,18 +13,10 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 public class ItemForceShovel extends ItemSpade implements IBreakable, IForceConsumer {
-    private static int damage = 1;
-    private static float efficiency = 5.0F;
-    private static int toolLevel = 10;
-    public static ToolMaterial material = EnumHelper.addToolMaterial(
-        "FORCE", toolLevel, 512, efficiency, (float) damage, 0
-    );
-
     public ItemForceShovel() {
-        super(material);
+        super(DartItems.forceMaterial);
         Util.configureItem(this, "forceshovel");
     }
 

@@ -17,7 +17,6 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 
 import java.util.ArrayList;
@@ -25,20 +24,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ItemForceMitts extends ItemTool implements IBreakable, IToolGrafter {
-    private static int damage = 0;
-    private static float efficiency = 16.0F;
-    private static int toolLevel = 4;
-    public static ToolMaterial material = EnumHelper.addToolMaterial(
-        "FORCE", toolLevel, 256, efficiency, (float) damage, 0
-    );
     public ArrayList<Block> mineableBlocks = new ArrayList<Block>();
     private int range = 2;
 
     public ItemForceMitts() {
-        super(0.0F, material, new HashSet());
+        super(0.0F, DartItems.forceMaterial, new HashSet());
         setCreativeTab(Dartcraft.tab);
         loadMinables();
-        efficiencyOnProperMaterial = efficiency;
+        efficiencyOnProperMaterial = DartItems.forceEfficiency;
         setUnlocalizedName("forcemitts");
         setTextureName(Dartcraft.MODID + ":forcemitts");
     }

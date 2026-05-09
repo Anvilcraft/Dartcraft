@@ -19,21 +19,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.EnumHelper;
 
 public class ItemForcePickaxe
     extends ItemPickaxe implements IBreakable, IForceConsumer, IForceUpgradable {
-    private static int damage = 1;
-    private static float efficiency = 5.0F;
-    private static int toolLevel = 10;
-    public static ToolMaterial material = EnumHelper.addToolMaterial(
-        "FORCE", toolLevel, 512, efficiency, (float) damage, 0
-    );
-
     private IIcon heatPick;
 
     public ItemForcePickaxe() {
-        super(material);
+        super(DartItems.forceMaterial);
         Util.configureItem(this, "forcepickaxe");
     }
 
