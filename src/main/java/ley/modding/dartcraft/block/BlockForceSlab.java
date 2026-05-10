@@ -1,7 +1,10 @@
 package ley.modding.dartcraft.block;
 
+import java.util.Random;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
 import ley.modding.tileralib.api.ICustomItemBlockProvider;
@@ -13,6 +16,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -95,5 +99,10 @@ public class BlockForceSlab extends BlockSlab implements ICustomItemBlockProvide
     public Class<? extends ItemBlock> getItemBlockClass() {
         // we register slab item blocks ourselves
         return null;
+    }
+
+    @Override
+    public Item getItemDropped(int alec1, Random alec2, int alec3) {
+        return DartItems.forceslabs[this.type];
     }
 }
