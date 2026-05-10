@@ -83,7 +83,7 @@ public class Dartcraft {
     public void init(FMLInitializationEvent e) {
         registry = new Registry();
         DartBlocks.register(registry);
-        DartItems.regsiter(registry);
+        DartItems.register(registry);
 
         proxy.init();
 

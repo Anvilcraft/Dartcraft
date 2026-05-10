@@ -1,12 +1,17 @@
 package ley.modding.dartcraft.item;
 
+import java.util.stream.IntStream;
+
+import ley.modding.dartcraft.block.DartBlocks;
 import ley.modding.dartcraft.item.tool.ItemForceAxe;
 import ley.modding.dartcraft.item.tool.ItemForceMitts;
 import ley.modding.dartcraft.item.tool.ItemForcePickaxe;
 import ley.modding.dartcraft.item.tool.ItemForceShears;
 import ley.modding.dartcraft.item.tool.ItemForceShovel;
+import ley.modding.dartcraft.util.Util;
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -33,6 +38,8 @@ public class DartItems {
     public static Item resource;
     public static Item soulwafer;
 
+    public static Item[] forceslabs;
+
     public static int forceDamage = 1;
     public static float forceEfficiency = 5.0F;
     public static int forceToolLevel = 10;
@@ -41,7 +48,7 @@ public class DartItems {
         "FORCE", forceToolLevel, 512, forceEfficiency, (float) forceDamage, 0
     );
 
-    public static void regsiter(IRegistry reg) {
+    public static void register(IRegistry reg) {
         entitybottle = reg.registerItem(new ItemEntityBottle());
         forceaxe = reg.registerItem(new ItemForceAxe());
         forceflask = reg.registerItem(new ItemForceFlask());
@@ -63,5 +70,14 @@ public class DartItems {
         goldenpower = reg.registerItem(new BaseItem("goldenpower"));
         resource = reg.registerItem(new BaseItem("resource"));
         soulwafer = reg.registerItem(new BaseItem("soulwafer"));
+
+        forceslabs = IntStream.range(0, DartBlocks.forceslab.length)
+                         .mapToObj(i -> {
+                             ItemSlab item = new ItemBlockForceSlab(
+                                 DartBlocks.forceslab[i], DartBlocks.forceslabDouble[i], i
+                             );
+                             return reg.registerItem(item);
+                         })
+                         .toArray(Item[] ::new);
     }
 }

@@ -4,6 +4,7 @@ import java.util.stream.IntStream;
 
 import ley.modding.tileralib.api.IRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 
@@ -14,7 +15,8 @@ public class DartBlocks {
     public static Block forcelog;
     public static Block forceplanks;
     public static Block forcesapling;
-    public static Block[] forceslab;
+    public static BlockSlab[] forceslab;
+    public static BlockSlab[] forceslabDouble;
     public static Block[] forcestairs;
     public static Block forcetorch;
     public static Block infuser;
@@ -39,9 +41,15 @@ public class DartBlocks {
         forceplanks = reg.registerBlock(new BlockForcePlanks());
         forcesapling = reg.registerBlock(new BlockForceSapling());
         forceslab = IntStream.range(0, 17)
-                        .mapToObj(BlockForceSlab::new)
+                        .mapToObj(i -> new BlockForceSlab(false, i))
                         .map(reg::registerBlock)
-                        .toArray(Block[] ::new);
+                        .map(b -> (BlockSlab) b)
+                        .toArray(BlockSlab[] ::new);
+        forceslabDouble = IntStream.range(0, 17)
+                              .mapToObj(i -> new BlockForceSlab(true, i))
+                              .map(reg::registerBlock)
+                              .map(b -> (BlockSlab) b)
+                              .toArray(BlockSlab[] ::new);
         forcestairs = IntStream.range(0, 17)
                           .mapToObj(BlockForceStairs::new)
                           .map(reg::registerBlock)

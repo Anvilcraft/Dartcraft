@@ -4,8 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import ley.modding.dartcraft.util.DartUtils;
 import ley.modding.dartcraft.util.FXUtils;
-import ley.modding.dartcraft.util.Util;
-import net.anvilcraft.alec.jalec.factories.AlecCriticalRuntimeErrorExceptionFactory;
+import ley.modding.tileralib.api.ICustomItemBlockProvider;
 import net.anvilcraft.anvillib.vector.Vec3;
 import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.block.Block;
@@ -14,31 +13,24 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockForceSlab extends BlockSlab {
+public class BlockForceSlab extends BlockSlab implements ICustomItemBlockProvider {
     int type;
 
-    public BlockForceSlab(int type) {
-        super(false, Material.rock);
-        Util.configureBlock(this, "forceslab" + type);
+    public BlockForceSlab(boolean isDouble, int type) {
+        super(isDouble, type >= 16 ? Material.wood : Material.rock);
+        this.type = type;
+        this.setBlockName(this.getBaseBlockName());
         this.setHardness(2.0F);
         this.setResistance(2000.0F);
-        this.setStepSound(Block.soundTypeStone);
+        this.setStepSound(type >= 16 ? Block.soundTypeWood : Block.soundTypeStone);
         this.setLightOpacity(0);
-        // TODO: WTF
-        //Block.useNeighborBrightness[id] = true;
-        this.type = type;
     }
-
-    // TODO: WTF
-    //@Override
-    //public String getFullSlabName(int var1) {
-    //    return "forceSlab";
-    //}
 
     @Override
     @SideOnly(Side.CLIENT)
@@ -60,7 +52,7 @@ public class BlockForceSlab extends BlockSlab {
     @Override
     public IIcon getIcon(int alec, int meta) {
         if (this.blockIcon == null)
-            this.blockIcon = (this.type == 16 ? DartBlocks.forceplanks
+            this.blockIcon = (this.type >= 16 ? DartBlocks.forceplanks
                                               : DartBlocks.forcebrick[this.type])
                                  .getIcon(0, 0);
         return this.blockIcon;
@@ -91,9 +83,17 @@ public class BlockForceSlab extends BlockSlab {
     }
 
     @Override
-    public String func_150002_b(int arg0) {
-        throw AlecCriticalRuntimeErrorExceptionFactory.PLAIN.createAlecException(
-            "Unknown Function called"
-        );
+    public String func_150002_b(int damage) {
+        return "tile." + this.getBaseBlockName();
+    }
+
+    private String getBaseBlockName() {
+        return (this.field_150004_a ? "double" : "") + "forceslab" + this.type;
+    }
+
+    @Override
+    public Class<? extends ItemBlock> getItemBlockClass() {
+        // we register slab item blocks ourselves
+        return null;
     }
 }
