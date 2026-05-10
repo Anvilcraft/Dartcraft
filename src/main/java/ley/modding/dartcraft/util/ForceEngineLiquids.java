@@ -140,21 +140,6 @@ public class ForceEngineLiquids {
                                                  check.substring(check.indexOf(59) + 1)
                                              ))
                                                 .intValue();
-                                    if (value < 0.5F) {
-                                        value = 0.5F;
-                                    }
-
-                                    if (value > 20.0F) {
-                                        value = 20.0F;
-                                    }
-
-                                    if (time1 < 100) {
-                                        time1 = 100;
-                                    }
-
-                                    if (time1 > 1000000) {
-                                        time1 = 1000000;
-                                    }
 
                                     fuels.put(e1, new float[] { value, (float) time1 });
                                 }
@@ -210,7 +195,7 @@ public class ForceEngineLiquids {
         Fluid liquidForce = FluidRegistry.getFluid("liquidforce");
         FluidStack milk = FluidRegistry.getFluidStack("milk", 1000);
         if (liquidForce != null) {
-            addLiquid(new EngineLiquid(new FluidStack(liquidForce, 1000), 0, 20000, 4.0F)
+            addLiquid(new EngineLiquid(new FluidStack(liquidForce, 1000), 0, 20000, 40.0F)
             );
         }
 
@@ -222,19 +207,19 @@ public class ForceEngineLiquids {
             new EngineLiquid(new FluidStack(FluidRegistry.WATER, 1000), 1, 600, 2.0F)
         );
         addLiquid(
-            new EngineLiquid(new FluidStack(FluidRegistry.LAVA, 1000), 0, 20000, 0.5F)
+            new EngineLiquid(new FluidStack(FluidRegistry.LAVA, 1000), 0, 20000, 5.0F)
         );
     }
 
     private static void buildcraftSupport() {
         FluidStack oil = FluidRegistry.getFluidStack("oil", 1000);
         if (oil != null) {
-            addLiquid(new EngineLiquid(oil, 0, 20000, 1.5F));
+            addLiquid(new EngineLiquid(oil, 0, 20000, 15.0F));
         }
 
         FluidStack fuel = FluidRegistry.getFluidStack("fuel", 1000);
         if (fuel != null) {
-            addLiquid(new EngineLiquid(fuel, 0, 100000, 3.0F));
+            addLiquid(new EngineLiquid(fuel, 0, 100000, 30.0F));
         }
     }
 
@@ -246,7 +231,7 @@ public class ForceEngineLiquids {
 
         FluidStack ethanol = FluidRegistry.getFluidStack("bioethanol", 1000);
         if (ethanol != null) {
-            addLiquid(new EngineLiquid(ethanol, 0, '\uea60', 2.0F));
+            addLiquid(new EngineLiquid(ethanol, 0, '\uea60', 20.0F));
         }
     }
 

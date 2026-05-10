@@ -71,11 +71,11 @@ public class Config {
     private static ArrayList getDefaultFuels() {
         ArrayList<String> defaults = new ArrayList<String>();
         //defaults.add("#Fuels.");
-        defaults.add("f:liquidforce=4.0;20000");
-        defaults.add("f:lava=0.5;20000");
-        defaults.add("f:oil=1.5;20000");
-        defaults.add("f:fuel=3.0;100000");
-        defaults.add("f:bioethanol=2.0;60000");
+        defaults.add("f:liquidforce=40.0;20000");
+        defaults.add("f:lava=5.0;20000");
+        defaults.add("f:oil=15.0;20000");
+        defaults.add("f:fuel=30.0;100000");
+        defaults.add("f:bioethanol=20.0;60000");
         //defaults.add("\n#Throttles.");
         defaults.add("t:water=2.0;600");
         defaults.add("t:milk=2.5;3000");
