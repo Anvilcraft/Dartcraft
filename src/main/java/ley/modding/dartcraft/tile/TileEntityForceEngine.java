@@ -7,12 +7,8 @@ import ley.modding.dartcraft.Dartcraft;
 import ley.modding.dartcraft.api.energy.EngineLiquid;
 import ley.modding.dartcraft.item.DartItems;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
-import net.anvilcraft.alec.jalec.AlecLogger;
 import net.anvilcraft.anvillib.vector.WorldVec;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
@@ -30,9 +26,8 @@ import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 
-public class TileEntityForceEngine extends TileEntity
-    implements IFluidHandler, IInventory, IEnergyProvider { //TODO Fix GUI
-
+public class TileEntityForceEngine
+    extends TileEntity implements IFluidHandler, IInventory, IEnergyProvider {
     public static final int MAX_STORED = 50000;
 
     public static final int MAX_LIQUID = 10000;
@@ -205,7 +200,7 @@ public class TileEntityForceEngine extends TileEntity
         this.doLoss();
     }
 
-    protected void transferEnergy() { //TODO better energy transfer
+    protected void transferEnergy() { // TODO better energy transfer
         TileEntity tile = this.worldObj.getTileEntity(
             xCoord + facing.offsetX, yCoord + facing.offsetY, zCoord + facing.offsetZ
         );
@@ -238,8 +233,8 @@ public class TileEntityForceEngine extends TileEntity
                         && (this.fuelTank.getFluid() == null
                             || this.fuelTank.getFluid().isFluidEqual(curActive))
                         && (this.fuelTank.getFluid() == null
-                            || 10000 >= this.fuelTank.getFluid().amount + curActive.amount
-                        )) {
+                            || 10000
+                                >= this.fuelTank.getFluid().amount + curActive.amount)) {
                         this.fuelTank.fill(curActive, true);
                         ItemStack temp1 = this.liquidInventory.getStackInSlot(0);
                         if (temp1.stackSize == 1 && temp1.getItem().hasContainerItem()) {
@@ -289,8 +284,8 @@ public class TileEntityForceEngine extends TileEntity
                             );
                         } else {
                             this.liquidInventory.decrStackSize(1, 1);
-                            new WorldVec(this).markForUpdate();
                         }
+                        new WorldVec(this).markForUpdate();
                     }
                 }
             }

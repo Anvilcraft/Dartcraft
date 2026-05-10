@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 
 public class GuiEngine extends GuiTab implements IContainerTooltipHandler {
     private TileEntityForceEngine engine;
@@ -75,24 +76,23 @@ public class GuiEngine extends GuiTab implements IContainerTooltipHandler {
         GuiContainer gui, ItemStack itemstack, int x, int y, List<String> tooltip
     ) {
         Point pointerLoc = new Point(x, y);
-        if (this.fuelBounds.contains(pointerLoc))
-            try {
+        FluidTank displayTank = null;
+        if (this.fuelBounds.contains(pointerLoc)) {
+            displayTank = this.engine.fuelTank;
+        } else if (this.throttleBounds.contains(pointerLoc)) {
+            displayTank = this.engine.throttleTank;
+        }
+
+        if (displayTank != null) {
+            if (displayTank.getFluidAmount() > 0) {
                 tooltip.add(
-                    "" + this.engine.fuelTank.getFluid().getFluid().getLocalizedName()
-                    + " (" + (this.engine.fuelTank.getFluid()).amount + ")"
+                    "" + displayTank.getFluid().getLocalizedName() + " ("
+                    + displayTank.getFluid().amount + ")"
                 );
-            } catch (Exception e) {
+            } else {
                 tooltip.add("Empty");
             }
-        if (this.throttleBounds.contains(pointerLoc))
-            try {
-                tooltip.add(
-                    "" + (this.engine.throttleTank.getInfo()).fluid.getFluid().getName()
-                    + " (" + (this.engine.throttleTank.getFluid()).amount + ")"
-                );
-            } catch (Exception e) {
-                tooltip.add("Empty");
-            }
+        }
         return tooltip;
     }
 
@@ -226,28 +226,35 @@ public class GuiEngine extends GuiTab implements IContainerTooltipHandler {
 
         private void initializeItems() {
             this.infoStrings.add(
-                "The Force Engine can be throttled with a few liquids, most notably water."
+                "The Force Engine can be throttled with a few liquids, most notably "
+                + "water."
             );
             this.infoStrings.add(
-                "The Force Engine's output is determined by the base output of the Fuel multiplied by the Throttle's value."
+                "The Force Engine's output is determined by the base output of the Fuel "
+                + "multiplied by the Throttle's value."
             );
             this.infoStrings.add(
                 "The Force Engine will never explode or die of loneliness."
             );
             this.infoStrings.add("The Force Engine requires a redstone signal to run.");
             this.infoStrings.add(
-                "You can right-click the Force Engine with a valid liquid container to add liquid quickly."
+                "You can right-click the Force Engine with a valid liquid container to "
+                + "add liquid quickly."
             );
             if (Loader.isModLoaded("BuildCraft|Energy")) {
                 this.infoStrings.add(
-                    "A wide variety of fuels are usable inside the Force Engine.  While Liquid Force is the most effective, BuildCraft Fuel or even lava is also usable."
+                    "A wide variety of fuels are usable inside the Force Engine.  While "
+                    + "Liquid Force is the most effective, BuildCraft Fuel or even lava "
+                    + "is also usable."
                 );
                 this.infoStrings.add(
-                    "Using Fuel or Lava in the Force Engine will yield the same output as the Combustion Engine if water is used as a throttle."
+                    "Using Fuel or Lava in the Force Engine will yield the same output "
+                    + "as the Combustion Engine if water is used as a throttle."
                 );
             } else {
                 this.infoStrings.add(
-                    "Lava is also a valid Force Engine Fuel, although not as effective as Liquid Force."
+                    "Lava is also a valid Force Engine Fuel, although not as effective "
+                    + "as Liquid Force."
                 );
             }
             if (Loader.isModLoaded("Forestry")) {

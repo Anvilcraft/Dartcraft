@@ -5,7 +5,6 @@ import ley.modding.dartcraft.tile.TileEntityForceEngine;
 import ley.modding.dartcraft.util.ForceEngineLiquids;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

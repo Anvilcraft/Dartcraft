@@ -27,6 +27,7 @@ tile.forcelog.name=Force Log
 tile.forceleaves.name=Force Leaves
 tile.forcesapling.name=Force Sapling
 tile.infuser.name=Force Infuser
+tile.forceengine.name=Force Engine
 
 tile.forceplanks.name=Force Planks
 tile.forcebrick0.name=Black Force Brick
